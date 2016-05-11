@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DB_Editor
+namespace DB_Editor.Components.LoginWindow
 {
-    public partial class Form1 : Form
+    public partial class View : Form
     {
-        public Form1()
+        public View()
         {
             InitializeComponent();
         }

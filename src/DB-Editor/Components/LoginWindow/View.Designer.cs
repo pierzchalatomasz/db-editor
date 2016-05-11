@@ -1,6 +1,6 @@
-﻿namespace DB_Editor
+﻿namespace DB_Editor.Components.LoginWindow
 {
-    partial class Form1
+    partial class View
     {
         /// <summary>
         /// Required designer variable.
@@ -30,10 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.Text = "View";
         }
 
         #endregion
     }
 }
-
