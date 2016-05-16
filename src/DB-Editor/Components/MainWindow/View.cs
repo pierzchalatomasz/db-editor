@@ -8,13 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DB_Editor
+namespace DB_Editor.Components.MainWindow
 {
-    public partial class Form1 : Form
+    public partial class View : Form
     {
-        public Form1()
+        private Presenter presenter_;
+
+        public View()
         {
             InitializeComponent();
+            presenter_ = new Presenter(this);
         }
     }
 }
