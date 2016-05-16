@@ -12,9 +12,12 @@ namespace DB_Editor.Components.MainWindow
 {
     public partial class View : Form
     {
+        Presenter presenter_;
+
         public View()
         {
             InitializeComponent();
+            presenter_ = new Presenter(this);
         }
     }
 }
