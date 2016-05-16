@@ -8,8 +8,8 @@ namespace DB_Editor.Components.MainWindow
 {
     class Presenter
     {
-        View view_;
-        Model model_;
+        private View view_;
+        private Model model_;
 
         public Presenter(View view)
         {

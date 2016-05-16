@@ -64,6 +64,7 @@
     <Compile Include="Components\MainWindow\View.Designer.cs">
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
+    <Compile Include="DB-Handlers\Column.cs" />
     <Compile Include="DB-Handlers\Database.cs" />
     <Compile Include="DB-Handlers\Table.cs" />
     <Compile Include="Program.cs" />
