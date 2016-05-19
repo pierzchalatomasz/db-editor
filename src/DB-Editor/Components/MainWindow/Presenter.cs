@@ -12,6 +12,7 @@ namespace DB_Editor.Components.MainWindow
     class Presenter
     {
         private View view_;
+
         private Model model_;
 
         public Presenter(View view)
@@ -22,6 +23,7 @@ namespace DB_Editor.Components.MainWindow
             // Test połączenia
             /*DBConnectionManager.Connect("localhost", "root", "", "swiat");
             QueryResult result = DBConnectionManager.Query("SELECT * from country where name like 'p%'");
+            //QueryResult result = DBConnectionManager.Query("UPDATE country SET name='Poland' where name='Poland'");
 
             foreach (var row in result)
             {
