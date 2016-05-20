@@ -71,7 +71,9 @@
     <Compile Include="DB-Connection\DBConnectionManager.cs" />
     <Compile Include="DB-Handlers\Column.cs" />
     <Compile Include="DB-Handlers\Database.cs" />
+    <Compile Include="DB-Handlers\OperationResult.cs" />
     <Compile Include="DB-Handlers\Table.cs" />
+    <Compile Include="DB-Handlers\ColumnStructureCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Components\AboutWindow\AboutBox.resx">
