@@ -64,6 +64,24 @@
     </Compile>
     <Compile Include="Components\MainWindow\Model.cs" />
     <Compile Include="Components\MainWindow\Presenter.cs" />
+    <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.Designer.cs">
+      <DependentUpon>TableEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.Designer.cs">
+      <DependentUpon>TableItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TablesListing\TablesListing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TablesListing\TablesListing.Designer.cs">
+      <DependentUpon>TablesListing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\MainWindow\View.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +101,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\LoginWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\TableEditor\TableEditor.resx">
+      <DependentUpon>TableEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\TablesListing\Partials\TableItem.resx">
+      <DependentUpon>TableItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\TablesListing\TablesListing.resx">
+      <DependentUpon>TablesListing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
@@ -110,6 +137,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Components\MainWindow\States\RowEditor\" />
+    <Folder Include="Components\MainWindow\States\TableOverview\" />
     <Folder Include="Dependencies\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

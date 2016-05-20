@@ -20,6 +20,8 @@ namespace DB_Editor.Components.MainWindow
             view_ = view;
             model_ = new Model();
 
+            ChangeState("TablesListing");
+
             // Test połączenia
             /*DBConnectionManager.Connect("localhost", "root", "", "swiat");
             QueryResult result = DBConnectionManager.Query("SELECT * from country where name like 'p%'");
@@ -32,6 +34,12 @@ namespace DB_Editor.Components.MainWindow
                     Console.WriteLine(column.Key + " : " + column.Value);
                 }
             }*/
+        }
+
+        public void ChangeState(string stateName)
+        {
+            view_.ShowInLeftPanel(model_.States[stateName][1]);
+            view_.ShowInRightPanel(model_.States[stateName][1], stateName);
         }
     }
 }
