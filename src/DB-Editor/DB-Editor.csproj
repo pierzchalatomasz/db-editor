@@ -79,6 +79,9 @@
     <EmbeddedResource Include="Components\AboutWindow\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\LoginWindow\View.resx">
+      <DependentUpon>View.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
     </EmbeddedResource>
