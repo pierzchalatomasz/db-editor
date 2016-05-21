@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.TablesListing;
+using DB_Editor.Components.MainWindow.States.TableEditor;
+using DB_Editor.Components.MainWindow.States.RowEditor;
 
 namespace DB_Editor.Components.MainWindow
 {
-    using StatesDict = Dictionary<string, List<Control>>;
+    using StatesDict = Dictionary<string, State>;
 
     class Model
     {
-        private StatesDict states_;
+        private Dictionary<string, State> states_;
+
+        private State activeState_;
 
         public Model()
         {
@@ -28,18 +33,28 @@ namespace DB_Editor.Components.MainWindow
             }
         }
 
-        private void CreateStates()
+        public State ActiveState
         {
-            CreateSingleState("TablesListing", new UserControl(), new TablesListing());
-            CreateSingleState("Test", new TablesListing(), new TextBox());
+            get
+            {
+                return activeState_;
+            }
+            set
+            {
+                activeState_ = value;
+            }
         }
 
-        private void CreateSingleState(string stateName, Control leftControl, Control rightControl)
+        private void CreateStates()
         {
-            List<Control> controls = new List<Control>();
-            controls.Add(leftControl);
-            controls.Add(rightControl);
-            states_.Add(stateName, controls);
+            CreateSingleState(new TablesListing());
+            CreateSingleState(new TableEditor());
+            CreateSingleState(new RowEditor());
+        }
+
+        private void CreateSingleState(State state)
+        {
+            states_.Add(state.Name, state);
         }
     }
 }

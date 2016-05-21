@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Editor.Events;
 using DB_Editor.DB_Connection;
+using DB_Editor.Components.MainWindow.Definitions;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -19,27 +21,54 @@ namespace DB_Editor.Components.MainWindow
         {
             view_ = view;
             model_ = new Model();
-
-            ChangeState("TablesListing");
-
-            // Test połączenia
-            /*DBConnectionManager.Connect("localhost", "root", "", "swiat");
-            QueryResult result = DBConnectionManager.Query("SELECT * from country where name like 'p%'");
-            //QueryResult result = DBConnectionManager.Query("UPDATE country SET name='Poland' where name='Poland'");
-
-            foreach (var row in result)
-            {
-                foreach (var column in row)
-                {
-                    Console.WriteLine(column.Key + " : " + column.Value);
-                }
-            }*/
         }
 
-        public void ChangeState(string stateName)
+        public void Init()
         {
-            view_.ShowInLeftPanel(model_.States[stateName][1]);
-            view_.ShowInRightPanel(model_.States[stateName][1], stateName);
+            ListenToEvents();
+            SetDefaultState("TablesListing");
+        }
+
+        public State ActiveState
+        {
+            get
+            {
+                return model_.ActiveState;
+            }
+        }
+
+        public void ChangeState(object sender, StateChangeRequestEventArgs args)
+        {
+            if (model_.ActiveState != null)
+            {
+                PerformActionOnStateChange(args.StateOrder);
+            }
+
+            model_.ActiveState = model_.States[args.State];
+            view_.DisplayStateChange();
+        }
+
+        private void PerformActionOnStateChange(StateOrder stateOrder)
+        {
+            if (stateOrder == StateOrder.Next)
+            {
+                model_.ActiveState.OnNextState();
+            }
+            else
+            {
+                model_.ActiveState.OnPrevState();
+            }
+        }
+
+        private void SetDefaultState(string stateName)
+        {
+            model_.ActiveState = model_.States[stateName];
+            view_.DisplayStateChange();
+        }
+
+        private void ListenToEvents()
+        {
+            StateChangeRequestEvents.StateChangeRequest += ChangeState;
         }
     }
 }

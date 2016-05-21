@@ -1,6 +1,6 @@
 ﻿namespace DB_Editor.Components.MainWindow.States.TablesListing
 {
-    partial class TablesListing
+    partial class TablesListingControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -37,17 +37,17 @@
             this.TableItemsContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.TableItemsContainer.Location = new System.Drawing.Point(0, 0);
             this.TableItemsContainer.Name = "TableItemsContainer";
-            this.TableItemsContainer.Size = new System.Drawing.Size(323, 150);
+            this.TableItemsContainer.Size = new System.Drawing.Size(476, 308);
             this.TableItemsContainer.TabIndex = 0;
             // 
-            // TablesListing
+            // TablesListingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.TableItemsContainer);
-            this.Name = "TablesListing";
-            this.Size = new System.Drawing.Size(323, 150);
+            this.Name = "TablesListingControl";
+            this.Size = new System.Drawing.Size(476, 308);
             this.ResumeLayout(false);
 
         }

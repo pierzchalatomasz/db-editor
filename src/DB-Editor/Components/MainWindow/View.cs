@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Events;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -18,26 +19,60 @@ namespace DB_Editor.Components.MainWindow
         {
             InitializeComponent();
             presenter_ = new Presenter(this);
+            presenter_.Init();
+
+            // TODO
             listBox1.Items.Add("swiat");
             listBox1.Items.Add("znajomi");
         }
 
-        public void ShowInLeftPanel(Control control)
-        {
-
-        }
-
-        public void ShowInRightPanel(Control control, string stateName)
+        public void DisplayStateChange()
         {
             rightPanel.Controls.Clear();
-            control.Show();
-            rightPanel.Controls.Add(control);
-            RightPanelTitle.Text = stateName;
+            presenter_.ActiveState.Right.Show();
+            rightPanel.Controls.Add(presenter_.ActiveState.Right);
+            RightPanelTitle.Text = presenter_.ActiveState.Name;
+
+            UpdateButtons();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ToggleButtonVisibility(Button button, string anotherState)
         {
-            presenter_.ChangeState("Test");
+            if (anotherState != null)
+            {
+                button.Show();
+            }
+            else
+            {
+                button.Hide();
+            }
+        }
+
+        private void buttonNext_Click(object sender, EventArgs e)
+        {
+            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.NextState);
+            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.PrevState, StateOrder.Prev);
+            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+        }
+
+        private void UpdateButtons()
+        {
+            SetButtonText();
+            ToggleButtonVisibility(buttonNext, presenter_.ActiveState.NextState);
+            ToggleButtonVisibility(buttonBack, presenter_.ActiveState.PrevState);
+        }
+
+        private void SetButtonText()
+        {
+            if (presenter_.ActiveState.ButtonText != null)
+            {
+                buttonNext.Text = presenter_.ActiveState.ButtonText;
+            }
         }
     }
 }

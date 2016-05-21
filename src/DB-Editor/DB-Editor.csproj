@@ -62,25 +62,48 @@
     <Compile Include="Components\LoginWindow\View.Designer.cs">
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\Definitions\State.cs" />
     <Compile Include="Components\MainWindow\Model.cs" />
     <Compile Include="Components\MainWindow\Presenter.cs" />
-    <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.cs">
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.Designer.cs">
-      <DependentUpon>TableEditor.cs</DependentUpon>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.Designer.cs">
+      <DependentUpon>FieldEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\RowEditor.cs" />
+    <Compile Include="Components\MainWindow\States\RowEditor\RowEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\RowEditorControl.Designer.cs">
+      <DependentUpon>RowEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\Partials\FieldEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\Partials\FieldEditor.Designer.cs">
+      <DependentUpon>FieldEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.cs" />
+    <Compile Include="Components\MainWindow\States\TableEditor\TableEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\TableEditorControl.Designer.cs">
+      <DependentUpon>TableEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\StateChangeRequestEvents.cs" />
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.Designer.cs">
       <DependentUpon>TableItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\MainWindow\States\TablesListing\TablesListing.cs">
+    <Compile Include="Components\MainWindow\States\TablesListing\TablesListing.cs" />
+    <Compile Include="Components\MainWindow\States\TablesListing\TablesListingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\MainWindow\States\TablesListing\TablesListing.Designer.cs">
-      <DependentUpon>TablesListing.cs</DependentUpon>
+    <Compile Include="Components\MainWindow\States\TablesListing\TablesListingControl.Designer.cs">
+      <DependentUpon>TablesListingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\MainWindow\View.cs">
       <SubType>Form</SubType>
@@ -93,6 +116,7 @@
     <Compile Include="DB-Handlers\Database.cs" />
     <Compile Include="DB-Handlers\OperationResult.cs" />
     <Compile Include="DB-Handlers\Table.cs" />
+    <Compile Include="Events\StateChangeRequestEventArgs.cs" />
     <Compile Include="DB-Handlers\ColumnStructureCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,14 +126,23 @@
     <EmbeddedResource Include="Components\LoginWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\MainWindow\States\TableEditor\TableEditor.resx">
-      <DependentUpon>TableEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.resx">
+      <DependentUpon>FieldEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RowEditor\RowEditorControl.resx">
+      <DependentUpon>RowEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\TableEditor\Partials\FieldEditor.resx">
+      <DependentUpon>FieldEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\TableEditor\TableEditorControl.resx">
+      <DependentUpon>TableEditorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\TablesListing\Partials\TableItem.resx">
       <DependentUpon>TableItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\MainWindow\States\TablesListing\TablesListing.resx">
-      <DependentUpon>TablesListing.cs</DependentUpon>
+    <EmbeddedResource Include="Components\MainWindow\States\TablesListing\TablesListingControl.resx">
+      <DependentUpon>TablesListingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
@@ -137,7 +170,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\MainWindow\States\RowEditor\" />
     <Folder Include="Components\MainWindow\States\TableOverview\" />
     <Folder Include="Dependencies\" />
   </ItemGroup>

@@ -33,6 +33,7 @@
             this.buttonDelete = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonRecords = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +66,7 @@
             this.buttonDelete.BackColor = System.Drawing.Color.Crimson;
             this.buttonDelete.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
-            this.buttonDelete.Location = new System.Drawing.Point(96, 3);
+            this.buttonDelete.Location = new System.Drawing.Point(195, 3);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
             this.buttonDelete.Size = new System.Drawing.Size(88, 34);
@@ -75,12 +76,13 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonRecords);
             this.panel1.Controls.Add(this.buttonEdit);
             this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(110, 0);
+            this.panel1.Location = new System.Drawing.Point(169, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(187, 44);
+            this.panel1.Size = new System.Drawing.Size(286, 44);
             this.panel1.TabIndex = 3;
             // 
             // panel2
@@ -90,8 +92,22 @@
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.panel2.Size = new System.Drawing.Size(312, 44);
+            this.panel2.Size = new System.Drawing.Size(470, 44);
             this.panel2.TabIndex = 4;
+            // 
+            // buttonRecords
+            // 
+            this.buttonRecords.BackColor = System.Drawing.Color.Chocolate;
+            this.buttonRecords.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonRecords.ForeColor = System.Drawing.Color.White;
+            this.buttonRecords.Location = new System.Drawing.Point(97, 3);
+            this.buttonRecords.Name = "buttonRecords";
+            this.buttonRecords.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
+            this.buttonRecords.Size = new System.Drawing.Size(88, 34);
+            this.buttonRecords.TabIndex = 3;
+            this.buttonRecords.Text = "Records";
+            this.buttonRecords.UseVisualStyleBackColor = false;
+            this.buttonRecords.Click += new System.EventHandler(this.buttonRecords_Click);
             // 
             // TableItem
             // 
@@ -101,7 +117,7 @@
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "TableItem";
-            this.Size = new System.Drawing.Size(318, 45);
+            this.Size = new System.Drawing.Size(476, 45);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -116,5 +132,6 @@
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button buttonRecords;
     }
 }

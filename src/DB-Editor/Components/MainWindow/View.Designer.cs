@@ -31,8 +31,9 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.LeftPanelTitle = new System.Windows.Forms.Label();
+            this.buttonBack = new System.Windows.Forms.Button();
             this.rightPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonNext = new System.Windows.Forms.Button();
             this.RightPanelTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -57,8 +58,9 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.splitContainer.Panel2.Controls.Add(this.buttonBack);
             this.splitContainer.Panel2.Controls.Add(this.rightPanel);
-            this.splitContainer.Panel2.Controls.Add(this.button1);
+            this.splitContainer.Panel2.Controls.Add(this.buttonNext);
             this.splitContainer.Panel2.Controls.Add(this.RightPanelTitle);
             this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(15);
             this.splitContainer.Size = new System.Drawing.Size(808, 483);
@@ -89,6 +91,21 @@
             this.LeftPanelTitle.TabIndex = 0;
             this.LeftPanelTitle.Text = "Databases";
             // 
+            // buttonBack
+            // 
+            this.buttonBack.BackColor = System.Drawing.Color.Gray;
+            this.buttonBack.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonBack.ForeColor = System.Drawing.Color.White;
+            this.buttonBack.Location = new System.Drawing.Point(32, 415);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
+            this.buttonBack.Size = new System.Drawing.Size(137, 41);
+            this.buttonBack.TabIndex = 6;
+            this.buttonBack.Text = "Back";
+            this.buttonBack.UseVisualStyleBackColor = false;
+            this.buttonBack.Visible = false;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
             // rightPanel
             // 
             this.rightPanel.Location = new System.Drawing.Point(32, 76);
@@ -96,19 +113,19 @@
             this.rightPanel.Size = new System.Drawing.Size(476, 308);
             this.rightPanel.TabIndex = 4;
             // 
-            // button1
+            // buttonNext
             // 
-            this.button1.BackColor = System.Drawing.Color.RoyalBlue;
-            this.button1.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(371, 415);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
-            this.button1.Size = new System.Drawing.Size(137, 41);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Add new table";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonNext.BackColor = System.Drawing.Color.RoyalBlue;
+            this.buttonNext.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonNext.ForeColor = System.Drawing.Color.White;
+            this.buttonNext.Location = new System.Drawing.Point(371, 415);
+            this.buttonNext.Name = "buttonNext";
+            this.buttonNext.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
+            this.buttonNext.Size = new System.Drawing.Size(137, 41);
+            this.buttonNext.TabIndex = 3;
+            this.buttonNext.Text = "Add new table";
+            this.buttonNext.UseVisualStyleBackColor = false;
+            this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
             // RightPanelTitle
             // 
@@ -127,6 +144,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(808, 483);
             this.Controls.Add(this.splitContainer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "View";
             this.Text = "DB Editor";
             this.splitContainer.Panel1.ResumeLayout(false);
@@ -145,7 +164,8 @@
         private System.Windows.Forms.Label LeftPanelTitle;
         private System.Windows.Forms.Label RightPanelTitle;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonNext;
         private System.Windows.Forms.FlowLayoutPanel rightPanel;
+        private System.Windows.Forms.Button buttonBack;
     }
 }
