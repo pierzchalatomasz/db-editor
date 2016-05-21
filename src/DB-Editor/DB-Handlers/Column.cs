@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using DB_Editor.DB_Connection;
 
 namespace DB_Editor.DB_Handlers
 {
@@ -40,6 +42,12 @@ namespace DB_Editor.DB_Handlers
         public static void AlterExtra(bool isAutoIncrement) //chyba, ze moze miec jeszcze jakies inne wartosci
         {
             
+        }
+
+        private static void OpenConnection()
+        {
+            DBConnectionManager.Connect();
+            DBConnectionManager.Connection.Open();
         }
         #endregion
     }

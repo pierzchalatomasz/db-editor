@@ -21,6 +21,32 @@ namespace DB_Editor.DB_Connection
                 return dbConnection_;
             }
         }
+       
+        #region ProtszyConnector_DlaTestow
+        private static string server_ = "localhost";
+        private static string username_ = "root";
+        private static string password_ = "";
+        private static string database_ = "world";
+      
+        public static void Connect()
+        {
+            try
+            {
+                MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+                builder.Server = server_;
+                builder.UserID = username_;
+                builder.Password = password_;
+                builder.Database = database_;
+
+                dbConnection_ = new MySqlConnection(builder.ToString());
+            }
+            catch (MySqlException e)
+            {
+                // Emit event here
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
 
         public static void Connect(string server, string username, string password, string database)
         {
