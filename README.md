@@ -3,7 +3,7 @@ MySQL database editor written in C#
 
 ##Opis programu
 
-Program służy do edytowania baz danych MySQL poprzez połączenie z serwerem SQL. Edytor ten pozwala nad dokonywać większość operacji na bazach danych, jakie umożliwia nam język MySQL, jednak bez konieczności znajomości tego języka. Dzięki niemu jesteśmy w stanie dodawać nowe bazy danych, usuwać je, dodawać nowe tabele, zmieniać jej strukturę, dodawać lub zmieniać rekordy w tabelach oraz wiele innych. Program ten składa się z okna logowania, która wymaga autoryzacji do dostępu do baz danych dla danego użytkownika oraz głównego okna, za pomocą którego jesteśmy w stanie manipulować bazami. Program ten wymaga dostępu do serwera SQL (w przypadku, gdy jest to zewnętrzny serwer SQL konieczne jest również połączenie z Internetem). 
+Program służy do edytowania baz danych MySQL poprzez połączenie z serwerem SQL. Edytor ten pozwala nam dokonywać większość operacji na bazach danych, jakie umożliwia nam język MySQL, jednak bez konieczności znajomości tego języka. Dzięki niemu jesteśmy w stanie dodawać nowe bazy danych, usuwać je, dodawać nowe tabele, zmieniać jej strukturę, dodawać lub zmieniać rekordy w tabelach oraz wiele innych. Program ten składa się z okna logowania, która wymaga autoryzacji do dostępu do baz danych dla danego użytkownika oraz głównego okna, za pomocą którego jesteśmy w stanie manipulować bazami. Program ten wymaga dostępu do serwera SQL (w przypadku, gdy jest to zewnętrzny serwer SQL konieczne jest również połączenie z Internetem). 
 
 ##Instrukcja obsługi
 
