@@ -18,7 +18,7 @@ namespace DB_Editor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Components.MainWindow.View());
-            Application.Run(new Components.LoginWindow.View());
+            Application.Run(new Components.MainWindow.View());
         }
     }
 }

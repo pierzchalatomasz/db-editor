@@ -69,7 +69,7 @@
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
     <Compile Include="DB-Connection\DBConnectionManager.cs" />
-    <Compile Include="DB-Handlers\Column.cs" />
+    <Compile Include="DB-Handlers\Record.cs" />
     <Compile Include="DB-Handlers\Database.cs" />
     <Compile Include="DB-Handlers\OperationResult.cs" />
     <Compile Include="DB-Handlers\Table.cs" />
