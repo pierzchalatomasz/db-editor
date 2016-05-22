@@ -91,6 +91,7 @@
     <Compile Include="Components\MainWindow\States\TableEditor\TableEditorControl.Designer.cs">
       <DependentUpon>TableEditorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="DB-Handlers\Record.cs" />
     <Compile Include="Events\StateChangeRequestEvents.cs" />
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
       <SubType>UserControl</SubType>
@@ -112,7 +113,6 @@
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
     <Compile Include="DB-Connection\DBConnectionManager.cs" />
-    <Compile Include="DB-Handlers\Column.cs" />
     <Compile Include="DB-Handlers\Database.cs" />
     <Compile Include="DB-Handlers\OperationResult.cs" />
     <Compile Include="DB-Handlers\Table.cs" />
