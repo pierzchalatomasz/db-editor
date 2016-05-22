@@ -8,27 +8,50 @@ namespace DB_Editor.DB_Handlers
 {
     public class ColumnStructureCreator
     {
-        //nalezy pamietac, by jezeli isAutoIncrement = true, wtedy musi byc ustanowiony jakis klucz
-        public ColumnStructureCreator(string name, string type, bool isNotNull = false, string def = "", bool isAutoIncrement = false)
+        public ColumnStructureCreator(string name, string type, bool isNotNull = false, bool primary_key = false, string def = "", bool isAutoIncrement = false)
         {
             Field = name;
             Type = type;
             NullValue = isNotNull;
-            //przypisac odpowiedni klucz
-            Default = def;
+            Primary_Key = primary_key;
+            if (isAutoIncrement)
+                Primary_Key = true;
+            if (!isAutoIncrement)
+                Default = def;
+            else
+                Default = "";
+
             Extra = isAutoIncrement;
         }
+        #region Properties
         public string Field { get; set; }///przeprowadzic walidacje, czy taka nazwa jest dozwolona       
         public string Type { get; set; }//walidacja w innym miejscu
-        public bool NullValue { get; set; } //NOT NULL
-        //key
+        public bool NullValue { get; set; } //true = NULL
+        public bool Primary_Key { get; set; } //true = PRIMARY KEY
         public string Default { get; set; }
-        public bool Extra { get; set; }
+        public bool Extra { get; set; } //true = auto_increment
+        #endregion
 
         public override string ToString()
         {
-            //odpowiednio zmodyfikowac w zaleznosci od klucza
-            return Field + " " + Type + " " + NullValue + " " + Default + " " + Extra;
+            string nullValueString = "";
+            string primaryKeyString = "";
+            string extraString = "";
+            string tmp = "";
+            if (!NullValue)
+                nullValueString = "NOT NULL";
+            if (Primary_Key)
+                primaryKeyString = "PRIMARY KEY";
+            if (Extra)
+                extraString = "auto_increment";
+            if(Default != String.Empty)
+            {
+                Default = "DEFAULT \"" + Default + "\"";
+                tmp =  Field + " " + Type + " " + nullValueString + " " + Default + " " + extraString + " " + primaryKeyString;
+            }
+            else
+                tmp = Field + " " + Type + " " + nullValueString + " " + extraString + " " + primaryKeyString;
+            return tmp.TrimEnd();
         }
     }
 }
