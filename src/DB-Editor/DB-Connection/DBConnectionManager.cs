@@ -91,6 +91,16 @@ namespace DB_Editor.DB_Connection
             return results;
         }
 
+        public static bool IsConnected()
+        {
+            if (dbConnection_ != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private static QueryResult GetQueryResult(MySqlDataReader reader)
         {
             QueryResult results = new QueryResult();

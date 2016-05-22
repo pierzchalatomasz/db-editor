@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Editor.Events;
 using DB_Editor.DB_Connection;
+using DB_Editor.Components.MainWindow.Definitions;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -12,24 +14,61 @@ namespace DB_Editor.Components.MainWindow
     class Presenter
     {
         private View view_;
+
         private Model model_;
 
         public Presenter(View view)
         {
             view_ = view;
             model_ = new Model();
+        }
 
-            // Test połączenia
-            /*DBConnectionManager.Connect("localhost", "root", "", "swiat");
-            QueryResult result = DBConnectionManager.Query("SELECT * from country where name like 'p%'");
+        public void Init()
+        {
+            ListenToEvents();
+            SetDefaultState("TablesListing");
+        }
 
-            foreach (var row in result)
+        public State ActiveState
+        {
+            get
             {
-                foreach (var column in row)
-                {
-                    Console.WriteLine(column.Key + " : " + column.Value);
-                }
-            }*/
+                return model_.ActiveState;
+            }
+        }
+
+        public void ChangeState(object sender, StateChangeRequestEventArgs args)
+        {
+            if (model_.ActiveState != null)
+            {
+                PerformActionOnStateChange(args.StateOrder);
+            }
+
+            model_.ActiveState = model_.States[args.State];
+            view_.DisplayStateChange();
+        }
+
+        private void PerformActionOnStateChange(StateOrder stateOrder)
+        {
+            if (stateOrder == StateOrder.Next)
+            {
+                model_.ActiveState.OnNextState();
+            }
+            else
+            {
+                model_.ActiveState.OnPrevState();
+            }
+        }
+
+        private void SetDefaultState(string stateName)
+        {
+            model_.ActiveState = model_.States[stateName];
+            view_.DisplayStateChange();
+        }
+
+        private void ListenToEvents()
+        {
+            StateChangeRequestEvents.StateChangeRequest += ChangeState;
         }
     }
 }
