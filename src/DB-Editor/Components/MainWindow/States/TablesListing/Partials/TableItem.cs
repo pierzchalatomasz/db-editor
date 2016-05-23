@@ -21,7 +21,8 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing.Partials
 
         private void buttonRecords_Click(object sender, EventArgs args)
         {
-            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("RowEditor");
+            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("RecordsListing");
+            eventArgs.Data.Add("id", name.Text);
             StateChangeRequestEvents.FireStateChangeRequest(sender, eventArgs);
         }
     }

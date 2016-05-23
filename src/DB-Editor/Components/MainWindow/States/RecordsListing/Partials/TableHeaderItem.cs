@@ -8,21 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
+namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
-    public partial class FieldEditor : UserControl
+    public partial class TableHeaderItem : UserControl
     {
-        public FieldEditor()
+        public TableHeaderItem()
         {
             InitializeComponent();
         }
 
         public string FieldName
         {
-            get
-            {
-                return fieldName.Text;
-            }
             set
             {
                 fieldName.Text = value;

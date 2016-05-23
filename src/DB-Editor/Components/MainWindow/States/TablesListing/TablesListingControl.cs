@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.TablesListing.Partials;
 
 namespace DB_Editor.Components.MainWindow.States.TablesListing
 {
-    public partial class TablesListingControl : UserControl
+    public partial class TablesListingControl : StateControl
     {
         public TablesListingControl()
         {

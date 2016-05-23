@@ -8,6 +8,7 @@ using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.TablesListing;
 using DB_Editor.Components.MainWindow.States.TableEditor;
 using DB_Editor.Components.MainWindow.States.RowEditor;
+using DB_Editor.Components.MainWindow.States.RecordsListing;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -50,6 +51,7 @@ namespace DB_Editor.Components.MainWindow
             CreateSingleState(new TablesListing());
             CreateSingleState(new TableEditor());
             CreateSingleState(new RowEditor());
+            CreateSingleState(new RecordsListing());
         }
 
         private void CreateSingleState(State state)

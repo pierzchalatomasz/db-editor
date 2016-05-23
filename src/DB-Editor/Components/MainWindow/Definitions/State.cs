@@ -17,18 +17,18 @@ namespace DB_Editor.Components.MainWindow.Definitions
 
         private string prevState_;
 
-        private UserControl leftPanelControl_;
+        private StateControl leftPanelControl_;
 
-        private UserControl rightPanelControl_;
+        private StateControl rightPanelControl_;
 
-        public State(string stateName, UserControl leftPanelControl, UserControl rightPanelControl)
+        public State(string stateName, StateControl leftPanelControl, StateControl rightPanelControl)
         {
             name_ = stateName;
             leftPanelControl_ = leftPanelControl;
             rightPanelControl_ = rightPanelControl;
         }
 
-        public UserControl Left
+        public StateControl Left
         {
             get
             {
@@ -36,7 +36,7 @@ namespace DB_Editor.Components.MainWindow.Definitions
             }
         }
 
-        public UserControl Right
+        public StateControl Right
         {
             get
             {
@@ -85,6 +85,14 @@ namespace DB_Editor.Components.MainWindow.Definitions
             set
             {
                 prevState_ = value;
+            }
+        }
+
+        public Dictionary<string, string> EventData 
+        {
+            set 
+            {
+                Right.EventData = value;
             }
         }
 

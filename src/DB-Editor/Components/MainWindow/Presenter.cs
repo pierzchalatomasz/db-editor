@@ -45,6 +45,7 @@ namespace DB_Editor.Components.MainWindow
             }
 
             model_.ActiveState = model_.States[args.State];
+            model_.ActiveState.EventData = args.Data;
             view_.DisplayStateChange();
         }
 
