@@ -21,7 +21,7 @@ Mechanizm zmiany stanów MainWindow
   metoda `ChangeState(object sender, StateChangeRequestEventArgs args)` klasy Presenter. Odpowiada ona za wywołanie
   `OnNextState()` lub `OnPrevState()`, a następnie zmianę aktywnego stanu.
 * `StateChangeRequestEventArgs` zawierają informacje takie jak:
-  * nazwa stanu do, którego należy przejść
+  * nazwa stanu, do którego należy przejść
   * `enum StateOrder`, który informuje, czy jest to stan typu Next, czy Prev
   * ewentualne dane w postaci `Dictionary<string, string>`, np. ID tabeli
     (docelowo każdy stan będzie potrafił na podstawie tych danych wyświetlić odpowiednie wartości w poszczególnych polach)
