@@ -29,8 +29,8 @@ namespace DB_Editor.Components.MainWindow
         public void DisplayStateChange()
         {
             rightPanel.Controls.Clear();
-            presenter_.ActiveState.Right.Show();
-            rightPanel.Controls.Add(presenter_.ActiveState.Right);
+            presenter_.ActiveState.Control.Show();
+            rightPanel.Controls.Add(presenter_.ActiveState.Control);
             RightPanelTitle.Text = presenter_.ActiveState.Name;
 
             UpdateButtons();

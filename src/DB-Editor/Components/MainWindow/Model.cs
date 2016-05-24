@@ -16,35 +16,15 @@ namespace DB_Editor.Components.MainWindow
 
     class Model
     {
-        private Dictionary<string, State> states_;
-
-        private State activeState_;
-
         public Model()
         {
-            states_ = new StatesDict();
+            States = new StatesDict();
             CreateStates();
         }
 
-        public StatesDict States
-        {
-            get
-            {
-                return states_;
-            }
-        }
+        public StatesDict States { get; private set; }
 
-        public State ActiveState
-        {
-            get
-            {
-                return activeState_;
-            }
-            set
-            {
-                activeState_ = value;
-            }
-        }
+        public State ActiveState { get; set; }
 
         private void CreateStates()
         {
@@ -56,7 +36,7 @@ namespace DB_Editor.Components.MainWindow
 
         private void CreateSingleState(State state)
         {
-            states_.Add(state.Name, state);
+            States.Add(state.Name, state);
         }
     }
 }

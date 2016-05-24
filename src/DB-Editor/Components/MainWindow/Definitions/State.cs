@@ -10,90 +10,27 @@ namespace DB_Editor.Components.MainWindow.Definitions
 {
     abstract public class State
     {
-        private string name_;
-
-        private string buttonNextText_;
-
-        private string nextState_;
-
-        private string prevState_;
-
-        private StateControl leftPanelControl_;
-
-        private StateControl rightPanelControl_;
-
-        public State(string stateName, StateControl leftPanelControl, StateControl rightPanelControl)
+        public State(string stateName, StateControl Control)
         {
-            name_ = stateName;
-            leftPanelControl_ = leftPanelControl;
-            rightPanelControl_ = rightPanelControl;
+            Name = stateName;
+            this.Control = Control;
         }
 
-        public StateControl Left
-        {
-            get
-            {
-                return leftPanelControl_;
-            }
-        }
+        public StateControl Control { get; private set; }
 
-        public StateControl Right
-        {
-            get
-            {
-                return rightPanelControl_;
-            }
-        }
+        public string Name { get; private set; }
 
-        public string Name
-        {
-            get
-            {
-                return name_;
-            }
-        }
+        public string ButtonText { get; set; }
 
-        public string ButtonText
-        {
-            get
-            {
-                return buttonNextText_;
-            }
-            set
-            {
-                buttonNextText_ = value;
-            }
-        }
+        public string NextState { get; set; }
 
-        public string NextState
-        {
-            get
-            {
-                return nextState_;
-            }
-            set
-            {
-                nextState_ = value;
-            }
-        }
-
-        public string PrevState
-        {
-            get
-            {
-                return prevState_;
-            }
-            set
-            {
-                prevState_ = value;
-            }
-        }
+        public string PrevState { get; set; }
 
         public StateChangeRequestEventArgs EventData 
         {
             set 
             {
-                Right.EventData = value;
+                Control.EventData = value;
             }
         }
 
