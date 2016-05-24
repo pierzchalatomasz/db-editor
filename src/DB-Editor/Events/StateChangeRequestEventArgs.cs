@@ -8,51 +8,32 @@ namespace DB_Editor.Events
 {
     public class StateChangeRequestEventArgs : EventArgs
     {
-        private string state_;
-
-        Dictionary<string, string> data_;
-
-        StateOrder stateOrder_;
-
         public StateChangeRequestEventArgs(string state, StateOrder stateOrder = StateOrder.Next)
         {
-            state_ = state;
-            stateOrder_ = stateOrder;
-            data_ = new Dictionary<string, string>();
+            State = state;
+            StateOrder = stateOrder;
+            Data = new Dictionary<string, string>();
+            Mode = Mode.Creator;
         }
 
-        public string State
-        {
-            get
-            {
-                return state_;
-            }
-        }
+        public string State { get; private set; }
 
-        public Dictionary<string, string> Data
-        {
-            get
-            {
-                return data_;
-            }
-            set
-            {
-                data_ = value;
-            }
-        }
+        public Dictionary<string, string> Data { get; set; }
 
-        public StateOrder StateOrder
-        {
-            get
-            {
-                return stateOrder_;
-            }
-        }
+        public StateOrder StateOrder { get; private set; }
+
+        public Mode Mode { get; set; }
     }
 
     public enum StateOrder
     {
         Next,
         Prev
+    }
+
+    public enum Mode
+    {
+        Editor,
+        Creator
     }
 }

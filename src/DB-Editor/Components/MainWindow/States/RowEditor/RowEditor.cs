@@ -10,7 +10,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 {
     public class RowEditor : State
     {
-        public RowEditor() : base("RowEditor", new StateControl(), new RowEditorControl())
+        public RowEditor() : base("RowEditor", new RowEditorControl())
         {
             ButtonText = "Save";
             NextState = "TablesListing";

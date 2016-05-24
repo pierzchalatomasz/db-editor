@@ -22,15 +22,15 @@ namespace DB_Editor.Components.MainWindow
             presenter_.Init();
 
             // TODO
-            listBox1.Items.Add("swiat");
-            listBox1.Items.Add("znajomi");
+            databasesList.Items.Add("swiat");
+            databasesList.Items.Add("znajomi");
         }
 
         public void DisplayStateChange()
         {
             rightPanel.Controls.Clear();
-            presenter_.ActiveState.Right.Show();
-            rightPanel.Controls.Add(presenter_.ActiveState.Right);
+            presenter_.ActiveState.Control.Show();
+            rightPanel.Controls.Add(presenter_.ActiveState.Control);
             RightPanelTitle.Text = presenter_.ActiveState.Name;
 
             UpdateButtons();

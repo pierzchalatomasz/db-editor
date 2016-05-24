@@ -32,8 +32,8 @@
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonRecords = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +60,7 @@
             this.buttonEdit.TabIndex = 1;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = false;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonDelete
             // 
@@ -85,16 +86,6 @@
             this.panel1.Size = new System.Drawing.Size(286, 44);
             this.panel1.TabIndex = 3;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Controls.Add(this.name);
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.panel2.Size = new System.Drawing.Size(470, 44);
-            this.panel2.TabIndex = 4;
-            // 
             // buttonRecords
             // 
             this.buttonRecords.BackColor = System.Drawing.Color.Chocolate;
@@ -108,6 +99,16 @@
             this.buttonRecords.Text = "Records";
             this.buttonRecords.UseVisualStyleBackColor = false;
             this.buttonRecords.Click += new System.EventHandler(this.buttonRecords_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.name);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
+            this.panel2.Size = new System.Drawing.Size(470, 44);
+            this.panel2.TabIndex = 4;
             // 
             // TableItem
             // 

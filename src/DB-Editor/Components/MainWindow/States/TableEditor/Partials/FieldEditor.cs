@@ -16,5 +16,19 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
         {
             InitializeComponent();
         }
+
+        public string FieldName
+        {
+            set
+            {
+                fieldName.Text = value;
+            }
+        }
+
+        public void Clear()
+        {
+            fieldName.Text = "";
+            fieldType.SelectedText = "";
+        }
     }
 }
