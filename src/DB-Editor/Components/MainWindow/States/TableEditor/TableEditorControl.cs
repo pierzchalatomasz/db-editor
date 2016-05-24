@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Events;
 using DB_Editor.Components.MainWindow.Definitions;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
@@ -23,6 +24,35 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 Partials.FieldEditor field = new Partials.FieldEditor();
                 field.Show();
                 container.Controls.Add(field);
+            }
+        }
+
+        public override StateChangeRequestEventArgs EventData
+        {
+            set
+            {
+                // Get mode (creator / editor)
+                if (value.Mode == Mode.Editor)
+                {
+                    // TEST of accessing event data
+                    foreach (Partials.FieldEditor control in container.Controls)
+                    {
+                        control.FieldName = value.Data["id"];
+                    }
+                }
+                else
+                {
+                    Clear();
+                }
+            }
+        }
+
+        protected override void Clear()
+        {
+            // TEST of accessing event data
+            foreach (Partials.FieldEditor control in container.Controls)
+            {
+                control.Clear();
             }
         }
 

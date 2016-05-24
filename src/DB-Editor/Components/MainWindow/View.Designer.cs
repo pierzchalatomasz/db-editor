@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.databasesList = new System.Windows.Forms.ListBox();
             this.LeftPanelTitle = new System.Windows.Forms.Label();
             this.buttonBack = new System.Windows.Forms.Button();
             this.rightPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -51,7 +51,7 @@
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.listBox1);
+            this.splitContainer.Panel1.Controls.Add(this.databasesList);
             this.splitContainer.Panel1.Controls.Add(this.LeftPanelTitle);
             this.splitContainer.Panel1.Padding = new System.Windows.Forms.Padding(15);
             // 
@@ -68,18 +68,18 @@
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 0;
             // 
-            // listBox1
+            // databasesList
             // 
-            this.listBox1.BackColor = System.Drawing.Color.White;
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 19;
-            this.listBox1.Location = new System.Drawing.Point(32, 76);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(205, 380);
-            this.listBox1.TabIndex = 1;
+            this.databasesList.BackColor = System.Drawing.Color.White;
+            this.databasesList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.databasesList.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.databasesList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.databasesList.FormattingEnabled = true;
+            this.databasesList.ItemHeight = 19;
+            this.databasesList.Location = new System.Drawing.Point(32, 76);
+            this.databasesList.Name = "databasesList";
+            this.databasesList.Size = new System.Drawing.Size(205, 380);
+            this.databasesList.TabIndex = 1;
             // 
             // LeftPanelTitle
             // 
@@ -163,7 +163,7 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.Label LeftPanelTitle;
         private System.Windows.Forms.Label RightPanelTitle;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox databasesList;
         private System.Windows.Forms.Button buttonNext;
         private System.Windows.Forms.FlowLayoutPanel rightPanel;
         private System.Windows.Forms.Button buttonBack;

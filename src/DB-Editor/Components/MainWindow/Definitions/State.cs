@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Events;
 
 namespace DB_Editor.Components.MainWindow.Definitions
 {
@@ -88,7 +89,7 @@ namespace DB_Editor.Components.MainWindow.Definitions
             }
         }
 
-        public Dictionary<string, string> EventData 
+        public StateChangeRequestEventArgs EventData 
         {
             set 
             {

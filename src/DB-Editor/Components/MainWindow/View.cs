@@ -22,8 +22,8 @@ namespace DB_Editor.Components.MainWindow
             presenter_.Init();
 
             // TODO
-            listBox1.Items.Add("swiat");
-            listBox1.Items.Add("znajomi");
+            databasesList.Items.Add("swiat");
+            databasesList.Items.Add("znajomi");
         }
 
         public void DisplayStateChange()

@@ -10,15 +10,18 @@ namespace DB_Editor.Events
     {
         private string state_;
 
-        Dictionary<string, string> data_;
+        private Dictionary<string, string> data_;
 
-        StateOrder stateOrder_;
+        private StateOrder stateOrder_;
+
+        private Mode mode_;
 
         public StateChangeRequestEventArgs(string state, StateOrder stateOrder = StateOrder.Next)
         {
             state_ = state;
             stateOrder_ = stateOrder;
             data_ = new Dictionary<string, string>();
+            mode_ = Mode.Creator;
         }
 
         public string State
@@ -48,11 +51,29 @@ namespace DB_Editor.Events
                 return stateOrder_;
             }
         }
+
+        public Mode Mode
+        {
+            get
+            {
+                return mode_;
+            }
+            set
+            {
+                mode_ = value;
+            }
+        }
     }
 
     public enum StateOrder
     {
         Next,
         Prev
+    }
+
+    public enum Mode
+    {
+        Editor,
+        Creator
     }
 }
