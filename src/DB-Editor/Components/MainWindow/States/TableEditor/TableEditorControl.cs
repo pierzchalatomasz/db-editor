@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Components.MainWindow.Definitions;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
-    public partial class TableEditorControl : UserControl
+    public partial class TableEditorControl : StateControl
     {
         public TableEditorControl()
         {

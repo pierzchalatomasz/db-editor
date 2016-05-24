@@ -8,24 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
+namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
-    public partial class FieldEditor : UserControl
+    public partial class RecordField : UserControl
     {
-        public FieldEditor()
+        public RecordField()
         {
             InitializeComponent();
         }
 
-        public string FieldName
+        public string FieldValue
         {
             get
             {
-                return fieldName.Text;
+                return fieldValue.Text;
             }
             set
             {
-                fieldName.Text = value;
+                fieldValue.Text = value;
             }
         }
     }

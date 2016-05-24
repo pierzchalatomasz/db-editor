@@ -10,7 +10,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
 {
     public class TablesListing : State
     {
-        public TablesListing() : base("TablesListing", new UserControl(), new TablesListingControl())
+        public TablesListing() : base("TablesListing", new StateControl(), new TablesListingControl())
         {
             NextState = "TableEditor";
             ButtonText = "Add new table";

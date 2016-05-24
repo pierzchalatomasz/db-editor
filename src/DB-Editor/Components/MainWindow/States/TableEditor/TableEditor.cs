@@ -10,7 +10,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
     public class TableEditor : State
     {
-        public TableEditor() : base("TableEditor", new UserControl(), new TableEditorControl())
+        public TableEditor() : base("TableEditor", new StateControl(), new TableEditorControl())
         {
             PrevState = "TablesListing";
             NextState = "TablesListing";

@@ -62,9 +62,43 @@
     <Compile Include="Components\LoginWindow\View.Designer.cs">
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\Definitions\StateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Components\MainWindow\Definitions\State.cs" />
     <Compile Include="Components\MainWindow\Model.cs" />
     <Compile Include="Components\MainWindow\Presenter.cs" />
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\Record.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\Record.Designer.cs">
+      <DependentUpon>Record.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\RecordField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\RecordField.Designer.cs">
+      <DependentUpon>RecordField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\TableHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\TableHeader.Designer.cs">
+      <DependentUpon>TableHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\TableHeaderItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\TableHeaderItem.Designer.cs">
+      <DependentUpon>TableHeaderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListing.cs" />
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.Designer.cs">
+      <DependentUpon>RecordsListingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +125,7 @@
     <Compile Include="Components\MainWindow\States\TableEditor\TableEditorControl.Designer.cs">
       <DependentUpon>TableEditorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\States\TableOverview\TableOverview.cs" />
     <Compile Include="DB-Handlers\Record.cs" />
     <Compile Include="Events\StateChangeRequestEvents.cs" />
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
@@ -125,6 +160,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\LoginWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\Record.resx">
+      <DependentUpon>Record.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\RecordField.resx">
+      <DependentUpon>RecordField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\TableHeader.resx">
+      <DependentUpon>TableHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\TableHeaderItem.resx">
+      <DependentUpon>TableHeaderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.resx">
+      <DependentUpon>RecordsListingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.resx">
       <DependentUpon>FieldEditor.cs</DependentUpon>
@@ -170,7 +220,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\MainWindow\States\TableOverview\" />
     <Folder Include="Dependencies\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
