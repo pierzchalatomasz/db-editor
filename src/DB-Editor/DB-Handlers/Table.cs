@@ -221,12 +221,12 @@ namespace DB_Editor.DB_Handlers
             if (dbName != "")
                 dbName = dbName + ".";
         }
-
         private static void OpenConnection()
         {
             DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
+        
         #endregion
     }
 }

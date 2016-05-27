@@ -16,8 +16,24 @@ namespace DB_Editor.DB_Handlers
             command_ = new MySqlCommand();
             command_.Connection = DBConnectionManager.Connection;
         }
+        
         #region Methods
-        //przeprowadzic walidacje niedozwolonych znakow/nazw?
+        //przykladowo:
+        //List<ColumnStructureCreator> tmp2 = new List<ColumnStructureCreator>();
+        //ColumnStructureCreator clmstr = new ColumnStructureCreator("nazwapola", "int");
+        //ewentualnie uzywac w takiej postaci w .Add
+        //tmp2.Add(new ColumnStructureCreator("nazwapola", "int"));
+        //Database.CreateTable("nazwatabeli3", tmp2);
+
+        //z kluczem glownym, przy testach jezeli jest klucz, to NIE moze byc default ustawiony
+        //List<ColumnStructureCreator> clm = new List<ColumnStructureCreator>();
+        //clm.Add(new ColumnStructureCreator("nazwapola", "int", false, false, "", true));
+        //Database.CreateTable("nazwatabeli", clm);
+
+        //z kluczami obcymi (pojedynczymi), przy testach pamietac by wszystkie pola byly ze soba zgodne
+        //List<Tuple<string, string, string>> foreignkis = new List<Tuple<string, string, string>>();
+        // foreignkis.Add(Tuple.Create("nazwapola", "nazwatabeli2", "nazwapola"));
+        // Database.CreateTable("nazwatabeli", clm, foreignkis);
         public static OperationResult CreateDatabase(string dbName)
         {
             try
@@ -57,23 +73,46 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-
         //przykladowo:
-        //List<ColumnStructureCreator> tmp2 = new List<ColumnStructureCreator>();
-        //ColumnStructureCreator clmstr = new ColumnStructureCreator("nazwapola", "int");
-        //ewentualnie uzywac w takiej postaci w .Add
-        //tmp2.Add(new ColumnStructureCreator("nazwapola", "int"));
-        //Database.CreateTable("nazwatabeli3", tmp2);
+        //string[] tablesNames = new string[]{"nazwa3", "nazwa4"};
+        //DB_Connection.DBConnectionManager.Connect();
+        // DB_Connection.DBConnectionManager.Connection.Open();
+        //
+        //Database.RenameDatabase("ok", "supernowanazwa", tablesNames);
+        public static OperationResult RenameDatabase(string dbOldName, string dbNewName, string[] tablesNames)
+        {
+            try
+            {
+                OpenConnection();
+                Database.CreateDatabase(dbNewName);
 
-        //z kluczem glownym, przy testach jezeli jest klucz, to NIE moze byc default ustawiony
-        //List<ColumnStructureCreator> clm = new List<ColumnStructureCreator>();
-        //clm.Add(new ColumnStructureCreator("nazwapola", "int", false, false, "", true));
-        //Database.CreateTable("nazwatabeli", clm);
+                CheckDbName(ref dbOldName);
+                CheckDbName(ref dbNewName);
+                string tmp = "RENAME TABLE ";
+                foreach (string tableName in tablesNames)
+                {
+                    tmp += dbOldName + tableName + " TO " + dbNewName + tableName + ", ";
+                }
+                tmp = tmp.Substring(0, tmp.Length - 2);
 
-        //z kluczami obcymi (pojedynczymi), przy testach pamietac by wszystkie pola byly ze soba zgodne
-        //List<Tuple<string, string, string>> foreignkis = new List<Tuple<string, string, string>>();
-        // foreignkis.Add(Tuple.Create("nazwapola", "nazwatabeli2", "nazwapola"));
-        // Database.CreateTable("nazwatabeli", clm, foreignkis);
+                command_.CommandText = tmp + ";";
+                command_.ExecuteNonQuery();
+
+                dbOldName = dbOldName.Substring(0, dbOldName.Length - 1);
+                Database.DropDatabase(dbOldName);
+
+                DBConnectionManager.Connection.Close();
+                return new OperationResult(true, new Exception("QUERY Ok"));
+            }
+            catch (Exception e)
+            {
+                return new OperationResult(false, e);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
 
         /// <summary>
         /// Methods for creating table in database;
@@ -82,12 +121,13 @@ namespace DB_Editor.DB_Handlers
         /// <param name="list"> List of columns in new table</param>
         /// <param name="foreignKeys"> List of foreign key tuples, where id1 = field name in tableName, id2 = referenced tableName, id3 = field name in referenced table</param>
         /// <returns></returns>
-        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, List<Tuple<string, string, string>> foreignKeys = null)
+        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, List<Tuple<string, string, string>> foreignKeys = null, string dbName = "")
         {
             try
             {
                 OpenConnection();
-                string tmp = "CREATE TABLE " + tableName + " (";
+                CheckDbName(ref dbName);
+                string tmp = "CREATE TABLE " + dbName + tableName + " (";
                 foreach (var i in list)
                 {
                     tmp += i.ToString();
@@ -116,12 +156,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult DropTable(string tableName)
+        public static OperationResult DropTable(string tableName, string dbName = "")
         {
             try
             {
                 OpenConnection();
-                MySqlCommand comm = new MySqlCommand("DROP TABLE " + tableName + ";", DBConnectionManager.Connection);
+                CheckDbName(ref dbName);
+                MySqlCommand comm = new MySqlCommand("DROP TABLE " + dbName + tableName + ";", DBConnectionManager.Connection);
                 comm.ExecuteNonQuery();
                 DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
@@ -135,12 +176,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult RenameTable(string oldName, string newName)
+        public static OperationResult RenameTable(string oldName, string newName, string dbName = "")
         {
             try
             {
                 OpenConnection();
-                command_.CommandText = "RENAME TABLE " + oldName + "TO " + newName + ";";
+                CheckDbName(ref dbName);
+                command_.CommandText = "RENAME TABLE " + dbName + oldName + "TO " + newName + ";";
                 command_.ExecuteNonQuery();
                 DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
@@ -156,17 +198,17 @@ namespace DB_Editor.DB_Handlers
         }
 
         #region NotImplementedMethodsYet
-        public static OperationResult RenameDatabase(string dbOldName, string dbNewName)
-        {
-            return new OperationResult(false, new Exception());//will dump db -> create new one -> import to new
-        }
         //import
         //export
         //kopiowanie
         //porowownywanie
         #endregion
 
-
+        private static void CheckDbName(ref string dbName)
+        {
+            if (dbName != "")
+                dbName = dbName + ".";
+        }
         private static void OpenConnection()
         {
             DBConnectionManager.Connect();
