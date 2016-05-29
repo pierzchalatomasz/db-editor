@@ -15,5 +15,28 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             NextState = "TableEditor";
             ButtonText = "Add new table";
         }
+        public override void OnDatabaseChanged()
+        {
+            try
+            {
+                DB_Connection.DBConnectionManager.Connect();
+                List<string> tablesNamesList = DB_Handlers.Database.GetTablesFromDatabase(DB_Connection.DBConnectionManager.DatabaseName);
+                TablesListingControl tablesListObject = (TablesListingControl)this.Control;
+                tablesListObject.AddTables(tablesNamesList);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                DB_Connection.DBConnectionManager.Connection.Close();
+            }
+        }
+
+        public void DatabaseChanged(object sender, EventArgs e)
+        {
+            OnDatabaseChanged();
+        }
     }
 }

@@ -8,8 +8,11 @@ using DB_Editor.DB_Connection;
 
 namespace DB_Editor.DB_Handlers
 {
+    using QueryResult = List<Dictionary<string, string>>;
     static class Database
     {
+        //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
+        //DB_Connection.DBConnectionManager.Connect();
         private static MySqlCommand command_;
         static Database()
         {
@@ -74,21 +77,21 @@ namespace DB_Editor.DB_Handlers
             }
         }
         //przykladowo:
-        //string[] tablesNames = new string[]{"nazwa3", "nazwa4"};
         //DB_Connection.DBConnectionManager.Connect();
         // DB_Connection.DBConnectionManager.Connection.Open();
-        //
-        //Database.RenameDatabase("ok", "supernowanazwa", tablesNames);
-        public static OperationResult RenameDatabase(string dbOldName, string dbNewName, string[] tablesNames)
+        //Database.RenameDatabase("ok", "supernowanazwa");
+        public static OperationResult RenameDatabase(string dbOldName, string dbNewName)
         {
             try
             {
                 OpenConnection();
+                List<string> tablesNames = new List<string>();
                 Database.CreateDatabase(dbNewName);
-
+                tablesNames = Database.GetTablesFromDatabase(dbOldName);
                 CheckDbName(ref dbOldName);
                 CheckDbName(ref dbNewName);
                 string tmp = "RENAME TABLE ";
+                
                 foreach (string tableName in tablesNames)
                 {
                     tmp += dbOldName + tableName + " TO " + dbNewName + tableName + ", ";
@@ -107,6 +110,32 @@ namespace DB_Editor.DB_Handlers
             catch (Exception e)
             {
                 return new OperationResult(false, e);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+        public static List<string> GetDatabases()
+        {
+            try
+            {
+                string tmp = "SHOW DATABASES;";
+                List<string> tmpList = new List<string>();
+                QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
+
+                foreach (var i in res)
+                {
+                    tmpList.Add(i.First().Value);
+                }
+                foreach (var f in tmpList)
+                    Console.WriteLine(f);
+                DBConnectionManager.Connection.Close();
+                return tmpList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
             }
             finally
             {
@@ -197,12 +226,58 @@ namespace DB_Editor.DB_Handlers
             }
         }
 
-        #region NotImplementedMethodsYet
-        //import
-        //export
-        //kopiowanie
-        //porowownywanie
-        #endregion
+        public static List<string> GetTablesFromDatabase(string dbName)
+        {
+            try
+            {
+                string tmp = "SHOW TABLES IN " + dbName + ";";
+                List<string> tmpList = new List<string>();
+                QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
+                
+                foreach(var i in res)
+                {
+                    tmpList.Add(i.First().Value);
+                }
+
+                DBConnectionManager.Connection.Close();
+                return tmpList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }       
+        }
+        public static List<string> GetFieldNamesFromTable(string tableName, string dbName = "")
+        {
+            try
+            {
+                CheckDbName(ref dbName);
+                string tmp = "DESC " + dbName + tableName + ";";
+                List<string> tmpList = new List<string>();
+                QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
+
+                foreach (var i in res)
+                {
+                    tmpList.Add(i.First().Value);
+                }
+
+                DBConnectionManager.Connection.Close();
+                return tmpList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }     
+        }
+
 
         private static void CheckDbName(ref string dbName)
         {

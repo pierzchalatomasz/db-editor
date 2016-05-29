@@ -10,6 +10,8 @@ namespace DB_Editor.Components.MainWindow.Definitions
 {
     abstract public class State
     {
+        public virtual void OnDatabaseChanged() { }
+
         public State(string stateName, StateControl Control)
         {
             Name = stateName;

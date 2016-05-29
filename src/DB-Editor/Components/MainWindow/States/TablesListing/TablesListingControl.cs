@@ -17,13 +17,22 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
         public TablesListingControl()
         {
             InitializeComponent();
+
             TableItem tableItem = new TableItem("country");
             tableItem.Show();
             TableItemsContainer.Controls.Add(tableItem);
 
-            TableItem tableItem2 = new TableItem("city");
-            tableItem2.Show();
-            TableItemsContainer.Controls.Add(tableItem2);
         }
+        public void AddTables(List<string> tablesNamesList)
+        {
+            TableItemsContainer.Controls.Clear();
+            foreach (var tableName in tablesNamesList)
+            {
+                TableItem tableItem = new TableItem(tableName);
+                tableItem.Show();
+                TableItemsContainer.Controls.Add(tableItem);
+            }
+        }
+
     }
 }
