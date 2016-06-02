@@ -10,7 +10,7 @@ namespace DB_Editor.Components.MainWindow.Definitions
 {
     abstract public class State
     {
-        public virtual void OnDatabaseChanged() { }
+        public virtual void DatabaseChanged(object sender, EventArgs e) { }
 
         public State(string stateName, StateControl Control)
         {
