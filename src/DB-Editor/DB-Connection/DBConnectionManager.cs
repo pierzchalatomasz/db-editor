@@ -27,6 +27,30 @@ namespace DB_Editor.DB_Connection
         private static string username_ = "root";
         private static string password_ = "";
         private static string database_ = "world";
+
+        public static string ServerUrl
+        {
+            set
+            {
+                server_ = value;
+            }
+        }
+
+        public static string Username
+        {
+            set
+            {
+                username_ = value;
+            }
+        }
+
+        public static string Password
+        {
+            set
+            {
+                password_ = value;
+            }
+        }
         
         public static string DatabaseName
         {
@@ -47,7 +71,7 @@ namespace DB_Editor.DB_Connection
                 builder.Server = server_;
                 builder.UserID = username_;
                 builder.Password = password_;
-                builder.Database = database_;
+                //builder.Database = database_;
 
                 dbConnection_ = new MySqlConnection(builder.ToString());
             }

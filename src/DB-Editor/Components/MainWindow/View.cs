@@ -15,17 +15,17 @@ namespace DB_Editor.Components.MainWindow
     public partial class View : Form
     {
         private Presenter presenter_;
+
         public event EventHandler DatabaseChanged;
 
-        public View()
+        public View(string serverUrl, string username, string password)
         {
             InitializeComponent();
             presenter_ = new Presenter(this);
             presenter_.Init();
-            
-            // TODO
-            databasesList.Items.Add("swiat");
-            databasesList.Items.Add("znajomi");
+            presenter_.EstablishConnection(serverUrl, username, password);
+
+            DisplayDatabasesList();
         }
 
         public void DisplayStateChange()
@@ -81,6 +81,17 @@ namespace DB_Editor.Components.MainWindow
         {
             DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
             DatabaseChanged.Invoke(sender, e);
+        }
+
+        private void DisplayDatabasesList()
+        {
+            databasesList.Items.Clear();
+
+            List<string> databases = DB_Handlers.Database.GetDatabases();
+            foreach (var database in databases)
+            {
+                databasesList.Items.Add(database);
+            }
         }
     }
 }

@@ -12,6 +12,10 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
     public partial class Record : UserControl
     {
+        public event EventHandler SelectedRecordChange;
+
+        public string ID { get; set; }
+
         public Record()
         {
             InitializeComponent();
@@ -42,7 +46,10 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 
         private void container_Click(object sender, EventArgs e)
         {
-            BackColor = Color.LightBlue;
+            if (SelectedRecordChange != null)
+            {
+                SelectedRecordChange(this, e);
+            }
         }
     }
 }

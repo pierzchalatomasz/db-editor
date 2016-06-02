@@ -14,15 +14,25 @@ namespace DB_Editor.Components.LoginWindow
     {
         private Presenter presenter_;
 
+        private MainWindow.View mainWindow;
+
         public View()
         {
             InitializeComponent();
             presenter_ = new Presenter(this);
         }
 
+        private void CloseLoginWindow(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            new MainWindow.View().Show();
+            mainWindow = new MainWindow.View(server.Text, username.Text, password.Text);
+            mainWindow.Show();
+            mainWindow.FormClosed += CloseLoginWindow;
+            Hide();
         }
     }
 }

@@ -11,8 +11,9 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
     {
         public RecordsListing() : base("RecordsListing", new RecordsListingControl())
         {
-            NextState = Name;
+            NextState = "RowEditor";
             PrevState = "TablesListing";
+            ButtonText = "Add new record";
         }
     }
 }
