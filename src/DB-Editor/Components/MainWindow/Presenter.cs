@@ -29,8 +29,7 @@ namespace DB_Editor.Components.MainWindow
             ListenToEvents();
             SetDefaultState("TablesListing");
  
-            TablesListing tablesListingObject = (TablesListing)this.GetStateByName("TablesListing");
-            view_.DatabaseChanged += tablesListingObject.DatabaseChanged; 
+            view_.DatabaseChanged += GetStateByName("TablesListing").DatabaseChanged; 
         }
 
         public State ActiveState
