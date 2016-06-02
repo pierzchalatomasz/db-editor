@@ -81,6 +81,8 @@ namespace DB_Editor.Components.MainWindow
         {
             DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
             DatabaseChanged.Invoke(sender, e);
+            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
+            StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
         }
 
         private void DisplayDatabasesList()

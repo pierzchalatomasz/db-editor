@@ -17,12 +17,8 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
         public TablesListingControl()
         {
             InitializeComponent();
-
-            TableItem tableItem = new TableItem("country");
-            tableItem.Show();
-            TableItemsContainer.Controls.Add(tableItem);
-
         }
+
         public void AddTables(List<string> tablesNamesList)
         {
             TableItemsContainer.Controls.Clear();

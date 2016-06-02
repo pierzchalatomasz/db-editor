@@ -16,14 +16,14 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 
         public string ID { get; set; }
 
-        public Record()
+        public Record(List<string> recordData)
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            foreach (string fieldValue in recordData)
             {
                 RecordField rf = new RecordField();
-                rf.FieldValue = "Field value " + (i + 1);
+                rf.FieldValue = fieldValue;
                 rf.Show();
                 container.Controls.Add(rf);
             }

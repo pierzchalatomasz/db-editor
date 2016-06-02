@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DB_Editor.Events;
 using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.RecordsListing.Partials;
 
@@ -21,21 +22,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         public RecordsListingControl()
         {
             InitializeComponent();
+        }
 
-            TableHeader th1 = new TableHeader();
-            th1.Show();
-            container.Controls.Add(th1);
-
-            for (int i = 0; i < 15; i++)
+        public override StateChangeRequestEventArgs EventData
+        {
+            set
             {
-                Record record = new Record();
-                record.ID = i.ToString();
-                record.Show();
-                container.Controls.Add(record);
-                records_.Add(record);
-            }
+                container.Controls.Clear();
 
-            ListenToSelectedRecordChange();
+                string id = value.Data["id"];
+                AddTableHeader(id);
+                AddRecords(id);
+
+                ListenToSelectedRecordChange();
+            }
         }
 
         private void ListenToSelectedRecordChange()
@@ -51,8 +51,6 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             Record record = sender as Record;
             SelectedRecordID = record.ID;
             HighlightSelectedRecord(record.ID);
-            // test
-            Console.WriteLine("Selected record changed to: " + record.ID);
         }
 
         private void HighlightSelectedRecord(string id)
@@ -67,6 +65,44 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
                 {
                     record.BackColor = Color.White;
                 }
+            }
+        }
+
+        private void AddTableHeader(string id)
+        {
+            try
+            {
+                List<string> tableFieldNames = DB_Handlers.Database.GetFieldNamesFromTable(id);
+                TableHeader th1 = new TableHeader(tableFieldNames);
+                th1.Show();
+                container.Controls.Add(th1);
+            }
+            catch (SystemException exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+        }
+
+        private void AddRecords(string id)
+        {
+            try
+            {
+                int iterator = 0;
+
+                List<List<string>> recordsData = DB_Handlers.Table.GetRecords(id);
+                foreach (var recordData in recordsData)
+                {
+                    Record record = new Record(recordData);
+                    record.ID = iterator.ToString();
+                    record.Show();
+                    container.Controls.Add(record);
+                    records_.Add(record);
+                    iterator++;
+                }
+            }
+            catch (SystemException exc)
+            {
+                Console.WriteLine(exc.Message);
             }
         }
     }

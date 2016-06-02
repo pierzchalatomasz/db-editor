@@ -26,7 +26,7 @@ namespace DB_Editor.DB_Connection
         private static string server_ = "localhost";
         private static string username_ = "root";
         private static string password_ = "";
-        private static string database_ = "world";
+        private static string database_ = "";
 
         public static string ServerUrl
         {
@@ -71,7 +71,10 @@ namespace DB_Editor.DB_Connection
                 builder.Server = server_;
                 builder.UserID = username_;
                 builder.Password = password_;
-                //builder.Database = database_;
+                if (database_ != "")
+                {
+                    builder.Database = database_;
+                }
 
                 dbConnection_ = new MySqlConnection(builder.ToString());
             }

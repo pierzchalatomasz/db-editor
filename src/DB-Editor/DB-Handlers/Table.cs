@@ -225,7 +225,7 @@ namespace DB_Editor.DB_Handlers
             try
             {
                 CheckDbName(ref dbName);
-                string tmp = "SELECT * FROM " + dbName + tableName + ";";
+                string tmp = "SELECT * FROM " + dbName + " " + tableName + ";";
                 List<List<string>> tmpListOfList = new List<List<string>>();
                 List<string> tmpList = new List<string>();
 

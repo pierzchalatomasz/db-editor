@@ -12,16 +12,16 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
     public partial class TableHeader : UserControl
     {
-        public TableHeader()
+        public TableHeader(List<string> tableFieldNames)
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            foreach (string tableFieldName in tableFieldNames)
             {
-                TableHeaderItem thi1 = new TableHeaderItem();
-                thi1.FieldName = "Field" + (i + 1);
-                thi1.Show();
-                container.Controls.Add(thi1);
+                TableHeaderItem thi = new TableHeaderItem();
+                thi.FieldName = tableFieldName;
+                thi.Show();
+                container.Controls.Add(thi);
             }
         }
     }
