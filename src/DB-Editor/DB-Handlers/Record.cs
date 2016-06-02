@@ -8,8 +8,11 @@ using DB_Editor.DB_Connection;
 
 namespace DB_Editor.DB_Handlers
 {
+    using QueryResult = List<Dictionary<string, string>>;
     static class Record
     {
+        //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
+        //DB_Connection.DBConnectionManager.Connect();
         #region Methods
         /// <summary>
         /// Methods alters one value in row.
@@ -87,6 +90,29 @@ namespace DB_Editor.DB_Handlers
             catch (Exception e)
             {
                 return new OperationResult(false, e);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+        
+        //tabela w ktorej jest pole, ktore jest auto_increment oraz nazwa bazy danych
+        //w ktorej tabelka sie znajduje, zabezpiecza to przed dwoma tabelkami o tej samej nazwie
+        //w roznych bazach danych
+        public static int GetNextIndex(string tableName, string dbName)
+        {
+            try
+            {
+                string tmp = "SELECT auto_increment FROM information_schema.tables where table_name = \"";
+                tmp += tableName + "\" AND table_schema = \"" + dbName + "\";";
+                QueryResult res = DBConnectionManager.Query(tmp);   
+                DBConnectionManager.Connection.Close();
+                return Int32.Parse(res[0].First().Value);
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
             }
             finally
             {

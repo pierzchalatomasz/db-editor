@@ -80,6 +80,7 @@
             this.databasesList.Name = "databasesList";
             this.databasesList.Size = new System.Drawing.Size(205, 380);
             this.databasesList.TabIndex = 1;
+            this.databasesList.DoubleClick += new System.EventHandler(this.databasesList_DoubleClick);
             // 
             // LeftPanelTitle
             // 

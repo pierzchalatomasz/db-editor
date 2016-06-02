@@ -11,6 +11,8 @@ namespace DB_Editor.DB_Handlers
     using QueryResult = List<Dictionary<string, string>>;
     static class Table
     {
+        //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
+        //DB_Connection.DBConnectionManager.Connect();
         private static MySqlCommand command_;
         static Table()
         {
@@ -183,14 +185,14 @@ namespace DB_Editor.DB_Handlers
             try
             {
                 CheckDbName(ref dbName);
-                string tmp = GetConstraintName(tableName, fieldName); 
+                string tmp = GetConstraintName(tableName, fieldName);
 
                 OpenConnection();
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP FOREIGN KEY " + tmp + ";";
                 command_.Connection = DBConnectionManager.Connection;
                 command_.ExecuteNonQuery();
 
-                command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP KEY " + fieldName + ";";     
+                command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP KEY " + fieldName + ";";
                 command_.ExecuteNonQuery();
 
                 DBConnectionManager.Connection.Close();
@@ -206,16 +208,55 @@ namespace DB_Editor.DB_Handlers
             }
         }
 
-        private static string GetConstraintName(string tableName, string fieldName)
-        {
-            DBConnectionManager.Connect();
-            QueryResult result = DBConnectionManager.Query("SELECT constraint_name FROM information_schema.key_column_usage WHERE table_name = \"" + tableName + "\" and column_name = \"" + fieldName + "\";");
-            DBConnectionManager.Connection.Close();
-            return result[0].First().Value;
-        }
-
         #endregion
 
+        //przykladowo:
+        //List<List<string>> tmpListOfList2 = new List<List<string>>();
+        //DB_Connection.DBConnectionManager.Connect();
+        //tmpListOfList2 = Table.GetRecords("oko", "i");
+        //foreach (var list in tmpListOfList2)
+        //{
+        //    foreach (var str in list)
+        //        Console.Write(str + " ");
+        //    Console.Write("\n");
+        //}
+        public static List<List<string>> GetRecords(string tableName, string dbName = "")
+        {
+            try
+            {
+                CheckDbName(ref dbName);
+                string tmp = "SELECT * FROM " + dbName + tableName + ";";
+                List<List<string>> tmpListOfList = new List<List<string>>();
+                List<string> tmpList = new List<string>();
+
+                MySqlCommand command = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
+
+                DB_Connection.DBConnectionManager.Connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+                int ColumnCount = reader.FieldCount;
+                while (reader.Read())
+                {
+                    for (int i = 0; i < ColumnCount; i++)
+                        tmpList.Add(reader.GetString(i));
+                    tmpListOfList.Add(new List<string>(tmpList));
+                    tmpList.Clear();
+                }
+
+                DBConnectionManager.Connection.Close();
+                return tmpListOfList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+
+        #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
             if (dbName != "")
@@ -226,7 +267,15 @@ namespace DB_Editor.DB_Handlers
             DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
-        
+        private static string GetConstraintName(string tableName, string fieldName)
+        {
+            DBConnectionManager.Connect();
+            QueryResult result = DBConnectionManager.Query("SELECT constraint_name FROM information_schema.key_column_usage WHERE table_name = \"" + tableName + "\" and column_name = \"" + fieldName + "\";");
+            DBConnectionManager.Connection.Close();
+            return result[0].First().Value;
+        }
+        #endregion
+
         #endregion
     }
 }

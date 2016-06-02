@@ -27,7 +27,18 @@ namespace DB_Editor.DB_Connection
         private static string username_ = "root";
         private static string password_ = "";
         private static string database_ = "world";
-      
+        
+        public static string DatabaseName
+        {
+            get
+            {
+                return database_;
+            }
+            set
+            {
+                database_ = value;
+            }
+        }
         public static void Connect()
         {
             try

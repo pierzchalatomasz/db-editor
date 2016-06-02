@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DB_Editor.Events;
 using DB_Editor.DB_Connection;
 using DB_Editor.Components.MainWindow.Definitions;
+using DB_Editor.Components.MainWindow.States.TablesListing;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -27,6 +28,8 @@ namespace DB_Editor.Components.MainWindow
         {
             ListenToEvents();
             SetDefaultState("TablesListing");
+ 
+            view_.DatabaseChanged += GetStateByName("TablesListing").DatabaseChanged; 
         }
 
         public State ActiveState
@@ -70,6 +73,11 @@ namespace DB_Editor.Components.MainWindow
         private void ListenToEvents()
         {
             StateChangeRequestEvents.StateChangeRequest += ChangeState;
+        }
+
+        public State GetStateByName(string name)
+        {
+            return model_.States[name];
         }
     }
 }

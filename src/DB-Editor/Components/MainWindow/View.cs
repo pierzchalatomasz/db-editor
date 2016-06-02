@@ -8,19 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DB_Editor.Events;
+using DB_Editor.Components.MainWindow.States.TablesListing;
 
 namespace DB_Editor.Components.MainWindow
 {
     public partial class View : Form
     {
         private Presenter presenter_;
+        public event EventHandler DatabaseChanged;
 
         public View()
         {
             InitializeComponent();
             presenter_ = new Presenter(this);
             presenter_.Init();
-
+            
             // TODO
             databasesList.Items.Add("swiat");
             databasesList.Items.Add("znajomi");
@@ -73,6 +75,12 @@ namespace DB_Editor.Components.MainWindow
             {
                 buttonNext.Text = presenter_.ActiveState.ButtonText;
             }
+        }
+
+        private void databasesList_DoubleClick(object sender, EventArgs e)
+        {
+            DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
+            DatabaseChanged.Invoke(sender, e);
         }
     }
 }
