@@ -16,14 +16,6 @@ namespace DB_Editor.Components.MainWindow
 
     class Model
     {
-        public event EventHandler DatabaseChanged;
-
-        protected virtual void OnDatabaseChanged(EventArgs e)
-        {
-            if (DatabaseChanged != null)
-                DatabaseChanged(this, e);
-        }
-
         public Model()
         {
             States = new StatesDict();
