@@ -24,9 +24,9 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
                 TablesListingControl tablesListObject = (TablesListingControl)this.Control;
                 tablesListObject.AddTables(tablesNamesList);
             }
-            catch(Exception e)
+            catch(Exception exc)
             {
-                throw e;
+                throw exc;
             }
             finally
             {
