@@ -15,7 +15,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             NextState = "TableEditor";
             ButtonText = "Add new table";
         }
-        public override void OnDatabaseChanged()
+        public override void DatabaseChanged(object sender, EventArgs e)
         {
             try
             {
@@ -32,11 +32,6 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             {
                 DB_Connection.DBConnectionManager.Connection.Close();
             }
-        }
-
-        public void DatabaseChanged(object sender, EventArgs e)
-        {
-            OnDatabaseChanged();
         }
     }
 }
