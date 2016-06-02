@@ -79,13 +79,5 @@ namespace DB_Editor.Components.MainWindow
         {
             return model_.States[name];
         }
-
-        public void EstablishConnection(string serverUrl, string username, string password)
-        {
-            DB_Connection.DBConnectionManager.ServerUrl = serverUrl;
-            DB_Connection.DBConnectionManager.Username = username;
-            DB_Connection.DBConnectionManager.Password = password;
-            DB_Connection.DBConnectionManager.Connect();
-        }
     }
 }

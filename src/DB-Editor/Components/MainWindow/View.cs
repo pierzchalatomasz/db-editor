@@ -18,12 +18,11 @@ namespace DB_Editor.Components.MainWindow
 
         public event EventHandler DatabaseChanged;
 
-        public View(string serverUrl, string username, string password)
+        public View()
         {
             InitializeComponent();
             presenter_ = new Presenter(this);
             presenter_.Init();
-            presenter_.EstablishConnection(serverUrl, username, password);
 
             DisplayDatabasesList();
         }

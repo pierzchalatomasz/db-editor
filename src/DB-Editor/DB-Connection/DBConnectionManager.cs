@@ -139,6 +139,12 @@ namespace DB_Editor.DB_Connection
             return false;
         }
 
+        public static void TryLogIn()
+        {
+            dbConnection_.Open();
+            dbConnection_.Close();
+        }
+
         private static QueryResult GetQueryResult(MySqlDataReader reader)
         {
             QueryResult results = new QueryResult();
