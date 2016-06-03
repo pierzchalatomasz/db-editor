@@ -49,22 +49,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         private void SelectedRecordChanged(object sender, EventArgs e)
         {
             Record record = sender as Record;
+            HighlightSelectedRecord(SelectedRecordID, record.ID);
             SelectedRecordID = record.ID;
-            HighlightSelectedRecord(record.ID);
         }
 
-        private void HighlightSelectedRecord(string id)
+        private void HighlightSelectedRecord(string oldId, string newId)
         {
-            foreach (Record record in records_)
+            Record selectedRecord = records_.Find(rec => rec.ID == newId);
+            Record prevSelectedRecord = records_.Find(rec => rec.ID == oldId);
+
+            selectedRecord.BackColor = Color.LightBlue;
+            
+            if (prevSelectedRecord != null)
             {
-                if (id == record.ID)
-                {
-                    record.BackColor = Color.LightBlue;
-                }
-                else
-                {
-                    record.BackColor = Color.White;
-                }
+                prevSelectedRecord.BackColor = Color.White;
             }
         }
 
