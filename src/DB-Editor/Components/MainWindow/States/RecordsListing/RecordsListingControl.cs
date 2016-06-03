@@ -87,7 +87,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 int iterator = 0;
 
-                List<List<string>> recordsData = DB_Handlers.Table.GetRecords(id);
+                List<List<string>> recordsData = DB_Handlers.Table.GetFirstPageOfRecords(id);
                 foreach (var recordData in recordsData)
                 {
                     Record record = new Record(recordData);

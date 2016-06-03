@@ -14,6 +14,7 @@ namespace DB_Editor.DB_Handlers
         //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
         //DB_Connection.DBConnectionManager.Connect();
         #region Methods
+
         /// <summary>
         /// Methods alters one value in row.
         /// </summary>
@@ -37,7 +38,6 @@ namespace DB_Editor.DB_Handlers
                 tmp += ";";
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -84,7 +84,6 @@ namespace DB_Editor.DB_Handlers
 
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -107,7 +106,6 @@ namespace DB_Editor.DB_Handlers
                 string tmp = "SELECT auto_increment FROM information_schema.tables where table_name = \"";
                 tmp += tableName + "\" AND table_schema = \"" + dbName + "\";";
                 QueryResult res = DBConnectionManager.Query(tmp);   
-                DBConnectionManager.Connection.Close();
                 return Int32.Parse(res[0].First().Value);
             }
             catch (Exception e)
@@ -119,6 +117,7 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+
 
         private static void CheckDbName(ref string dbName)
         {
