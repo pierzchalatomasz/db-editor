@@ -21,6 +21,9 @@ namespace DB_Editor.DB_Handlers
         }
         
         #region Methods
+
+        #region DatabaseManipulateMethods
+
         //przykladowo:
         //List<ColumnStructureCreator> tmp2 = new List<ColumnStructureCreator>();
         //ColumnStructureCreator clmstr = new ColumnStructureCreator("nazwapola", "int");
@@ -45,7 +48,6 @@ namespace DB_Editor.DB_Handlers
                 command_.CommandText = "CREATE DATABASE " + dbName + ";";
                 command_.ExecuteNonQuery();
 
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -64,7 +66,6 @@ namespace DB_Editor.DB_Handlers
                 OpenConnection();
                 command_.CommandText = "DROP DATABASE " + dbName + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -104,7 +105,6 @@ namespace DB_Editor.DB_Handlers
                 dbOldName = dbOldName.Substring(0, dbOldName.Length - 1);
                 Database.DropDatabase(dbOldName);
 
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -116,33 +116,10 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static List<string> GetDatabases()
-        {
-            try
-            {
-                string tmp = "SHOW DATABASES;";
-                List<string> tmpList = new List<string>();
-                QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
 
-                foreach (var i in res)
-                {
-                    tmpList.Add(i.First().Value);
-                }
-                foreach (var f in tmpList)
-                    Console.WriteLine(f);
-                DBConnectionManager.Connection.Close();
-                return tmpList;
-            }
-            catch (Exception e)
-            {
-                throw new System.Exception(e.Message);
-            }
-            finally
-            {
-                DBConnectionManager.Connection.Close();
-            }
-        }
+        #endregion
 
+        #region TableManipulateMethods
         /// <summary>
         /// Methods for creating table in database;
         /// </summary>
@@ -173,7 +150,6 @@ namespace DB_Editor.DB_Handlers
                 tmp += ");";
                 command_.CommandText = tmp;
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -193,7 +169,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 MySqlCommand comm = new MySqlCommand("DROP TABLE " + dbName + tableName + ";", DBConnectionManager.Connection);
                 comm.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -213,7 +188,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "RENAME TABLE " + dbName + oldName + "TO " + newName + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -225,7 +199,32 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        #endregion
 
+        #region GetSomethingFromDatabaseMethods
+        public static List<string> GetDatabases()
+        {
+            try
+            {
+                string tmp = "SHOW DATABASES;";
+                List<string> tmpList = new List<string>();
+                QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
+
+                foreach (var i in res)
+                {
+                    tmpList.Add(i.First().Value);
+                }
+                return tmpList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
         public static List<string> GetTablesFromDatabase(string dbName)
         {
             try
@@ -238,8 +237,6 @@ namespace DB_Editor.DB_Handlers
                 {
                     tmpList.Add(i.First().Value);
                 }
-
-                DBConnectionManager.Connection.Close();
                 return tmpList;
             }
             catch (Exception e)
@@ -264,8 +261,6 @@ namespace DB_Editor.DB_Handlers
                 {
                     tmpList.Add(i.First().Value);
                 }
-
-                DBConnectionManager.Connection.Close();
                 return tmpList;
             }
             catch (Exception e)
@@ -277,8 +272,9 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }     
         }
+        #endregion
 
-
+        #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
             if (dbName != "")
@@ -289,7 +285,8 @@ namespace DB_Editor.DB_Handlers
             DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
-
+        #endregion
+        
         #endregion
     }
 }

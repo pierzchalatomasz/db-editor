@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using DB_Editor.DB_Connection;
+using System.Windows.Forms;
 
 namespace DB_Editor.DB_Handlers
 {
@@ -35,7 +36,6 @@ namespace DB_Editor.DB_Handlers
                     posName = "AFTER " + posName;
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD " + colm.ToString() + posName + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -56,7 +56,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + oldColumnName + " " + newColumn.ToString() + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -76,7 +75,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP COLUMN " + columnName + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -98,7 +96,6 @@ namespace DB_Editor.DB_Handlers
                     posName = "AFTER " + posName;
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + colm.ToString() + posName + ";";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -121,7 +118,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD PRIMARY KEY(" + columnName + ");";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -147,7 +143,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP PRIMARY KEY;";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -168,7 +163,6 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD FOREIGN KEY(" + fieldName + ") REFERENCES " + dbName + referencedTable + "(" + referencedField + ");";
                 command_.ExecuteNonQuery();
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -190,12 +184,12 @@ namespace DB_Editor.DB_Handlers
                 OpenConnection();
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP FOREIGN KEY " + tmp + ";";
                 command_.Connection = DBConnectionManager.Connection;
+                //sprawdzic, czy powyzsze mozna usunac
                 command_.ExecuteNonQuery();
 
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP KEY " + fieldName + ";";
                 command_.ExecuteNonQuery();
 
-                DBConnectionManager.Connection.Close();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
             catch (Exception e)
@@ -210,6 +204,7 @@ namespace DB_Editor.DB_Handlers
 
         #endregion
 
+        #region GetSomethingFromDatabaseMethods
         //przykladowo:
         //List<List<string>> tmpListOfList2 = new List<List<string>>();
         //DB_Connection.DBConnectionManager.Connect();
@@ -220,31 +215,11 @@ namespace DB_Editor.DB_Handlers
         //        Console.Write(str + " ");
         //    Console.Write("\n");
         //}
-        public static List<List<string>> GetRecords(string tableName, string dbName = "")
+        public static List<List<string>> GetFirstPageOfRecords(string tableName, string dbName = "")
         {
             try
             {
-                CheckDbName(ref dbName);
-                string tmp = "SELECT * FROM " + dbName + tableName + ";";
-                List<List<string>> tmpListOfList = new List<List<string>>();
-                List<string> tmpList = new List<string>();
-
-                MySqlCommand command = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
-
-                DB_Connection.DBConnectionManager.Connection.Open();
-
-                MySqlDataReader reader = command.ExecuteReader();
-                int ColumnCount = reader.FieldCount;
-                while (reader.Read())
-                {
-                    for (int i = 0; i < ColumnCount; i++)
-                        tmpList.Add(reader.GetString(i));
-                    tmpListOfList.Add(new List<string>(tmpList));
-                    tmpList.Clear();
-                }
-
-                DBConnectionManager.Connection.Close();
-                return tmpListOfList;
+                return GetPageOfRecordsByIndex(0, tableName, dbName);           
             }
             catch (Exception e)
             {
@@ -256,6 +231,75 @@ namespace DB_Editor.DB_Handlers
             }
         }
 
+        public static int GetAmountOfPages(string tableName, string dbName = "")
+        {
+            try
+            {
+                CheckDbName(ref dbName);
+                string tmp = "SELECT count(*) FROM " + dbName + tableName + ";";
+
+                command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
+                DB_Connection.DBConnectionManager.Connection.Open();
+
+                MySqlDataReader reader = command_.ExecuteReader();
+                int result = 0;
+                while (reader.Read())
+                {
+                    result = Int32.Parse(reader.GetString(0));
+                }
+                return (int)Math.Ceiling(result / 50.0);
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+
+        public static List<List<string>> GetPageOfRecordsByIndex(int index, string tableName, string dbName = "")
+        {
+            try
+            {
+                CheckDbName(ref dbName);
+                string tmp = "SELECT * FROM " + dbName + tableName + " limit " + index * 50 + ", 50;";
+                List<List<string>> tmpListOfList = new List<List<string>>();
+                List<string> tmpList = new List<string>();
+
+                command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
+
+                DB_Connection.DBConnectionManager.Connection.Open();
+
+                MySqlDataReader reader = command_.ExecuteReader();
+                int ColumnCount = reader.FieldCount;
+                while (reader.Read())
+                {
+                    for (int i = 0; i < ColumnCount; i++)
+                    {
+                        if (!reader.IsDBNull(i))
+                            tmpList.Add(reader.GetString(i));
+                        else
+                            tmpList.Add("");
+                    }
+                    tmpListOfList.Add(new List<string>(tmpList));
+                    tmpList.Clear();
+                }
+
+                return tmpListOfList;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+        #endregion
+        
         #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
