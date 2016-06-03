@@ -61,5 +61,20 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             container.VerticalScroll.Visible = false;
             container.AutoScroll = true;
         }
+
+        private void buttonAddNewField_Click(object sender, EventArgs e)
+        {
+            Partials.FieldEditor field = new Partials.FieldEditor();
+            field.Show();
+            container.Controls.Add(field);
+            ScrollToNewField();
+        }
+
+        private void ScrollToNewField()
+        {
+            container.AutoScroll = false;
+            container.VerticalScroll.Value = container.VerticalScroll.Maximum;
+            container.AutoScroll = true;
+        }
     }
 }
