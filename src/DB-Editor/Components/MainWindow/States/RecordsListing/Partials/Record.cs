@@ -12,14 +12,18 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
     public partial class Record : UserControl
     {
-        public Record()
+        public event EventHandler SelectedRecordChange;
+
+        public string ID { get; set; }
+
+        public Record(List<string> recordData)
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            foreach (string fieldValue in recordData)
             {
                 RecordField rf = new RecordField();
-                rf.FieldValue = "Field value " + (i + 1);
+                rf.FieldValue = fieldValue;
                 rf.Show();
                 container.Controls.Add(rf);
             }
@@ -42,7 +46,10 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 
         private void container_Click(object sender, EventArgs e)
         {
-            BackColor = Color.LightBlue;
+            if (SelectedRecordChange != null)
+            {
+                SelectedRecordChange(this, e);
+            }
         }
     }
 }

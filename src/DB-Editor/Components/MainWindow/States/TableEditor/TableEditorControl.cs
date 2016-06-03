@@ -18,26 +18,24 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         {
             InitializeComponent();
             SetScrollBar();            
-
-            for (int i = 0; i < 7; i++)
-            {
-                Partials.FieldEditor field = new Partials.FieldEditor();
-                field.Show();
-                container.Controls.Add(field);
-            }
         }
 
         public override StateChangeRequestEventArgs EventData
         {
             set
             {
+                container.Controls.Clear();
+
                 // Get mode (creator / editor)
                 if (value.Mode == Mode.Editor)
                 {
-                    // TEST of accessing event data
-                    foreach (Partials.FieldEditor control in container.Controls)
+                    List<string> fieldNames = DB_Handlers.Database.GetFieldNamesFromTable(value.Data["id"]);
+                    foreach (var fieldName in fieldNames)
                     {
-                        control.FieldName = value.Data["id"];
+                        Partials.FieldEditor field = new Partials.FieldEditor();
+                        field.FieldName = fieldName;
+                        field.Show();
+                        container.Controls.Add(field);
                     }
                 }
                 else

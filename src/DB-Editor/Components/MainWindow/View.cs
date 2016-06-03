@@ -15,6 +15,7 @@ namespace DB_Editor.Components.MainWindow
     public partial class View : Form
     {
         private Presenter presenter_;
+
         public event EventHandler DatabaseChanged;
 
         public View()
@@ -22,10 +23,8 @@ namespace DB_Editor.Components.MainWindow
             InitializeComponent();
             presenter_ = new Presenter(this);
             presenter_.Init();
-            
-            // TODO
-            databasesList.Items.Add("swiat");
-            databasesList.Items.Add("znajomi");
+
+            DisplayDatabasesList();
         }
 
         public void DisplayStateChange()
@@ -81,6 +80,19 @@ namespace DB_Editor.Components.MainWindow
         {
             DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
             DatabaseChanged.Invoke(sender, e);
+            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
+            StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
+        }
+
+        private void DisplayDatabasesList()
+        {
+            databasesList.Items.Clear();
+
+            List<string> databases = DB_Handlers.Database.GetDatabases();
+            foreach (var database in databases)
+            {
+                databasesList.Items.Add(database);
+            }
         }
     }
 }

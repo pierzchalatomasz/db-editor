@@ -58,6 +58,7 @@
             this.server.Name = "server";
             this.server.Size = new System.Drawing.Size(184, 23);
             this.server.TabIndex = 1;
+            this.server.Text = "localhost";
             // 
             // tableLayoutPanel1
             // 
@@ -114,6 +115,7 @@
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(184, 23);
             this.username.TabIndex = 2;
+            this.username.Text = "root";
             // 
             // labelServer
             // 

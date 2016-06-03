@@ -26,7 +26,31 @@ namespace DB_Editor.DB_Connection
         private static string server_ = "localhost";
         private static string username_ = "root";
         private static string password_ = "";
-        private static string database_ = "world";
+        private static string database_ = "";
+
+        public static string ServerUrl
+        {
+            set
+            {
+                server_ = value;
+            }
+        }
+
+        public static string Username
+        {
+            set
+            {
+                username_ = value;
+            }
+        }
+
+        public static string Password
+        {
+            set
+            {
+                password_ = value;
+            }
+        }
         
         public static string DatabaseName
         {
@@ -47,7 +71,10 @@ namespace DB_Editor.DB_Connection
                 builder.Server = server_;
                 builder.UserID = username_;
                 builder.Password = password_;
-                builder.Database = database_;
+                if (database_ != "")
+                {
+                    builder.Database = database_;
+                }
 
                 dbConnection_ = new MySqlConnection(builder.ToString());
             }
@@ -110,6 +137,12 @@ namespace DB_Editor.DB_Connection
             }
 
             return false;
+        }
+
+        public static void TryLogIn()
+        {
+            dbConnection_.Open();
+            dbConnection_.Close();
         }
 
         private static QueryResult GetQueryResult(MySqlDataReader reader)
