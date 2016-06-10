@@ -93,12 +93,14 @@
       <DependentUpon>TableHeaderItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListing.cs" />
-    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.cs">
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.Designer.cs">
-      <DependentUpon>RecordsListingControl.cs</DependentUpon>
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingView.Designer.cs">
+      <DependentUpon>RecordsListingView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingModel.cs" />
+    <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingPresenter.cs" />
     <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,8 +175,8 @@
     <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\TableHeaderItem.resx">
       <DependentUpon>TableHeaderItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\RecordsListingControl.resx">
-      <DependentUpon>RecordsListingControl.cs</DependentUpon>
+    <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\RecordsListingView.resx">
+      <DependentUpon>RecordsListingView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.resx">
       <DependentUpon>FieldEditor.cs</DependentUpon>

@@ -17,6 +17,8 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
         public TablesListingControl()
         {
             InitializeComponent();
+            Resize += OnResize;
+            Paint += OnResize;
         }
 
         public void AddTables(List<string> tablesNamesList)
@@ -30,5 +32,12 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             }
         }
 
+        public void OnResize(object sender, EventArgs e)
+        {
+            foreach (Control tableItem in TableItemsContainer.Controls)
+            {
+                tableItem.Width = Width - 25;
+            }
+        }
     }
 }
