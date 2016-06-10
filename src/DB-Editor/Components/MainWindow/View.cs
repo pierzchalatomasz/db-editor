@@ -30,6 +30,9 @@ namespace DB_Editor.Components.MainWindow
         public void DisplayStateChange()
         {
             rightPanel.Controls.Clear();
+            presenter_.ActiveState.Control.Height = rightPanel.Height;
+            presenter_.ActiveState.Control.Width = rightPanel.Width;
+            presenter_.ActiveState.Control.AutoScroll = true;
             presenter_.ActiveState.Control.Show();
             rightPanel.Controls.Add(presenter_.ActiveState.Control);
             RightPanelTitle.Text = presenter_.ActiveState.Name;

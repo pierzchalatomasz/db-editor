@@ -9,7 +9,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 {
     public class RecordsListing : State
     {
-        public RecordsListing() : base("RecordsListing", new RecordsListingControl())
+        public RecordsListing() : base("RecordsListing", new RecordsListingView())
         {
             NextState = "RowEditor";
             PrevState = "TablesListing";
