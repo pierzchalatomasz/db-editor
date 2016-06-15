@@ -15,6 +15,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
         public TableHeaderItem()
         {
             InitializeComponent();
+            DoubleBuffered = true;
         }
 
         public string FieldName

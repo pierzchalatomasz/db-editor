@@ -19,6 +19,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
         public Record(List<string> recordData)
         {
             InitializeComponent();
+            DoubleBuffered = true;
 
             foreach (string fieldValue in recordData)
             {
