@@ -28,8 +28,8 @@ namespace DB_Editor.Components.MainWindow
         {
             ListenToEvents();
             SetDefaultState("TablesListing");
- 
-            view_.DatabaseChanged += GetStateByName("TablesListing").DatabaseChanged; 
+
+            view_.DatabaseChanged += GetStateByName("TablesListing").DatabaseChanged;
         }
 
         public State ActiveState

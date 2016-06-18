@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DB_Editor.Components.MainWindow.Definitions;
+using DB_Editor.Components.MainWindow.States.TableEditor.Partials;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
@@ -15,7 +16,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             PrevState = "TablesListing";
             NextState = "TablesListing";
             ButtonText = "Save";
-        }
+        }   
 
         public override void OnNextState()
         {

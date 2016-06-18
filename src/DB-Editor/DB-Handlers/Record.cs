@@ -118,7 +118,7 @@ namespace DB_Editor.DB_Handlers
             }
         }
 
-
+        #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
             if (dbName != "")
@@ -129,7 +129,8 @@ namespace DB_Editor.DB_Handlers
             DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
-        
+        #endregion
+
         #endregion
     }
 }

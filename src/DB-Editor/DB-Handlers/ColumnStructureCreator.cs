@@ -24,8 +24,8 @@ namespace DB_Editor.DB_Handlers
             Extra = isAutoIncrement;
         }
         #region Properties
-        public string Field { get; set; }///przeprowadzic walidacje, czy taka nazwa jest dozwolona       
-        public string Type { get; set; }//walidacja w innym miejscu
+        public string Field { get; set; }      
+        public string Type { get; set; }
         public bool NullValue { get; set; } //true = NULL
         public bool Primary_Key { get; set; } //true = PRIMARY KEY
         public string Default { get; set; }

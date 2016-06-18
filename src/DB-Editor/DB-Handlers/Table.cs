@@ -230,7 +230,6 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-
         public static int GetAmountOfPages(string tableName, string dbName = "")
         {
             try
@@ -258,7 +257,6 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-
         public static List<List<string>> GetPageOfRecordsByIndex(int index, string tableName, string dbName = "")
         {
             try
