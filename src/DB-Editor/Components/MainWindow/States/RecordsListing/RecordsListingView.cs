@@ -19,10 +19,15 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private List<Record> records_ = new List<Record>();
 
+        private RecordsContainer recordsContainerOld_ = new RecordsContainer();
+
+        private RecordsContainer recordsContainerNew_ = new RecordsContainer();
+
         public RecordsListingView()
         {
             InitializeComponent();
             presenter_ = new RecordsListingPresenter(this);
+            DoubleBuffered = true;
         }
 
         public override StateChangeRequestEventArgs EventData
@@ -37,33 +42,51 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         public void UpdateView()
         {
-            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage, presenter_.AmountOfPages);
+            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage, presenter_.AmountOfPages - 1);
+
+            BuildRecordsContainer();
+            recordsContainerOld_.Hide();
 
             ClearControls();
-            ShowTableHeader();
-            ShowRecords();
+            recordsContainerOld_ = recordsContainerNew_;
 
+            ScrollTop();
             ToggleNextPageButtonVisibility();
             TogglePrevPageButtonVisibility();
         }
 
         #region View Builders
 
-        private void ShowTableHeader()
+        private void BuildRecordsContainer()
+        {
+            RecordsContainer recordsContainer = new RecordsContainer();
+            recordsContainer.Scroll += container_Scroll;
+            recordsContainer.Show();
+
+            ShowTableHeader(recordsContainer);
+            ShowRecords(recordsContainer);
+
+            recordsContainerNew_ = recordsContainer;
+            container.Controls.Add(recordsContainerNew_);
+        }
+
+        private void ShowTableHeader(RecordsContainer recordsContainer)
         {
             TableHeader tableHeader = new TableHeader(presenter_.TableFieldNames);
             tableHeader.Show();
-            container.Controls.Add(tableHeader);
+            recordsContainer.Controls.Add(tableHeader);
         }
 
-        private void ShowRecords()
+        private void ShowRecords(RecordsContainer recordsContainer)
         {
             int iterator = 50 * (presenter_.CurrentPage - 1);
+
+            records_.Clear();
 
             foreach (var recordData in presenter_.RecordsData)
             {
                 Record record = BuildRecord(recordData, iterator.ToString());
-                container.Controls.Add(record);
+                recordsContainer.Controls.Add(record);
                 records_.Add(record);
                 iterator++;
             }
@@ -109,7 +132,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void ToggleNextPageButtonVisibility()
         {
-            if (presenter_.CurrentPage == presenter_.AmountOfPages || presenter_.AmountOfPages == 0)
+            if (presenter_.CurrentPage == presenter_.AmountOfPages - 1 || presenter_.AmountOfPages == 0)
             {
                 buttonNextPage.Hide();
             }
@@ -153,14 +176,29 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void ClearControls()
         {
-            for(int i = container.Controls.Count - 1; i >= 0; i--)
+            for(int i = recordsContainerOld_.Controls.Count - 1; i >= 0; i--)
             {
-                container.Controls[i].Dispose();
+                recordsContainerOld_.Controls[i].Dispose();
             }
-            records_.Clear();
-            container.Controls.Clear();
+            
+            container.Controls.Remove(recordsContainerOld_);
+            recordsContainerOld_.Dispose();
+        }
+
+        private void ScrollTop()
+        {
+            container.AutoScroll = false;
+            container.VerticalScroll.Value = 0;
+            container.AutoScroll = true;
         }
 
         #endregion
+
+        // Blinking on scrolling fix
+        private void container_Scroll(object sender, ScrollEventArgs e)
+        {
+            Invalidate();
+            Application.DoEvents();
+        }
     }
 }

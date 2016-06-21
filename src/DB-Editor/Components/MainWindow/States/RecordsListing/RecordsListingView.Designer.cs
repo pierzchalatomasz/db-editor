@@ -152,6 +152,7 @@
             this.container.Size = new System.Drawing.Size(479, 253);
             this.container.TabIndex = 0;
             this.container.WrapContents = false;
+            this.container.Scroll += new System.Windows.Forms.ScrollEventHandler(this.container_Scroll);
             // 
             // wrapper
             // 
@@ -164,7 +165,7 @@
             this.wrapper.Size = new System.Drawing.Size(479, 268);
             this.wrapper.TabIndex = 6;
             // 
-            // RecordsListingControl
+            // RecordsListingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -173,7 +174,7 @@
             this.Controls.Add(this.wrapper);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "RecordsListingControl";
+            this.Name = "RecordsListingView";
             this.Size = new System.Drawing.Size(479, 308);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

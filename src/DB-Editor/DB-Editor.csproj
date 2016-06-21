@@ -80,6 +80,9 @@
     <Compile Include="Components\MainWindow\States\RecordsListing\Partials\RecordField.Designer.cs">
       <DependentUpon>RecordField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\States\RecordsListing\Partials\RecordsContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\MainWindow\States\RecordsListing\Partials\TableHeader.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -209,6 +212,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

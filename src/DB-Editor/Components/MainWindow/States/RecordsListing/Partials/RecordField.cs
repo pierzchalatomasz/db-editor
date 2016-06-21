@@ -15,6 +15,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
         public RecordField()
         {
             InitializeComponent();
+            DoubleBuffered = true;
         }
 
         public string FieldValue

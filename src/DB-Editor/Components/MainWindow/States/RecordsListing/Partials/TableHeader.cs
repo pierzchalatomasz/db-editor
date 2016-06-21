@@ -15,6 +15,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
         public TableHeader(List<string> tableFieldNames)
         {
             InitializeComponent();
+            DoubleBuffered = true;
 
             foreach (string tableFieldName in tableFieldNames)
             {
