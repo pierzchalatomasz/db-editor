@@ -81,6 +81,8 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             int iterator = 50 * (presenter_.CurrentPage - 1);
 
+            records_.Clear();
+
             foreach (var recordData in presenter_.RecordsData)
             {
                 Record record = BuildRecord(recordData, iterator.ToString());
@@ -178,7 +180,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 recordsContainerOld_.Controls[i].Dispose();
             }
-            records_.Clear();
+            
             container.Controls.Remove(recordsContainerOld_);
             recordsContainerOld_.Dispose();
         }
