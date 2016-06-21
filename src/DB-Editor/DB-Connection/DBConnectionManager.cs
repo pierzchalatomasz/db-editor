@@ -105,7 +105,7 @@ namespace DB_Editor.DB_Connection
             }
         }
 
-        public static List<Dictionary<string, string>> Query(string query)
+        public static QueryResult Query(string query)
         {
             QueryResult results = new QueryResult();
 

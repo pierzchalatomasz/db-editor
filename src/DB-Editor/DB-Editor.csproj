@@ -120,6 +120,7 @@
     <Compile Include="Components\MainWindow\States\TableEditor\Partials\FieldEditor.Designer.cs">
       <DependentUpon>FieldEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\MainWindow\States\TableEditor\Partials\FieldEditorPresenter.cs" />
     <Compile Include="Components\MainWindow\States\TableEditor\TableEditor.cs" />
     <Compile Include="Components\MainWindow\States\TableEditor\TableEditorControl.cs">
       <SubType>UserControl</SubType>
