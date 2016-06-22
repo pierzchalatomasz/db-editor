@@ -8,6 +8,7 @@ namespace DB_Editor.DB_Handlers
 {
     public class ColumnStructureCreator
     {
+        private object[] properties_;
         public ColumnStructureCreator(string name, string type, bool isNotNull = false, bool primary_key = false, string def = "", bool isAutoIncrement = false)
         {
             Field = name;
@@ -22,9 +23,11 @@ namespace DB_Editor.DB_Handlers
                 Default = "";
 
             Extra = isAutoIncrement;
+            properties_ = new object[] { Field, Type, NullValue, Primary_Key, Default, Extra };
+
         }
         #region Properties
-        public string Field { get; set; }      
+        public string Field { get; set; }
         public string Type { get; set; }
         public bool NullValue { get; set; } //true = NULL
         public bool Primary_Key { get; set; } //true = PRIMARY KEY
@@ -44,14 +47,21 @@ namespace DB_Editor.DB_Handlers
                 primaryKeyString = "PRIMARY KEY";
             if (Extra)
                 extraString = "auto_increment";
-            if(Default != String.Empty)
+            if (Default != String.Empty)
             {
                 Default = "DEFAULT \"" + Default + "\"";
-                tmp =  Field + " " + Type + " " + nullValueString + " " + Default + " " + extraString + " " + primaryKeyString;
+                tmp = Field + " " + Type + " " + nullValueString + " " + Default + " " + extraString + " " + primaryKeyString;
             }
             else
                 tmp = Field + " " + Type + " " + nullValueString + " " + extraString + " " + primaryKeyString;
             return tmp.TrimEnd();
+        }
+        public object this[int indexer]
+        {
+            get
+            {
+                return properties_[indexer&6];
+            }
         }
     }
 }
