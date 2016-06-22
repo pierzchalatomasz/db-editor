@@ -28,10 +28,7 @@ namespace DB_Editor.Components.MainWindow
         {
             ListenToEvents();
             SetDefaultState("TablesListing");
-            view_.DatabaseChanged += GetStateByName("TablesListing").DatabaseChanged;
-            view_.DatabaseAdd += model_.ActiveState.DatabaseAdd;
-            view_.DatabaseDelete += model_.ActiveState.DatabaseDelete;
-            view_.CurrentlyUsedDatabaseDelete += model_.ActiveState.CurrentlyUsedDatabaseDelete;
+            view_.SetDatabaseChangedDelegate(GetStateByName("TablesListing").DatabaseChanged);
         }
 
         public State ActiveState
@@ -44,9 +41,6 @@ namespace DB_Editor.Components.MainWindow
 
         public void ChangeState(object sender, StateChangeRequestEventArgs args)
         {
-            view_.DatabaseAdd -= model_.ActiveState.DatabaseAdd;
-            view_.DatabaseDelete -= model_.ActiveState.DatabaseDelete;
-            view_.CurrentlyUsedDatabaseDelete -= model_.ActiveState.CurrentlyUsedDatabaseDelete;
             if (model_.ActiveState != null)
             {
                 PerformActionOnStateChange(args.StateOrder);
@@ -54,10 +48,6 @@ namespace DB_Editor.Components.MainWindow
 
             model_.ActiveState = model_.States[args.State];
             model_.ActiveState.EventData = args;
-
-            view_.DatabaseAdd += model_.ActiveState.DatabaseAdd;
-            view_.DatabaseDelete += model_.ActiveState.DatabaseDelete;
-            view_.CurrentlyUsedDatabaseDelete += model_.ActiveState.CurrentlyUsedDatabaseDelete;
             view_.DisplayStateChange();
         }
 
