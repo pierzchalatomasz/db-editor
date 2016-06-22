@@ -67,12 +67,12 @@ namespace DB_Editor.Components.MainWindow.Partials
             newDatabaseName.Text = "";
             DisplayDatabasesList();
         }
-
         private void buttonDelete_Click(object sender, EventArgs e)
-        {
+        {         
             if (databasesList.SelectedIndex != -1)
             {
                 DatabaseNameToAction = databasesList.SelectedItem.ToString();
+
                 if (databasesList.SelectedItem.ToString() == DB_Connection.DBConnectionManager.DatabaseName)
                 {
                     if (MessageBox.Show("Are you sure you want to delete " + databasesList.SelectedItem.ToString() + "?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -83,10 +83,9 @@ namespace DB_Editor.Components.MainWindow.Partials
                         DB_Connection.DBConnectionManager.Connect();
                     }
                 }
-                else if (MessageBox.Show("Are you sure you want to delete " + databasesList.SelectedItem.ToString() + "?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    DatabaseDelete.Invoke(sender, e);
-                }
+                else if (MessageBox.Show("Are you sure you want to delete " + databasesList.SelectedItem.ToString() + "?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        DatabaseDelete.Invoke(sender, e);
+                
 
                 DisplayDatabasesList();
                 databasesList.SelectedIndex = -1;
@@ -95,7 +94,6 @@ namespace DB_Editor.Components.MainWindow.Partials
 
         public void DatabaseAddHandler(object sender, EventArgs e)
         {
-            DB_Connection.DBConnectionManager.Connection.Open();
             DB_Handlers.OperationResult tmp = DB_Handlers.Database.CreateDatabase(DatabaseNameToAction);
             if (tmp.Exception.Message != "QUERY Ok")
                 MessageBox.Show("Error! " + tmp.Exception.Message + " Try again.", "Database Add Error");
@@ -104,7 +102,6 @@ namespace DB_Editor.Components.MainWindow.Partials
 
         public void DatabaseDeleteHandler(object sender, EventArgs e)
         {
-            DB_Connection.DBConnectionManager.Connection.Open();
             DB_Handlers.OperationResult tmp = DB_Handlers.Database.DropDatabase(DatabaseNameToAction);
             if (tmp.Exception.Message != "QUERY Ok")
                 MessageBox.Show("Error! " + tmp.Exception.Message + " Try again.", "Database Delete Error");
@@ -115,7 +112,6 @@ namespace DB_Editor.Components.MainWindow.Partials
         {
             StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
             StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
-            DB_Connection.DBConnectionManager.Connection.Open();
             DB_Handlers.OperationResult tmp = DB_Handlers.Database.DropDatabase(DatabaseNameToAction);
             if (tmp.Exception.Message != "QUERY Ok")
                 MessageBox.Show("Error! " + tmp.Exception.Message + " Try again.", "Database Delete Error");
