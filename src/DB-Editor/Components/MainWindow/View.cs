@@ -16,24 +16,12 @@ namespace DB_Editor.Components.MainWindow
     {
         private Presenter presenter_;
 
-        public event EventHandler DatabaseAdd;
-        public event EventHandler DatabaseChanged;
-        public event EventHandler DatabaseDelete;
-        public event EventHandler CurrentlyUsedDatabaseDelete;
-
-        public static string DatabaseNameToAction
-        {
-            get;
-            private set;
-        }
-
         public View()
         {
             InitializeComponent();
+            databasesList.Init();
             presenter_ = new Presenter(this);
             presenter_.Init();
-
-            DisplayDatabasesList();
         }
 
         public void DisplayStateChange()
@@ -88,57 +76,9 @@ namespace DB_Editor.Components.MainWindow
             }
         }
 
-        private void databasesList_DoubleClick(object sender, EventArgs e)
+        public void SetDatabaseChangedDelegate(EventHandler eventHandler)
         {
-            DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
-            DatabaseChanged.Invoke(sender, e);
-            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
-            StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
-        }
-
-        private void DisplayDatabasesList()
-        {
-            databasesList.Items.Clear();
-
-            List<string> databases = DB_Handlers.Database.GetDatabases();
-            foreach (var database in databases)
-            {
-                databasesList.Items.Add(database);
-            }
-        }
-
-        private void addNewDatabase_Click(object sender, EventArgs e)
-        {
-            DatabaseNameToAction = newDatabaseName.Text;                  
-            
-            DatabaseAdd.Invoke(sender, e);
-            newDatabaseName.Text = "";
-            DisplayDatabasesList(); 
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            if (databasesList.SelectedIndex != -1)
-            {
-                DatabaseNameToAction = databasesList.SelectedItem.ToString();
-                if(databasesList.SelectedItem.ToString() == DB_Connection.DBConnectionManager.DatabaseName)
-                {
-                    if (MessageBox.Show("Are you sure you want to delete " + databasesList.SelectedItem.ToString() + "?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                    {
-                        databasesList.SelectedIndex = -1;
-                        CurrentlyUsedDatabaseDelete.Invoke(sender, e);
-                        DB_Connection.DBConnectionManager.DatabaseName = "";
-                        DB_Connection.DBConnectionManager.Connect();
-                    }
-                }
-                else if (MessageBox.Show("Are you sure you want to delete " + databasesList.SelectedItem.ToString() + "?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    DatabaseDelete.Invoke(sender, e);                   
-                }
-                
-                DisplayDatabasesList();
-                databasesList.SelectedIndex = -1;
-            }
+            databasesList.DatabaseChanged += eventHandler;
         }
     }
 }

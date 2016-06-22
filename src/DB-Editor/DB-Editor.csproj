@@ -67,6 +67,12 @@
     </Compile>
     <Compile Include="Components\MainWindow\Definitions\State.cs" />
     <Compile Include="Components\MainWindow\Model.cs" />
+    <Compile Include="Components\MainWindow\Partials\DatabasesListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\Partials\DatabasesListView.Designer.cs">
+      <DependentUpon>DatabasesListView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\MainWindow\Presenter.cs" />
     <Compile Include="Components\MainWindow\States\RecordsListing\Partials\Record.cs">
       <SubType>UserControl</SubType>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\LoginWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\Partials\DatabasesListView.resx">
+      <DependentUpon>DatabasesListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\RecordsListing\Partials\Record.resx">
       <DependentUpon>Record.cs</DependentUpon>

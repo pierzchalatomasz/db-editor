@@ -15,6 +15,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             NextState = "TableEditor";
             ButtonText = "Add new table";
         }
+
         public override void DatabaseChanged(object sender, EventArgs e)
         {
             try
