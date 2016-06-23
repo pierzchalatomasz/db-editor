@@ -20,7 +20,6 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
         {
             try
             {
-                DB_Connection.DBConnectionManager.Connect();
                 List<string> tablesNamesList = DB_Handlers.Database.GetTablesFromDatabase(DB_Connection.DBConnectionManager.DatabaseName);
                 TablesListingControl tablesListObject = (TablesListingControl)this.Control;
                 tablesListObject.AddTables(tablesNamesList);

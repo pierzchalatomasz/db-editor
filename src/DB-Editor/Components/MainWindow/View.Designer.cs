@@ -72,6 +72,7 @@
             // databasesList
             // 
             this.databasesList.AutoSize = true;
+            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.databasesList.Location = new System.Drawing.Point(15, 15);
             this.databasesList.Name = "databasesList";
@@ -162,7 +163,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "View";
             this.Text = "DB Editor";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);

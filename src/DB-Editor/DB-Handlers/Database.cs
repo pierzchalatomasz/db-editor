@@ -46,7 +46,6 @@ namespace DB_Editor.DB_Handlers
             {
                 OpenConnection();
                 command_.CommandText = "CREATE DATABASE " + dbName + ";";
-                Console.WriteLine(command_.CommandText);
                 command_.ExecuteNonQuery();
 
                 return new OperationResult(true, new Exception("QUERY Ok"));
@@ -283,7 +282,7 @@ namespace DB_Editor.DB_Handlers
         }
         private static void OpenConnection()
         {
-            DBConnectionManager.Connect();
+            //DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
         #endregion
