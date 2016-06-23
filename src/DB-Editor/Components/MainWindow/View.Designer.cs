@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             this.buttonsContainer = new System.Windows.Forms.Panel();
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonNext = new System.Windows.Forms.Button();
             this.RightPanelTitle = new System.Windows.Forms.Label();
             this.rightPanelWrapper = new System.Windows.Forms.Panel();
             this.rightPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -68,16 +68,6 @@
             this.splitContainer.SplitterDistance = 269;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 0;
-            // 
-            // databasesList
-            // 
-            this.databasesList.AutoSize = true;
-            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databasesList.Location = new System.Drawing.Point(15, 15);
-            this.databasesList.Name = "databasesList";
-            this.databasesList.Size = new System.Drawing.Size(239, 453);
-            this.databasesList.TabIndex = 0;
             // 
             // buttonsContainer
             // 
@@ -121,6 +111,7 @@
             this.buttonNext.TabIndex = 3;
             this.buttonNext.Text = "Add new table";
             this.buttonNext.UseVisualStyleBackColor = false;
+            this.buttonNext.Visible = false;
             this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
             // RightPanelTitle
@@ -152,6 +143,16 @@
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(478, 318);
             this.rightPanel.TabIndex = 4;
+            // 
+            // databasesList
+            // 
+            this.databasesList.AutoSize = true;
+            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databasesList.Location = new System.Drawing.Point(15, 15);
+            this.databasesList.Name = "databasesList";
+            this.databasesList.Size = new System.Drawing.Size(239, 453);
+            this.databasesList.TabIndex = 0;
             // 
             // View
             // 

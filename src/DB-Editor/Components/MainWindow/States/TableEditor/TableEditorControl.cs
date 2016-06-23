@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DB_Editor.Events;
 using DB_Editor.Components.MainWindow.Definitions;
+using DB_Editor.Components.MainWindow.States.TableEditor.Partials;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
@@ -45,6 +46,15 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
         }
 
+        public int GetAllFields()
+        {
+            //List<DB_Handlers.ColumnStructureCreator> list = new List<DB_Handlers.ColumnStructureCreator>();
+            foreach(FieldEditor item in container.Controls)
+                Console.WriteLine(item.FieldName);
+            
+            return 5;
+        }
+
         protected override void Clear()
         {
             // TEST of accessing event data
@@ -63,7 +73,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         }
 
         private void buttonAddNewField_Click(object sender, EventArgs e)
-        {
+        {       
             Partials.FieldEditor field = new Partials.FieldEditor();
             field.Show();
             container.Controls.Add(field);

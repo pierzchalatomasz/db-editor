@@ -20,6 +20,8 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
 
         public override void OnNextState()
         {
+
+            //this.Control.Container
             Console.WriteLine("Saved sucessfully!");
         }
 
