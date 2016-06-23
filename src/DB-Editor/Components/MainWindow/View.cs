@@ -22,6 +22,7 @@ namespace DB_Editor.Components.MainWindow
             databasesList.Init();
             presenter_ = new Presenter(this);
             presenter_.Init();
+            this.buttonNext.Visible = false;
         }
 
         public void DisplayStateChange()

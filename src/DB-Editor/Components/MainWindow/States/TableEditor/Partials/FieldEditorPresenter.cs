@@ -20,9 +20,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             AutoIncrementCheckChanged += fld.Auto_Increment_CheckChanged;
             PrimaryKeyCheckChanged += fld.Primary_Key_CheckChanged;
             ForeignKeyCheckChanged += fld.Foreign_Key_CheckChanged;
-            FieldTypeChanged += fld.Field_Type_Changed;
-        
+            FieldTypeChanged += fld.Field_Type_Changed;   
         }
-
     }
 }

@@ -306,7 +306,7 @@ namespace DB_Editor.DB_Handlers
         }
         private static void OpenConnection()
         {
-            DBConnectionManager.Connect();
+            //DBConnectionManager.Connect();
             DBConnectionManager.Connection.Open();
         }
         private static string GetConstraintName(string tableName, string fieldName)

@@ -9,12 +9,13 @@ namespace DB_Editor.DB_Handlers
     public class ColumnStructureCreator
     {
         private object[] properties_;
-        public ColumnStructureCreator(string name, string type, bool isNotNull = false, bool primary_key = false, string def = "", bool isAutoIncrement = false)
+        public ColumnStructureCreator(string name, string type, bool isNotNull = false, bool primary_key = false, string typeLength = "", string def = "", bool isAutoIncrement = false)
         {
             Field = name;
             Type = type;
             NullValue = isNotNull;
             Primary_Key = primary_key;
+            TypeLength = typeLength;
             if (isAutoIncrement)
                 Primary_Key = true;
             if (!isAutoIncrement)
@@ -23,12 +24,13 @@ namespace DB_Editor.DB_Handlers
                 Default = "";
 
             Extra = isAutoIncrement;
-            properties_ = new object[] { Field, Type, NullValue, Primary_Key, Default, Extra };
+            properties_ = new object[] { Field, Type, TypeLength, NullValue, Primary_Key, Default, Extra };
 
         }
         #region Properties
         public string Field { get; set; }
         public string Type { get; set; }
+        public string TypeLength { get; set; }
         public bool NullValue { get; set; } //true = NULL
         public bool Primary_Key { get; set; } //true = PRIMARY KEY
         public string Default { get; set; }
@@ -40,6 +42,8 @@ namespace DB_Editor.DB_Handlers
             string nullValueString = "";
             string primaryKeyString = "";
             string extraString = "";
+            if (TypeLength != "")
+                Type += " " + TypeLength;
             string tmp = "";
             if (!NullValue)
                 nullValueString = "NOT NULL";
@@ -60,7 +64,7 @@ namespace DB_Editor.DB_Handlers
         {
             get
             {
-                return properties_[indexer&6];
+                return properties_[indexer&7];
             }
         }
     }

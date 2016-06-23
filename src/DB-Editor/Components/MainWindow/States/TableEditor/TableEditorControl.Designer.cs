@@ -28,11 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonAddNewField = new System.Windows.Forms.Button();
-            this.container = new System.Windows.Forms.FlowLayoutPanel();
             this.wrapper = new System.Windows.Forms.Panel();
+            this.tblNameTextBox = new System.Windows.Forms.TextBox();
+            this.tblNameLabel = new System.Windows.Forms.Label();
+            this.container = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonAddNewField = new System.Windows.Forms.Button();
             this.wrapper.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // wrapper
+            // 
+            this.wrapper.Controls.Add(this.tblNameTextBox);
+            this.wrapper.Controls.Add(this.tblNameLabel);
+            this.wrapper.Controls.Add(this.container);
+            this.wrapper.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wrapper.Location = new System.Drawing.Point(0, 0);
+            this.wrapper.Name = "wrapper";
+            this.wrapper.Size = new System.Drawing.Size(476, 268);
+            this.wrapper.TabIndex = 2;
+            // 
+            // tblNameTextBox
+            // 
+            this.tblNameTextBox.Location = new System.Drawing.Point(80, 0);
+            this.tblNameTextBox.Name = "tblNameTextBox";
+            this.tblNameTextBox.Size = new System.Drawing.Size(160, 20);
+            this.tblNameTextBox.TabIndex = 2;
+            // 
+            // tblNameLabel
+            // 
+            this.tblNameLabel.AutoSize = true;
+            this.tblNameLabel.Location = new System.Drawing.Point(3, 3);
+            this.tblNameLabel.Name = "tblNameLabel";
+            this.tblNameLabel.Size = new System.Drawing.Size(71, 13);
+            this.tblNameLabel.TabIndex = 1;
+            this.tblNameLabel.Text = "Table Name: ";
+            // 
+            // container
+            // 
+            this.container.Location = new System.Drawing.Point(0, 26);
+            this.container.Name = "container";
+            this.container.Size = new System.Drawing.Size(476, 242);
+            this.container.TabIndex = 0;
             // 
             // buttonAddNewField
             // 
@@ -49,23 +85,6 @@
             this.buttonAddNewField.UseVisualStyleBackColor = false;
             this.buttonAddNewField.Click += new System.EventHandler(this.buttonAddNewField_Click);
             // 
-            // container
-            // 
-            this.container.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.container.Location = new System.Drawing.Point(0, 0);
-            this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(476, 268);
-            this.container.TabIndex = 0;
-            // 
-            // wrapper
-            // 
-            this.wrapper.Controls.Add(this.container);
-            this.wrapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wrapper.Location = new System.Drawing.Point(0, 0);
-            this.wrapper.Name = "wrapper";
-            this.wrapper.Size = new System.Drawing.Size(476, 268);
-            this.wrapper.TabIndex = 2;
-            // 
             // TableEditorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -76,6 +95,7 @@
             this.Name = "TableEditorControl";
             this.Size = new System.Drawing.Size(476, 308);
             this.wrapper.ResumeLayout(false);
+            this.wrapper.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -85,5 +105,7 @@
         private System.Windows.Forms.FlowLayoutPanel container;
         private System.Windows.Forms.Button buttonAddNewField;
         private System.Windows.Forms.Panel wrapper;
+        private System.Windows.Forms.TextBox tblNameTextBox;
+        private System.Windows.Forms.Label tblNameLabel;
     }
 }

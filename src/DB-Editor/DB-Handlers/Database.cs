@@ -59,6 +59,11 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        
+        public static OperationResult DropDatabase()
+        {
+            return DropDatabase(DB_Connection.DBConnectionManager.DatabaseName);
+        }
         public static OperationResult DropDatabase(string dbName)
         {
             try
@@ -77,6 +82,7 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        
         //przykladowo:
         //DB_Connection.DBConnectionManager.Connect();
         // DB_Connection.DBConnectionManager.Connection.Open();
