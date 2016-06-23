@@ -11,7 +11,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
     {
         public RecordsListingModel()
         {
-            SelectedRecordID = "";
+            SelectedRecordID = -1;
             TableFieldNames = new List<string>();
             RecordsData = new List<List<string>>();
             CurrentPage = 0;
@@ -24,7 +24,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         public int CurrentPage { get; set; }
 
-        public string SelectedRecordID { get; set; }
+        public long SelectedRecordID { get; set; }
 
         public int AmountOfPages { get; set; }
 

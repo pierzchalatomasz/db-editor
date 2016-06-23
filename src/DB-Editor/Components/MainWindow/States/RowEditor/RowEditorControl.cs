@@ -18,10 +18,6 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
         public RowEditorControl()
         {
             InitializeComponent();
-
-            FieldEditor field = new FieldEditor();
-            field.Show();
-            container.Controls.Add(field);
         }
 
         public override StateChangeRequestEventArgs EventData
@@ -29,14 +25,28 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             set
             {
                 // Get mode (creator / editor)
-                if (value.Mode == Mode.Editor)
+                //if (value.Mode == Mode.Editor)
+                //{
+                    BuildFields(value.Data);
+                //}
+                //else
                 {
-                    
+                  //  Clear();
                 }
-                else
-                {
-                    Clear();
-                }
+            }
+        }
+
+        private void BuildFields(Dictionary<string, string> data)
+        {
+            foreach (var fieldData in data)
+            {
+                Console.WriteLine(fieldData.Key);
+
+                FieldEditor field = new FieldEditor();
+                field.FieldName = fieldData.Key;
+                field.Value = fieldData.Value;
+                field.Show();
+                container.Controls.Add(field);
             }
         }
     }

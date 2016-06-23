@@ -28,5 +28,17 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
                 fieldName.Text = value;
             }
         }
+
+        public string Value
+        {
+            get
+            {
+                return fieldValue.Text;
+            }
+            set
+            {
+                fieldValue.Text = value;
+            }
+        }
     }
 }
