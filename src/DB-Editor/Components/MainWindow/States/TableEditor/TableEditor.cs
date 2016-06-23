@@ -11,7 +11,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
     public class TableEditor : State
     {
-        TableEditorControl control_;
+        private TableEditorControl control_;
         public TableEditor() : base("TableEditor", new TableEditorControl())
         {
             PrevState = "TablesListing";
