@@ -72,6 +72,7 @@
             // databasesList
             // 
             this.databasesList.AutoSize = true;
+            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.databasesList.Location = new System.Drawing.Point(15, 15);
             this.databasesList.Name = "databasesList";

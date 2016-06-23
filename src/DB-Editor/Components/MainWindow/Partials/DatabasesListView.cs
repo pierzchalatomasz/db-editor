@@ -21,6 +21,7 @@ namespace DB_Editor.Components.MainWindow.Partials
 
         public event EventHandler CurrentlyUsedDatabaseDelete;
 
+
         public DatabasesListView()
         {
             InitializeComponent();
@@ -48,6 +49,7 @@ namespace DB_Editor.Components.MainWindow.Partials
             StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
         }
 
+
         private void DisplayDatabasesList()
         {
             databasesList.Items.Clear();
@@ -68,7 +70,18 @@ namespace DB_Editor.Components.MainWindow.Partials
             DisplayDatabasesList();
         }
         private void buttonDelete_Click(object sender, EventArgs e)
-        {         
+        {
+            if(DB_Connection.DBConnectionManager.DatabaseName == "")
+            {
+                DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
+                DatabaseChanged.Invoke(sender, e);
+                //WYROBIC LABEL DLA TABLESLISTING
+            }
+            else
+            {
+                DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
+                DatabaseChanged.Invoke(sender, e);
+            }
             if (databasesList.SelectedIndex != -1)
             {
                 DatabaseNameToAction = databasesList.SelectedItem.ToString();
