@@ -14,7 +14,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
         {
             ButtonText = "Save";
             NextState = "TablesListing";
-            PrevState = "TablesListing";
+            PrevState = "RecordsListing";
         }
     }
 }

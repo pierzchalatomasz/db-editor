@@ -34,9 +34,12 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             set 
             {
-                presenter_.TableName = value.Data["id"];
-                ClearControls();
-                presenter_.Init();
+                if (value.Data.ContainsKey("id"))
+                {
+                    presenter_.TableName = value.Data["id"];
+                    ClearControls();
+                    presenter_.Init();
+                }
             }
         }
 
@@ -85,14 +88,14 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
             foreach (var recordData in presenter_.RecordsData)
             {
-                Record record = BuildRecord(recordData, iterator.ToString());
+                Record record = BuildRecord(recordData, iterator);
                 recordsContainer.Controls.Add(record);
                 records_.Add(record);
                 iterator++;
             }
         }
 
-        private Record BuildRecord(List<string> recordData, string id)
+        private Record BuildRecord(List<string> recordData, long id)
         {
             Record record = new Record(recordData);
             record.ID = id;
@@ -118,7 +121,12 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
+            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
+            args.Data = presenter_.GetSelectedRecordData();
 
+            Console.WriteLine(args.Data.Count);
+
+            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -161,7 +169,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             presenter_.SelectedRecordID = record.ID;
         }
 
-        private void HighlightSelectedRecord(string oldId, string newId)
+        private void HighlightSelectedRecord(long oldId, long newId)
         {
             Record selectedRecord = records_.Find(rec => rec.ID == newId);
             Record prevSelectedRecord = records_.Find(rec => rec.ID == oldId);

@@ -26,6 +26,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             CurrentPage = 1;
         }
 
+        public Dictionary<string, string> GetSelectedRecordData()
+        {
+            var output = new Dictionary<string, string>();
+
+            for (int i = 0; i < TableFieldNames.Count; i++)
+            {
+                string fieldName = TableFieldNames.ElementAt(i);
+                string value = RecordsData.ElementAt((int)SelectedRecordID).ElementAt(i);
+                output.Add(fieldName, value);
+            }
+
+            return output;
+        }
+
         #region Private Methods
 
         private void FetchRecords()
@@ -68,7 +82,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         #region Getters / Setters
 
-        public string SelectedRecordID
+        public long SelectedRecordID
         {
             get
             {

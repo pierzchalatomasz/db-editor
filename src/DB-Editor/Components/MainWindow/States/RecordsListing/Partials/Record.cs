@@ -14,7 +14,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
     {
         public event EventHandler SelectedRecordChange;
 
-        public string ID { get; set; }
+        public long ID { get; set; }
 
         public Record(List<string> recordData)
         {
