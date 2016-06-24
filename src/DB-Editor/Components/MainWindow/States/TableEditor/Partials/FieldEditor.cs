@@ -17,7 +17,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
         private static bool auto_increment_clicked;
         private static bool primary_key_clicked;
         private static bool foreign_key_clicked;
-        private bool nullvalue_;
 
         public FieldEditor()
         {
@@ -28,7 +27,9 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             primary_key_clicked = false;
             foreign_key_clicked = false;
         }
-        public ColumnStructureCreator Object
+
+        #region Properties
+        public ColumnStructureCreator ColumnStructureObject
         {
             get
             {
@@ -45,17 +46,21 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 fieldNameTxtBox.Text = value;
             }
-        }       
+        }
         public string FieldType
         {
             get
             {
-                return fieldTypeDrpDwnLst.SelectedItem.ToString();
+                if (fieldTypeDrpDwnLst.SelectedIndex > -1)
+                    return fieldTypeDrpDwnLst.SelectedItem.ToString();
+                else
+                    return "";
             }
-            set
-            {
-                fieldTypeDrpDwnLst.SelectedItem = value;
-            }
+       
+            //set
+            //{
+            //    fieldTypeDrpDwnLst.SelectedItem = value;
+            //}
         }
         public string TypeLength
         {
@@ -63,10 +68,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return LengthTxtBox.Text;
             }
-            set
-            {
-                LengthTxtBox.Text = value;
-            }
+            //set
+            //{
+            //    LengthTxtBox.Text = value;
+            //}
         }       
         public bool NullValue
         {
@@ -77,13 +82,13 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
                 else
                     return false;
             }
-            set
-            {
-                if(value)
-                   NullDrpDwnLst.SelectedItem = "YES";
-                else
-                    NullDrpDwnLst.SelectedItem = "NO";
-            }
+            //set
+            //{
+            //    if(value)
+            //       NullDrpDwnLst.SelectedItem = "YES";
+            //    else
+            //        NullDrpDwnLst.SelectedItem = "NO";
+            //}
         }       
         public bool Primary_Key
         {
@@ -91,10 +96,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return PrimaryKeyChckBox.Checked;
             }
-            set
-            {
-                PrimaryKeyChckBox.Checked = value;
-            }
+            //set
+            //{
+            //    PrimaryKeyChckBox.Checked = value;
+            //}
         }       
         public string Default
         {
@@ -102,10 +107,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return defaultTextBox.Text;
             }
-            set
-            {
-                defaultTextBox.Text = value;
-            }
+            //set
+            //{
+            //    defaultTextBox.Text = value;
+            //}
         }      
         public bool Extra
         {
@@ -113,12 +118,12 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return AutoIncrementChckBox.Checked;
             }
-            set
-            {
-                AutoIncrementChckBox.Checked = value;
-            }
+            //set
+            //{
+            //    AutoIncrementChckBox.Checked = value;
+            //}
         }
-
+        #endregion
         public void Clear()
         {
             fieldNameTxtBox.Text = "";
@@ -199,16 +204,16 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
         {
             PrimaryKeyChckBox.Checked = false;
             AutoIncrementChckBox.Checked = false;
-            ForeignKeyChckBox.Checked = foreign_key_clicked;
             defaultTextBox.Text = "";
-            defaultTextBox.Enabled = !foreign_key_clicked;
+            defaultTextBox.Enabled = foreign_key_clicked;
             NullDrpDwnLst.Enabled = foreign_key_clicked;
             if (foreign_key_clicked)
                 NullDrpDwnLst.SelectedItem = "YES";
             else
                 NullDrpDwnLst.SelectedItem = "NO";
             PrimaryKeyChckBox.Enabled = foreign_key_clicked;
-            AutoIncrementChckBox.Enabled = foreign_key_clicked;        
+            AutoIncrementChckBox.Enabled = foreign_key_clicked;  
+      
             foreign_key_clicked = !foreign_key_clicked;
         }
         public void Field_Type_Changed(object sender, EventArgs e)

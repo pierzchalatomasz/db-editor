@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.wrapper = new System.Windows.Forms.Panel();
             this.tblNameTextBox = new System.Windows.Forms.TextBox();
             this.tblNameLabel = new System.Windows.Forms.Label();
             this.container = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonAddNewField = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.wrapper.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // wrapper
@@ -53,6 +56,7 @@
             this.tblNameTextBox.Name = "tblNameTextBox";
             this.tblNameTextBox.Size = new System.Drawing.Size(160, 20);
             this.tblNameTextBox.TabIndex = 2;
+            this.tblNameTextBox.TextChanged += new System.EventHandler(this.tblNameTextBox_TextChanged);
             // 
             // tblNameLabel
             // 
@@ -85,6 +89,10 @@
             this.buttonAddNewField.UseVisualStyleBackColor = false;
             this.buttonAddNewField.Click += new System.EventHandler(this.buttonAddNewField_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // TableEditorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,6 +104,7 @@
             this.Size = new System.Drawing.Size(476, 308);
             this.wrapper.ResumeLayout(false);
             this.wrapper.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -107,5 +116,6 @@
         private System.Windows.Forms.Panel wrapper;
         private System.Windows.Forms.TextBox tblNameTextBox;
         private System.Windows.Forms.Label tblNameLabel;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

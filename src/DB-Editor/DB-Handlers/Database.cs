@@ -133,7 +133,7 @@ namespace DB_Editor.DB_Handlers
         /// <param name="list"> List of columns in new table</param>
         /// <param name="foreignKeys"> List of foreign key tuples, where id1 = field name in tableName, id2 = referenced tableName, id3 = field name in referenced table</param>
         /// <returns></returns>
-        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, List<Tuple<string, string, string>> foreignKeys = null, string dbName = "")
+        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, string dbName = "", List<Tuple<string, string, string>> foreignKeys = null)
         {
             try
             {
@@ -155,6 +155,7 @@ namespace DB_Editor.DB_Handlers
                 tmp = tmp.Substring(0, tmp.Length - 2);
                 tmp += ");";
                 command_.CommandText = tmp;
+                Console.WriteLine(command_.CommandText);
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }

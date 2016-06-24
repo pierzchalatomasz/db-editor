@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DB_Editor.Events;
 using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.TableEditor.Partials;
+using DB_Editor.DB_Handlers;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
@@ -18,7 +19,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         public TableEditorControl()
         {
             InitializeComponent();
-            SetScrollBar();            
+            SetScrollBar();
         }
 
         public override StateChangeRequestEventArgs EventData
@@ -46,13 +47,37 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
         }
 
-        public int GetAllFields()
+        public string NewTableName
         {
-            //List<DB_Handlers.ColumnStructureCreator> list = new List<DB_Handlers.ColumnStructureCreator>();
-            foreach(FieldEditor item in container.Controls)
-                Console.WriteLine(item.FieldName);
+            get
+            {
+                return tblNameTextBox.Text;
+            }
+            set
+            {
+                tblNameTextBox.Text = value;
+            }
+        }
+        public bool CheckTableName()
+        {
+            if (NewTableName != String.Empty)
+                return true;
+            else
+            {
+                errorProvider1.SetError(tblNameTextBox, "You have to put a table name");
+                return false;
+            }
+        }
+        
+        public List<ColumnStructureCreator> GetAllColumns()
+        {
+            List<ColumnStructureCreator> listOfObjects = new List<ColumnStructureCreator>();//, string dbName = "", List<Tuple<string, string, string>> foreignKeys = null)
+            foreach (FieldEditor item in container.Controls)
+            {
+                listOfObjects.Add(item.ColumnStructureObject);
+            }
             
-            return 5;
+            return listOfObjects;
         }
 
         protected override void Clear()
@@ -73,8 +98,9 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         }
 
         private void buttonAddNewField_Click(object sender, EventArgs e)
-        {       
+        {
             Partials.FieldEditor field = new Partials.FieldEditor();
+            tblNameTextBox.Text = String.Empty;
             field.Show();
             container.Controls.Add(field);
             ScrollToNewField();
@@ -85,6 +111,11 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             container.AutoScroll = false;
             container.VerticalScroll.Value = container.VerticalScroll.Maximum;
             container.AutoScroll = true;
+        }
+
+        private void tblNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            errorProvider1.Clear();
         }
     }
 }

@@ -11,19 +11,24 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
     public class TableEditor : State
     {
+        private TableEditorControl control_;
         public TableEditor() : base("TableEditor", new TableEditorControl())
         {
             PrevState = "TablesListing";
             NextState = "TablesListing";
             ButtonText = "Save";
+            control_ = Control as TableEditorControl;
         }   
 
         public override void OnNextState()
         {
 
-            //this.Control.Container
-            Console.WriteLine("Saved sucessfully!");
+            if(control_.CheckTableName())
+            {
+                DB_Handlers.Database.CreateTable(control_.NewTableName, control_.GetAllColumns(), DB_Connection.DBConnectionManager.DatabaseName);
+            }          
         }
+
 
         public override void OnPrevState()
         {
