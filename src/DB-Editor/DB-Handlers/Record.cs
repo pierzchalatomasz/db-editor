@@ -27,7 +27,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 string tmp = "";
                 tmp += "UPDATE " + dbName + tableName + " SET " + Change.Item1 + " = \"" + Change.Item2 + "\" WHERE ";
@@ -60,7 +60,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 string tmp = "";
                 tmp += "INSERT INTO " + dbName + tableName + " (";
@@ -123,11 +123,6 @@ namespace DB_Editor.DB_Handlers
         {
             if (dbName != "")
                 dbName = dbName + ".";
-        }
-        private static void OpenConnection()
-        {
-            DBConnectionManager.Connect();
-            DBConnectionManager.Connection.Open();
         }
         #endregion
 

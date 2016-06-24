@@ -52,8 +52,12 @@ namespace DB_Editor.Components.MainWindow
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.NextState);
-            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+            presenter_.ActiveState.ModifyAllowChangeState();
+            if(presenter_.ActiveState.AllowChangeState)
+            {
+                StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.NextState);
+                StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+            }
         }
 
         private void buttonBack_Click(object sender, EventArgs e)

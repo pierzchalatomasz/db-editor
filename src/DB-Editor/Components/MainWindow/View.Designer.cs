@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             this.buttonsContainer = new System.Windows.Forms.Panel();
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonNext = new System.Windows.Forms.Button();
             this.RightPanelTitle = new System.Windows.Forms.Label();
             this.rightPanelWrapper = new System.Windows.Forms.Panel();
             this.rightPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -68,6 +68,16 @@
             this.splitContainer.SplitterDistance = 269;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 0;
+            // 
+            // databasesList
+            // 
+            this.databasesList.AutoSize = true;
+            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databasesList.Location = new System.Drawing.Point(15, 15);
+            this.databasesList.Name = "databasesList";
+            this.databasesList.Size = new System.Drawing.Size(239, 453);
+            this.databasesList.TabIndex = 0;
             // 
             // buttonsContainer
             // 
@@ -144,16 +154,6 @@
             this.rightPanel.Size = new System.Drawing.Size(478, 318);
             this.rightPanel.TabIndex = 4;
             // 
-            // databasesList
-            // 
-            this.databasesList.AutoSize = true;
-            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databasesList.Location = new System.Drawing.Point(15, 15);
-            this.databasesList.Name = "databasesList";
-            this.databasesList.Size = new System.Drawing.Size(239, 453);
-            this.databasesList.TabIndex = 0;
-            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +164,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "View";
             this.Text = "DB Editor";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);
