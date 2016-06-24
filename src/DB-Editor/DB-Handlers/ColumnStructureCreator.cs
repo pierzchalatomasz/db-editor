@@ -9,6 +9,10 @@ namespace DB_Editor.DB_Handlers
     public class ColumnStructureCreator
     {
         private object[] properties_;
+        public ColumnStructureCreator()
+        {
+
+        }
         public ColumnStructureCreator(string name, string type, bool isNotNull = false, bool primary_key = false, string typeLength = "", string def = "", bool isAutoIncrement = false)
         {
             Field = name;

@@ -164,7 +164,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "View";
             this.Text = "DB Editor";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);
