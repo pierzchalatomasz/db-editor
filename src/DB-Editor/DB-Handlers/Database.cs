@@ -254,6 +254,79 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        //do dokumentacji
+        public static List<ColumnStructureCreator> GetColumnStructureCreatorsFromTable(string tableName, string dbName = "")
+        {
+            try
+            {
+                CheckDbName(ref dbName);
+                command_.CommandText = "DESC " + dbName + tableName + ";";
+                DB_Connection.DBConnectionManager.Connection.Open();
+
+                MySqlDataReader reader = command_.ExecuteReader();
+
+                List<ColumnStructureCreator> listOfClmnStrcCrtr;
+                listOfClmnStrcCrtr = new List<ColumnStructureCreator>();
+                string[] tmpStrings = new string[2];
+                char[] delimiterChar = new char[1] { '(' };
+                ColumnStructureCreator tmps = new ColumnStructureCreator();
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {                     
+                        switch(reader.GetName(i))
+                        {
+                            case "Field": tmps.Field = reader[i].ToString();
+                                break;
+                            case "Type":
+                                {
+                                    tmpStrings = reader[i].ToString().Split(delimiterChar);
+                                    tmps.Type = tmpStrings[0];
+                                    tmps.TypeLength = tmpStrings[1].TrimEnd(')');
+                                }
+                                break;
+                            case "Null":
+                                {
+                                    if (reader[i].ToString() == String.Empty)
+                                        tmps.NullValue = true;
+                                    else
+                                        tmps.NullValue = false;
+                                } 
+                                break;
+                            case "Key":
+                                {
+                                    if (reader[i].ToString() != String.Empty)
+                                        tmps.Primary_Key = true;
+                                    else
+                                        tmps.Primary_Key = false;
+                                }
+                                break;  
+                            case "Default": tmps.Default = reader[i].ToString();
+                                break;
+                            case "Extra":
+                                {
+                                    if (reader[i].ToString() != String.Empty)
+                                        tmps.Extra = true;
+                                    else
+                                        tmps.Extra = false;
+                                }                         
+                                break;                               
+                        }               
+                    }
+                    listOfClmnStrcCrtr.Add(tmps);
+                    tmps = new ColumnStructureCreator();
+                }
+                return listOfClmnStrcCrtr;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
         #endregion
 
         #region PrivateMethods

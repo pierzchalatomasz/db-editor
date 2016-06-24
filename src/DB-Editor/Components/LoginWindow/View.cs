@@ -19,7 +19,7 @@ namespace DB_Editor.Components.LoginWindow
         public View()
         {
             InitializeComponent();
-            presenter_ = new Presenter(this);
+            presenter_ = new Presenter(this);           
         }
 
         private void CloseLoginWindow(object sender, EventArgs e)

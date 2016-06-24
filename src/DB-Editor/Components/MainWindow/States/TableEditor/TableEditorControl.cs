@@ -21,7 +21,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             InitializeComponent();
             SetScrollBar();
             tblNameTextBox.Text = String.Empty;
-            buttonAddNewField_Click(new object(), new EventArgs());
         }
 
 
@@ -32,11 +31,24 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 // Get mode (creator / editor)
                 if (value.Mode == Mode.Editor)
                 {
-                    List<string> fieldNames = DB_Handlers.Database.GetFieldNamesFromTable(value.Data["id"]);
-                    foreach (var fieldName in fieldNames)
+                    tblNameTextBox.Text = value.Data["id"];
+                    string[] settingableTypes = new string[] { "float", "double", "decimal", "char", "varchar", "text", "enum" };
+                        
+                    List<ColumnStructureCreator> columnList = DB_Handlers.Database.GetColumnStructureCreatorsFromTable(value.Data["id"], DB_Connection.DBConnectionManager.DatabaseName);
+                    foreach (var property in columnList)
                     {
                         Partials.FieldEditor field = new Partials.FieldEditor();
-                        field.FieldName = fieldName;
+                        field.FieldName = property.Field;
+                        field.FieldType = property.Type;
+                        if (settingableTypes.Contains(field.FieldType))
+                        {                        
+                            field.TypeLength = property.TypeLength;
+                            field.LengthReadOnly = true;
+                        }
+                        field.NullValue = property.NullValue;
+                        field.Primary_Key = property.Primary_Key;
+                        field.Default = property.Default;
+                        field.Extra = property.Extra;
                         field.Show();
                         container.Controls.Add(field);
                     }
@@ -44,6 +56,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 else
                 {
                     Clear();
+                    buttonAddNewField_Click(new object(), new EventArgs());
                 }
             }
         }
