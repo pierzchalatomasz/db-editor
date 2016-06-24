@@ -224,12 +224,12 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             else
                 LengthTxtBox.ReadOnly = true;
         }
-        #endregion
+        
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
-
+        #endregion
     }
 }

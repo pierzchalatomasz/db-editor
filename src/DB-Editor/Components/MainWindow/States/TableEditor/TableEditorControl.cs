@@ -20,14 +20,15 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         {
             InitializeComponent();
             SetScrollBar();
+            tblNameTextBox.Text = String.Empty;
+            buttonAddNewField_Click(new object(), new EventArgs());
         }
+
 
         public override StateChangeRequestEventArgs EventData
         {
             set
             {
-                container.Controls.Clear();
-
                 // Get mode (creator / editor)
                 if (value.Mode == Mode.Editor)
                 {
@@ -47,6 +48,9 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
         }
 
+
+        #region StuffForNewTable
+        //do dokumentacji
         public string NewTableName
         {
             get
@@ -58,17 +62,79 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 tblNameTextBox.Text = value;
             }
         }
+        //do dokumentacji
         public bool CheckTableName()
         {
             if (NewTableName != String.Empty)
                 return true;
             else
             {
-                errorProvider1.SetError(tblNameTextBox, "You have to put a table name");
+                SetErrorProvider(tblNameTextBox, "You have to put a table name");
                 return false;
             }
         }
-        
+        //do dokumentacji
+        public bool CheckAmountOfColumns()
+        {
+            if (container.Controls.Count > 0)
+                return true;
+            SetErrorProvider(tblNameTextBox, "Table has to have at least one column");
+            return false;
+
+        }
+        //do dokumentacji
+        public bool CheckNamesOfColumns()
+        {
+            bool result = true;
+            foreach (FieldEditor item in container.Controls)
+            {
+                if (item.FieldName == String.Empty)
+                {
+                    result = false;
+                    SetErrorProvider(item, "You have to put a name for a column");
+                    break;
+                }
+            }
+            return result;
+        }
+        //do dokumentacji
+        public bool CheckTypesOfColumns()
+        {
+            bool result = true;
+            foreach (FieldEditor item in container.Controls)
+            {
+                if (item.FieldType == String.Empty)
+                {
+                    result = false;
+                    SetErrorProvider(item, "You have to put a type field for a column");
+                    break;
+                }
+            }
+            return result;
+        }
+        //do dokumentacji
+        public bool CheckAmountOfPrimaryKeys()
+        {
+            int result = 0;
+            foreach (FieldEditor item in container.Controls)
+            {
+                if (item.Primary_Key)
+                    result++;
+                if(result>1)
+                {
+                    SetErrorProvider(item, "There can be only one primary key in table.");
+                    return false;
+                }
+            }
+            return true;          
+        }
+
+        private void SetErrorProvider(Control ctrl, string message)
+        {
+            errorProvider1.Clear();
+            errorProvider1.SetError(ctrl, message);
+        }
+        //do dokumentacji
         public List<ColumnStructureCreator> GetAllColumns()
         {
             List<ColumnStructureCreator> listOfObjects = new List<ColumnStructureCreator>();//, string dbName = "", List<Tuple<string, string, string>> foreignKeys = null)
@@ -76,10 +142,9 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             {
                 listOfObjects.Add(item.ColumnStructureObject);
             }
-            
             return listOfObjects;
         }
-
+        #endregion
         protected override void Clear()
         {
             // TEST of accessing event data
@@ -100,10 +165,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         private void buttonAddNewField_Click(object sender, EventArgs e)
         {
             Partials.FieldEditor field = new Partials.FieldEditor();
-            tblNameTextBox.Text = String.Empty;
             field.Show();
             container.Controls.Add(field);
             ScrollToNewField();
+            errorProvider1.Clear();
         }
 
         private void ScrollToNewField()
