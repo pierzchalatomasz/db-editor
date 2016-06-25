@@ -56,6 +56,12 @@ namespace DB_Editor.Components.MainWindow
             if(presenter_.ActiveState.AllowChangeState)
             {
                 StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.NextState);
+
+                if (presenter_.ActiveState.DefaultNextStateData != null)
+                {
+                    args.Data = presenter_.ActiveState.DefaultNextStateData;
+                }
+
                 StateChangeRequestEvents.FireStateChangeRequest(sender, args);
             }
         }
@@ -63,6 +69,12 @@ namespace DB_Editor.Components.MainWindow
         private void buttonBack_Click(object sender, EventArgs e)
         {
             StateChangeRequestEventArgs args = new StateChangeRequestEventArgs(presenter_.ActiveState.PrevState, StateOrder.Prev);
+
+            if (presenter_.ActiveState.DefaultPrevStateData != null)
+            {
+                args.Data = presenter_.ActiveState.DefaultPrevStateData;
+            }
+
             StateChangeRequestEvents.FireStateChangeRequest(sender, args);
         }
 
