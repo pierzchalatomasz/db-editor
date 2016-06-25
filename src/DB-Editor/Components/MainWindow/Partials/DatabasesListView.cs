@@ -69,14 +69,6 @@ namespace DB_Editor.Components.MainWindow.Partials
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if(DB_Connection.DBConnectionManager.DatabaseName == "")
-            {
-                DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
-            }
-            else
-            {
-                DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
-            }
             if (databasesList.SelectedIndex != -1)
             {
                 DatabaseNameToAction = databasesList.SelectedItem.ToString();

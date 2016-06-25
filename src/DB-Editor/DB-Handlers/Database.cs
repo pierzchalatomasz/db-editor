@@ -12,6 +12,7 @@ namespace DB_Editor.DB_Handlers
     static class Database
     {
         private static MySqlCommand command_;
+        private static string dbName_;
         static Database()
         {
             command_ = new MySqlCommand();
@@ -42,7 +43,8 @@ namespace DB_Editor.DB_Handlers
         }
         public static OperationResult DropDatabase()
         {
-            return DropDatabase(DB_Connection.DBConnectionManager.DatabaseName);
+            dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+            return DropDatabase(dbName_);
         }
         public static OperationResult DropDatabase(string dbName)
         {
@@ -108,13 +110,14 @@ namespace DB_Editor.DB_Handlers
         /// <param name="list"> List of columns in new table</param>
         /// <param name="foreignKeys"> List of foreign key tuples, where id1 = field name in tableName, id2 = referenced tableName, id3 = field name in referenced table</param>
         /// <returns></returns>
-        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, string dbName = "", List<Tuple<string, string, string>> foreignKeys = null)
+        public static OperationResult CreateTable(string tableName, List<ColumnStructureCreator> list, List<Tuple<string, string, string>> foreignKeys = null)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                string tmp = "CREATE TABLE " + dbName + tableName + " (";
+                CheckDbName(ref dbName_);
+                string tmp = "CREATE TABLE " + dbName_ + tableName + " (";
                 foreach (var i in list)
                 {
                     tmp += i.ToString();
@@ -143,13 +146,14 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult DropTable(string tableName, string dbName = "")
+        public static OperationResult DropTable(string tableName)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                MySqlCommand comm = new MySqlCommand("DROP TABLE " + dbName + tableName + ";", DBConnectionManager.Connection);
+                CheckDbName(ref dbName_);
+                MySqlCommand comm = new MySqlCommand("DROP TABLE " + dbName_ + tableName + ";", DBConnectionManager.Connection);
                 comm.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -162,13 +166,15 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult RenameTable(string oldName, string newName, string dbName = "")
+        public static OperationResult RenameTable(string oldName, string newName)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                command_.CommandText = "RENAME TABLE " + dbName + oldName + "TO " + newName + ";";
+                CheckDbName(ref dbName_);
+                command_.CommandText = "RENAME TABLE " + dbName_ + oldName + " TO " + dbName_ + newName + ";";
+                Console.WriteLine(command_.CommandText);
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -230,12 +236,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static List<string> GetFieldNamesFromTable(string tableName, string dbName = "")
+        public static List<string> GetFieldNamesFromTable(string tableName)
         {
             try
             {
-                CheckDbName(ref dbName);
-                string tmp = "DESC " + dbName + tableName + ";";
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                CheckDbName(ref dbName_);
+                string tmp = "DESC " + dbName_ + tableName + ";";
                 List<string> tmpList = new List<string>();
                 QueryResult res = DB_Connection.DBConnectionManager.Query(tmp);
 
@@ -254,13 +261,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        //do dokumentacji
-        public static List<ColumnStructureCreator> GetColumnStructureCreatorsFromTable(string tableName, string dbName = "")
+        public static List<ColumnStructureCreator> GetColumnStructureCreatorsFromTable(string tableName)
         {
             try
             {
-                CheckDbName(ref dbName);
-                command_.CommandText = "DESC " + dbName + tableName + ";";
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                CheckDbName(ref dbName_);
+                command_.CommandText = "DESC " + dbName_ + tableName + ";";
                 DB_Connection.DBConnectionManager.Connection.Open();
 
                 MySqlDataReader reader = command_.ExecuteReader();
