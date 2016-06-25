@@ -63,12 +63,27 @@ namespace DB_Editor.DB_Handlers
             else
                 tmp = Field + " " + Type + " " + nullValueString + " " + extraString + " " + primaryKeyString;
             return tmp.TrimEnd();
+        }     
+        public static bool operator ==(ColumnStructureCreator firstColumn, ColumnStructureCreator secondColumn)
+        {
+            if(firstColumn.Field == secondColumn.Field & firstColumn.Type == secondColumn.Type & firstColumn.TypeLength == secondColumn.TypeLength & firstColumn.NullValue == secondColumn.NullValue &
+                firstColumn.Primary_Key == secondColumn.Primary_Key & firstColumn.Default == secondColumn.Default & firstColumn.Extra == secondColumn.Extra)
+                return true;
+            else
+                return false;
         }
-        public object this[int indexer]
+        public static bool operator !=(ColumnStructureCreator firstColumn, ColumnStructureCreator secondColumn)
+        {
+            if (firstColumn == secondColumn)
+                return false;
+            return true;
+        }
+
+        public object this[int i]
         {
             get
             {
-                return properties_[indexer&7];
+                return properties_[i%7];
             }
         }
     }

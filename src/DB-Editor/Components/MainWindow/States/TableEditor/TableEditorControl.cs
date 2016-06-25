@@ -23,7 +23,29 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             tblNameTextBox.Text = String.Empty;
         }
 
+        List<ColumnStructureCreator> oldListOfColumns_;
         public Action<string> SetTitle;
+
+        public Mode ActualMode
+        {
+            get;
+            set;
+        }
+        public List<ColumnStructureCreator> GetColumnsWithProperties()
+        {
+            List<ColumnStructureCreator> tmpList = new List<ColumnStructureCreator>();
+            foreach (FieldEditor item in container.Controls)
+            {
+                tmpList.Add(new ColumnStructureCreator(item.FieldName, item.FieldType, item.NullValue, item.Primary_Key, item.TypeLength, item.Default, item.Extra));
+            }
+            return tmpList;
+        }
+        public string OldTableName
+        {
+            get;
+            set;
+        }
+
 
         public override StateChangeRequestEventArgs EventData
         {
@@ -32,41 +54,50 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 // Get mode (creator / editor)
                 if (value.Mode == Mode.Editor)
                 {
+                    ActualMode = value.Mode;
                     SetTitle(value.Data["id"]);
-
+                    OldTableName = value.Data["id"];
                     tblNameTextBox.Text = value.Data["id"];
-                    string[] settingableTypes = new string[] { "float", "double", "decimal", "char", "varchar", "text", "enum" };
-                        
-                    List<ColumnStructureCreator> columnList = DB_Handlers.Database.GetColumnStructureCreatorsFromTable(value.Data["id"], DB_Connection.DBConnectionManager.DatabaseName);
-                    foreach (var property in columnList)
+                                       
+                    List<ColumnStructureCreator> columnList = DB_Handlers.Database.GetColumnStructureCreatorsFromTable(value.Data["id"]);
+                    oldListOfColumns_ = new List<ColumnStructureCreator>();
+                    oldListOfColumns_ = columnList;
+                    foreach (ColumnStructureCreator property in columnList)
                     {
-                        Partials.FieldEditor field = new Partials.FieldEditor();
-                        field.FieldName = property.Field;
-                        field.FieldType = property.Type;
-                        if (settingableTypes.Contains(field.FieldType))
-                        {                        
-                            field.TypeLength = property.TypeLength;
-                            field.LengthReadOnly = true;
-                        }
-                        field.NullValue = property.NullValue;
-                        field.Primary_Key = property.Primary_Key;
-                        field.Default = property.Default;
-                        field.Extra = property.Extra;
+                        FieldEditor field = new FieldEditor();
+                        SetSettingsFieldEditor(ref field, property);
+
                         field.Show();
                         container.Controls.Add(field);
                     }
                 }
                 else
                 {
+                    ActualMode = Mode.Creator;
                     Clear();
                     buttonAddNewField_Click(new object(), new EventArgs());
                 }
             }
         }
-
+        private void SetSettingsFieldEditor(ref FieldEditor field, ColumnStructureCreator property)
+        {
+            string[] settingableTypes = new string[] { "float", "double", "decimal", "char", "varchar", "text", "enum" };
+            field.FieldName = property.Field;
+            field.FieldType = property.Type;
+            if (settingableTypes.Contains(field.FieldType))
+            {
+                field.TypeLength = property.TypeLength;
+                field.LengthReadOnly = false;
+            }
+            field.NullValue = property.NullValue;
+            field.Primary_Key = property.Primary_Key;
+            field.Default = property.Default;
+            field.Extra = property.Extra;
+            field.TableNameItBelongs = tblNameTextBox.Text;
+            field.EditorTableMode = true;
+        }
 
         #region StuffForNewTable
-        //do dokumentacji
         public string NewTableName
         {
             get
@@ -78,7 +109,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 tblNameTextBox.Text = value;
             }
         }
-        //do dokumentacji
         public bool CheckTableName()
         {
             if (NewTableName != String.Empty)
@@ -89,7 +119,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 return false;
             }
         }
-        //do dokumentacji
         public bool CheckAmountOfColumns()
         {
             if (container.Controls.Count > 0)
@@ -98,7 +127,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             return false;
 
         }
-        //do dokumentacji
         public bool CheckNamesOfColumns()
         {
             bool result = true;
@@ -113,7 +141,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
             return result;
         }
-        //do dokumentacji
         public bool CheckTypesOfColumns()
         {
             bool result = true;
@@ -128,7 +155,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
             return result;
         }
-        //do dokumentacji
         public bool CheckAmountOfPrimaryKeys()
         {
             int result = 0;
@@ -150,10 +176,9 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             errorProvider1.Clear();
             errorProvider1.SetError(ctrl, message);
         }
-        //do dokumentacji
         public List<ColumnStructureCreator> GetAllColumns()
         {
-            List<ColumnStructureCreator> listOfObjects = new List<ColumnStructureCreator>();//, string dbName = "", List<Tuple<string, string, string>> foreignKeys = null)
+            List<ColumnStructureCreator> listOfObjects = new List<ColumnStructureCreator>();
             foreach (FieldEditor item in container.Controls)
             {
                 listOfObjects.Add(item.ColumnStructureObject);

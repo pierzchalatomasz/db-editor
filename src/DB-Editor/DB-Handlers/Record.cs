@@ -11,8 +11,8 @@ namespace DB_Editor.DB_Handlers
     using QueryResult = List<Dictionary<string, string>>;
     static class Record
     {
-        //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
-        //DB_Connection.DBConnectionManager.Connect();
+        private static string dbName_;
+
         #region Methods
 
         /// <summary>
@@ -23,14 +23,15 @@ namespace DB_Editor.DB_Handlers
         /// <param name="OldRecord">Table of tuples with all field names and their old values</param>
         /// <param name="dbName">Optional, database name</param>
         /// <returns></returns>
-        public static OperationResult ChangeRowValue(string tableName, Tuple<string, string> Change, Tuple<string, string>[] OldRecord, string dbName = "")
+        public static OperationResult ChangeRowValue(string tableName, Tuple<string, string> Change, Tuple<string, string>[] OldRecord)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
+                CheckDbName(ref dbName_);
                 string tmp = "";
-                tmp += "UPDATE " + dbName + tableName + " SET " + Change.Item1 + " = \"" + Change.Item2 + "\" WHERE ";
+                tmp += "UPDATE " + dbName_ + tableName + " SET " + Change.Item1 + " = \"" + Change.Item2 + "\" WHERE ";
                 foreach (var pair in OldRecord)
                     tmp += pair.Item1 + " = \"" + pair.Item2 + "\" AND ";
 
@@ -56,14 +57,15 @@ namespace DB_Editor.DB_Handlers
         //oko.Add(ok2);
         //oko.Add(ok3);
         //Record.InsertRowValue("stringtable", ok2, oko, "ok");
-        public static OperationResult InsertRowValue(string tableName, string[] ColumnNames, List<string[]> Values, string dbName = "")
+        public static OperationResult InsertRowValue(string tableName, string[] ColumnNames, List<string[]> Values)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
+                CheckDbName(ref dbName_);
                 string tmp = "";
-                tmp += "INSERT INTO " + dbName + tableName + " (";
+                tmp += "INSERT INTO " + dbName_ + tableName + " (";
                 foreach (string columnName in ColumnNames)
                     tmp += columnName + ", ";
                 tmp = tmp.Substring(0, tmp.Length - 2);

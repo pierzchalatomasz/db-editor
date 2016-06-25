@@ -13,6 +13,7 @@ namespace DB_Editor.DB_Handlers
     static class Table
     {
         private static MySqlCommand command_;
+        private static string dbName_;
         static Table()
         {
             command_ = new MySqlCommand();
@@ -21,16 +22,14 @@ namespace DB_Editor.DB_Handlers
         #region Methods
 
         #region ColumnManipulateMethods
-        //Table.DropColumn("Nazwa_tabeli", "nazwa_kolumny_do_usuniecia", "nazwa_bazy_danych");
-        public static OperationResult AddColumn(string tableName, ColumnStructureCreator colm, string posName = "", string dbName = "")
+        public static OperationResult AddColumn(string tableName, ColumnStructureCreator colm)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                if (posName != "" || posName != "FIRST")
-                    posName = "AFTER " + posName;
-                command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD " + colm.ToString() + posName + ";";
+                CheckDbName(ref dbName_);
+                command_.CommandText = "ALTER TABLE " + dbName_ + tableName + " ADD " + colm.ToString() + ";";
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -47,6 +46,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + oldColumnName + " " + newColumn.ToString() + ";";
@@ -62,13 +62,14 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult DropColumn(string tableName, string columnName, string dbName = "")
+        public static OperationResult DropColumn(string tableName, string columnName)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP COLUMN " + columnName + ";";
+                CheckDbName(ref dbName_);
+                command_.CommandText = "ALTER TABLE " + dbName_ + tableName + " DROP COLUMN " + columnName + ";";
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -81,15 +82,16 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static OperationResult MoveColumn(string tableName, ColumnStructureCreator colm, string posName, string dbName = "")
+        public static OperationResult MoveColumn(string tableName, ColumnStructureCreator colm, string posName)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
+                CheckDbName(ref dbName_);
                 if (posName != "FIRST")
                     posName = "AFTER " + posName;
-                command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + colm.ToString() + posName + ";";
+                command_.CommandText = "ALTER TABLE " + dbName_ + tableName + " CHANGE " + colm.ToString() + posName + ";";
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -105,13 +107,14 @@ namespace DB_Editor.DB_Handlers
         #endregion
 
         #region KeyMethods
-        public static OperationResult AddPrimaryKey(string tableName, string columnName, string dbName = "")
+        public static OperationResult AddPrimaryKey(string tableName, string columnName)
         {
             try
             {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
-                CheckDbName(ref dbName);
-                command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD PRIMARY KEY(" + columnName + ");";
+                CheckDbName(ref dbName_);
+                command_.CommandText = "ALTER TABLE " + dbName_ + tableName + " ADD PRIMARY KEY(" + columnName + ");";
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -210,11 +213,11 @@ namespace DB_Editor.DB_Handlers
         //        Console.Write(str + " ");
         //    Console.Write("\n");
         //}
-        public static List<List<string>> GetFirstPageOfRecords(string tableName, string dbName = "")
+        public static List<List<string>> GetFirstPageOfRecords(string tableName)
         {
             try
             {
-                return GetPageOfRecordsByIndex(0, tableName, dbName);
+                return GetPageOfRecordsByIndex(0, tableName);
             }
             catch (Exception e)
             {
@@ -225,12 +228,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static int GetAmountOfPages(string tableName, string dbName = "")
+        public static int GetAmountOfPages(string tableName)
         {
             try
             {
-                CheckDbName(ref dbName);
-                string tmp = "SELECT count(*) FROM " + dbName + tableName + ";";
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                CheckDbName(ref dbName_);
+                string tmp = "SELECT count(*) FROM " + dbName_ + tableName + ";";
 
                 command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
                 DB_Connection.DBConnectionManager.Connection.Open();
@@ -252,12 +256,13 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        public static List<List<string>> GetPageOfRecordsByIndex(int index, string tableName, string dbName = "")
+        public static List<List<string>> GetPageOfRecordsByIndex(int index, string tableName)
         {
             try
             {
-                CheckDbName(ref dbName);
-                string tmp = "SELECT * FROM " + dbName + tableName + " limit " + index * 50 + ", 50;";
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                CheckDbName(ref dbName_);
+                string tmp = "SELECT * FROM " + dbName_ + tableName + " limit " + index * 50 + ", 50;";
                 List<List<string>> tmpListOfList = new List<List<string>>();
                 List<string> tmpList = new List<string>();
 

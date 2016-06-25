@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DB_Editor.Components.MainWindow.Definitions;
 using DB_Editor.Components.MainWindow.States.TableEditor.Partials;
+using DB_Editor.Events;
+using DB_Editor.DB_Handlers;
 
 namespace DB_Editor.Components.MainWindow.States.TableEditor
 {
     public class TableEditor : State
     {
         private TableEditorControl control_;
-        public TableEditor() : base("TableEditor", new TableEditorControl())
+        public TableEditor()
+            : base("TableEditor", new TableEditorControl())
         {
             PrevState = "TablesListing";
             NextState = "TablesListing";
@@ -28,7 +31,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
         }
 
         public override void OnNextState()
-        {           
+        {
             Console.WriteLine("Saved successfully");
         }
 
@@ -37,13 +40,43 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             Console.WriteLine("Are you sure?");
         }
 
-        //do dokumentacji
         public override void ModifyAllowChangeState()
         {
             if (DoAllTheTests())
             {
-                DB_Handlers.Database.CreateTable(control_.NewTableName, control_.GetAllColumns(), DB_Connection.DBConnectionManager.DatabaseName);
-                this.AllowChangeState = true;
+                if (control_.ActualMode == Mode.Creator)
+                {
+                    Database.CreateTable(control_.NewTableName, control_.GetAllColumns());
+                    this.AllowChangeState = true;
+                }
+                else
+                {
+                     if (control_.OldTableName != control_.NewTableName)
+                         Database.RenameTable(control_.OldTableName, control_.NewTableName);
+                     
+                    List<ColumnStructureCreator> oldColumnListWithProperties = new List<ColumnStructureCreator>();
+                    oldColumnListWithProperties = Database.GetColumnStructureCreatorsFromTable(control_.NewTableName);
+
+                    List<ColumnStructureCreator> actualColumnListWithProperties = control_.GetColumnsWithProperties();
+                    
+                    for (int i = 0; i < oldColumnListWithProperties.Count; i++)
+                    {
+                        if (oldColumnListWithProperties[i] != actualColumnListWithProperties[i])
+                        {
+                            DB_Handlers.Table.ChangeColumn(control_.NewTableName, oldColumnListWithProperties[i].Field, actualColumnListWithProperties[i], DB_Connection.DBConnectionManager.DatabaseName);
+                        }
+                    }
+
+
+                    if (oldColumnListWithProperties.Count != actualColumnListWithProperties.Count)
+                    {
+                        for (int i = 0; i < actualColumnListWithProperties.Count - oldColumnListWithProperties.Count; i++)
+                        {
+                            DB_Handlers.Table.AddColumn(control_.NewTableName, actualColumnListWithProperties[oldColumnListWithProperties.Count+i]);
+                        }
+                    }
+                    this.AllowChangeState = true;
+                }
             }
             else
             {

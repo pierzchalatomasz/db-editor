@@ -34,5 +34,14 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing.Partials
             eventArgs.Mode = Mode.Editor;
             StateChangeRequestEvents.FireStateChangeRequest(sender, eventArgs);
         }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if(DialogResult.Yes == MessageBox.Show("This will delete whole table from database. Are you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                DB_Handlers.Database.DropTable(this.name.Text);
+                this.Dispose();
+            }
+        }
     }
 }
