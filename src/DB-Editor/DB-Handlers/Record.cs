@@ -19,11 +19,22 @@ namespace DB_Editor.DB_Handlers
         /// Methods alters one value in row.
         /// </summary>
         /// <param name="tableName">Name of the table</param>
-        /// <param name="Change">Tuple of field name and its changed value</param>
+        /// <param name="OldValues">Tuple of field name and its changed value</param>
         /// <param name="OldRecord">Table of tuples with all field names and their old values</param>
         /// <param name="dbName">Optional, database name</param>
         /// <returns></returns>
-        public static OperationResult ChangeRowValue(string tableName, Tuple<string, string> Change, Tuple<string, string>[] OldRecord)
+        /// 
+
+        /*Dictionary<string, string> cos = new Dictionary<string,string>();
+            cos.Add("superfajneoko", "2");
+            cos.Add("oczko", "1");
+            Dictionary<string, string> cos2 = new Dictionary<string,string>();
+            cos2.Add("superfajneoko", "10");
+            cos2.Add("oczko", "20");
+
+            DB_Handlers.Record.ChangeRowValue("jedenoko", cos2, cos);*/
+
+        public static OperationResult ChangeRowValue(string tableName, Dictionary<string, string> OldValues, Dictionary<string, string> StuffToChange)
         {
             try
             {
@@ -31,12 +42,23 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName_);
                 string tmp = "";
-                tmp += "UPDATE " + dbName_ + tableName + " SET " + Change.Item1 + " = \"" + Change.Item2 + "\" WHERE ";
-                foreach (var pair in OldRecord)
-                    tmp += pair.Item1 + " = \"" + pair.Item2 + "\" AND ";
+                tmp += "UPDATE " + dbName_ + tableName + " SET ";
 
+                foreach(var item in StuffToChange)
+                {
+                    tmp += item.Key + " = \"" + item.Value + "\", ";
+                }
+
+                tmp = tmp.Substring(0, tmp.Length - 2);
+                tmp += " WHERE ";
+
+                foreach(var item in OldValues)
+                {
+                    tmp += item.Key + " = \"" + item.Value + "\" AND ";
+                }
                 tmp = tmp.Substring(0, tmp.Length - 5);
                 tmp += ";";
+
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
@@ -120,6 +142,42 @@ namespace DB_Editor.DB_Handlers
             }
         }
 
+
+        /*Dictionary<string, string> cos = new Dictionary<string,string>();
+            cos.Add("superfajneoko", "2");
+            cos.Add("oczko", "8");
+            DB_Handlers.Record.DeleteRow("jedenoko", cos);*/
+
+        public static OperationResult DeleteRow(string tableName, Dictionary<string, string> pairs)
+        {
+            try
+            {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                DBConnectionManager.Connection.Open();
+                CheckDbName(ref dbName_);
+                string tmp = "";
+                tmp += "DELETE FROM " + dbName_ + tableName + " WHERE ";
+                foreach(var item in pairs)
+                {
+                    tmp += item.Key + " = \"" + item.Value + "\" AND ";
+                }
+                tmp = tmp.Substring(0, tmp.Length - 5);
+                tmp += ";";
+
+                MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
+                command_.ExecuteNonQuery();
+                return new OperationResult(true, new Exception("QUERY Ok"));
+            }
+            catch (Exception e)
+            {
+                return new OperationResult(false, e);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+       
         #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
