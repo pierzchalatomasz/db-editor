@@ -58,7 +58,6 @@ namespace DB_Editor.DB_Handlers
                 }
                 tmp = tmp.Substring(0, tmp.Length - 5);
                 tmp += ";";
-                Console.WriteLine(tmp);
 
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
