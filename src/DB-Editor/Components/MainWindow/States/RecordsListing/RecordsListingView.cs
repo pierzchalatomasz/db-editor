@@ -49,7 +49,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         public void UpdateView()
         {
-            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage, presenter_.AmountOfPages - 1);
+            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage + 1, presenter_.AmountOfPages);
 
             BuildRecordsContainer();
             recordsContainerOld_.Hide();
@@ -60,6 +60,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             ScrollTop();
             ToggleNextPageButtonVisibility();
             TogglePrevPageButtonVisibility();
+            ToggleEditButtonVisibility();
         }
 
         #region View Builders
@@ -86,7 +87,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void ShowRecords(RecordsContainer recordsContainer)
         {
-            int iterator = 50 * (presenter_.CurrentPage - 1);
+            int iterator = 0;
 
             records_.Clear();
 
@@ -155,7 +156,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void TogglePrevPageButtonVisibility()
         {
-            if (presenter_.CurrentPage == 1 || presenter_.AmountOfPages == 0)
+            if (presenter_.CurrentPage == 0 || presenter_.AmountOfPages == 0)
             {
                 buttonPrevPage.Hide();
             }
@@ -169,7 +170,15 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             Record record = sender as Record;
             HighlightSelectedRecord(presenter_.SelectedRecordID, record.ID);
-            presenter_.SelectedRecordID = record.ID;
+            
+            if (presenter_.SelectedRecordID != record.ID)
+            {
+                presenter_.SelectedRecordID = record.ID;
+            }
+            else
+            {
+                presenter_.SelectedRecordID = -1;
+            }
         }
 
         private void HighlightSelectedRecord(long oldId, long newId)
@@ -210,6 +219,18 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             Invalidate();
             Application.DoEvents();
+        }
+
+        public void ToggleEditButtonVisibility()
+        {
+            if (presenter_.SelectedRecordID == -1)
+            {
+                buttonEdit.Hide();
+            }
+            else
+            {
+                buttonEdit.Show();
+            }
         }
     }
 }

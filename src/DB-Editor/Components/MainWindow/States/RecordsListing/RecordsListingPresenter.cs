@@ -23,7 +23,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             FetchRecords();
             FetchTableFieldNames();
             SetAmountOfPages();
-            CurrentPage = 1;
+            CurrentPage = 0;
         }
 
         public Dictionary<string, string> GetSelectedRecordData()
@@ -91,6 +91,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             set
             {
                 model_.SelectedRecordID = value;
+                view_.ToggleEditButtonVisibility();
             }
         }
 
