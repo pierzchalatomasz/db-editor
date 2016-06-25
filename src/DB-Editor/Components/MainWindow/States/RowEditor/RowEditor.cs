@@ -15,6 +15,14 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             ButtonText = "Save";
             NextState = "TablesListing";
             PrevState = "RecordsListing";
+
+            var control = Control as RowEditorControl;
+            control.SetTitle = SetTitle;
+        }
+
+        public void SetTitle(string tableName)
+        {
+            Title = string.Format("Editing record of \"{0}\" table", tableName);
         }
     }
 }

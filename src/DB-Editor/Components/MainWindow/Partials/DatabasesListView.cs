@@ -15,8 +15,6 @@ namespace DB_Editor.Components.MainWindow.Partials
     {
         public event EventHandler DatabaseAdd;
 
-        public event EventHandler DatabaseChanged;
-
         public event EventHandler DatabaseDelete;
 
         public event EventHandler CurrentlyUsedDatabaseDelete;
@@ -44,7 +42,6 @@ namespace DB_Editor.Components.MainWindow.Partials
         private void databasesList_DoubleClick(object sender, EventArgs e)
         {
             DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
-            DatabaseChanged.Invoke(sender, e);
             StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
             StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
         }
@@ -69,18 +66,16 @@ namespace DB_Editor.Components.MainWindow.Partials
             newDatabaseName.Text = "";
             DisplayDatabasesList();
         }
+
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if(DB_Connection.DBConnectionManager.DatabaseName == "")
             {
                 DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
-                DatabaseChanged.Invoke(sender, e);
-                //WYROBIC LABEL DLA TABLESLISTING
             }
             else
             {
                 DB_Connection.DBConnectionManager.DatabaseName = DB_Connection.DBConnectionManager.DatabaseName;
-                DatabaseChanged.Invoke(sender, e);
             }
             if (databasesList.SelectedIndex != -1)
             {
@@ -123,7 +118,7 @@ namespace DB_Editor.Components.MainWindow.Partials
 
         public void CurrentlyUsedDatabaseDeleteHandler(object sender, EventArgs e)
         {
-            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
+            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("Welcome");
             StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
             DB_Handlers.OperationResult tmp = DB_Handlers.Database.DropDatabase(DatabaseNameToAction);
             if (tmp.Exception.Message != "QUERY Ok")

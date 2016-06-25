@@ -138,6 +138,13 @@
       <DependentUpon>TableEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\MainWindow\States\TableOverview\TableOverview.cs" />
+    <Compile Include="Components\MainWindow\States\Welcome\Welcome.cs" />
+    <Compile Include="Components\MainWindow\States\Welcome\WelcomeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\Welcome\WelcomeControl.Designer.cs">
+      <DependentUpon>WelcomeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB-Handlers\Record.cs" />
     <Compile Include="Events\StateChangeRequestEvents.cs" />
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
@@ -208,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\TablesListing\TablesListingControl.resx">
       <DependentUpon>TablesListingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\Welcome\WelcomeControl.resx">
+      <DependentUpon>WelcomeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\View.resx">
       <DependentUpon>View.cs</DependentUpon>

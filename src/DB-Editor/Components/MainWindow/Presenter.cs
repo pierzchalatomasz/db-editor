@@ -27,8 +27,7 @@ namespace DB_Editor.Components.MainWindow
         public void Init()
         {
             ListenToEvents();
-            SetDefaultState("TablesListing");
-            view_.SetDatabaseChangedDelegate(GetStateByName("TablesListing").DatabaseChanged);
+            SetDefaultState("Welcome");
         }
 
         public State ActiveState
@@ -44,6 +43,11 @@ namespace DB_Editor.Components.MainWindow
             if (model_.ActiveState != null)
             {
                 PerformActionOnStateChange(args.StateOrder);
+            }
+
+            if (model_.States[args.State].Rebuildable)
+            {
+                model_.RebuildState(args.State);
             }
 
             model_.ActiveState = model_.States[args.State];

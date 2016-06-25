@@ -9,6 +9,7 @@ using DB_Editor.Components.MainWindow.States.TablesListing;
 using DB_Editor.Components.MainWindow.States.TableEditor;
 using DB_Editor.Components.MainWindow.States.RowEditor;
 using DB_Editor.Components.MainWindow.States.RecordsListing;
+using DB_Editor.Components.MainWindow.States.Welcome;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -16,9 +17,12 @@ namespace DB_Editor.Components.MainWindow
 
     class Model
     {
+        private Dictionary<string, Type> stateTypes_; 
+
         public Model()
         {
             States = new StatesDict();
+            stateTypes_ = new Dictionary<string, Type>();
             CreateStates();
         }
 
@@ -26,17 +30,27 @@ namespace DB_Editor.Components.MainWindow
 
         public State ActiveState { get; set; }
 
-        private void CreateStates()
+        public void RebuildState(string name)
         {
-            CreateSingleState(new TablesListing());
-            CreateSingleState(new TableEditor());
-            CreateSingleState(new RowEditor());
-            CreateSingleState(new RecordsListing());
+            States.Remove(name);
+            State state = Activator.CreateInstance(stateTypes_[name]) as State;
+            States.Add(state.Name, state);
         }
 
-        private void CreateSingleState(State state)
+        private void CreateStates()
         {
+            CreateSingleState(typeof(Welcome));
+            CreateSingleState(typeof(TablesListing));
+            CreateSingleState(typeof(TableEditor));
+            CreateSingleState(typeof(RowEditor));
+            CreateSingleState(typeof(RecordsListing));
+        }
+
+        private void CreateSingleState(Type type)
+        {
+            State state = Activator.CreateInstance(type) as State;
             States.Add(state.Name, state);
+            stateTypes_.Add(state.Name, type);
         }
     }
 }
