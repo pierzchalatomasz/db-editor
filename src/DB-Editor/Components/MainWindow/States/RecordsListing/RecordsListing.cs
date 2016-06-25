@@ -14,6 +14,15 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             NextState = "RowEditor";
             PrevState = "TablesListing";
             ButtonText = "Add new record";
+            Rebuildable = false;
+
+            var control = Control as RecordsListingView;
+            control.SetTitle += SetTitle;
+        }
+
+        private void SetTitle(string tableName)
+        {
+            Title = string.Format("Records of \"{0}\" table", tableName);
         }
     }
 }

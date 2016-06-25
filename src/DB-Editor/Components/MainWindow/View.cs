@@ -33,7 +33,7 @@ namespace DB_Editor.Components.MainWindow
             presenter_.ActiveState.Control.AutoScroll = true;
             presenter_.ActiveState.Control.Show();
             rightPanel.Controls.Add(presenter_.ActiveState.Control);
-            RightPanelTitle.Text = presenter_.ActiveState.Name;
+            RightPanelTitle.Text = presenter_.ActiveState.Title;
 
             UpdateButtons();
         }
@@ -79,11 +79,6 @@ namespace DB_Editor.Components.MainWindow
             {
                 buttonNext.Text = presenter_.ActiveState.ButtonText;
             }
-        }
-
-        public void SetDatabaseChangedDelegate(EventHandler eventHandler)
-        {
-            databasesList.DatabaseChanged += eventHandler;
         }
     }
 }

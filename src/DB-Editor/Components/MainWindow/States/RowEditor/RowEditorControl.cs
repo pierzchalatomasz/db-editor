@@ -20,19 +20,17 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             InitializeComponent();
         }
 
+        public string TableName { get; set; }
+
+        public Action<string> SetTitle;
+
         public override StateChangeRequestEventArgs EventData
         {
             set
             {
-                // Get mode (creator / editor)
-                //if (value.Mode == Mode.Editor)
-                //{
-                    BuildFields(value.Data);
-                //}
-                //else
-                {
-                  //  Clear();
-                }
+                TableName = value.Data["tableName"];
+                SetTitle(TableName);
+                BuildFields(value.Data);
             }
         }
 
@@ -40,13 +38,14 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
         {
             foreach (var fieldData in data)
             {
-                Console.WriteLine(fieldData.Key);
-
-                FieldEditor field = new FieldEditor();
-                field.FieldName = fieldData.Key;
-                field.Value = fieldData.Value;
-                field.Show();
-                container.Controls.Add(field);
+                if (fieldData.Key != "tableName")
+                {
+                    FieldEditor field = new FieldEditor();
+                    field.FieldName = fieldData.Key;
+                    field.Value = fieldData.Value;
+                    field.Show();
+                    container.Controls.Add(field);
+                }
             }
         }
     }
