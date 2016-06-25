@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Editor.Events;
 
 namespace DB_Editor.Components.MainWindow.States.RecordsListing
 {
@@ -26,18 +27,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             CurrentPage = 0;
         }
 
-        public Dictionary<string, string> GetSelectedRecordData()
+        public void DeleteRecord()
         {
-            var output = new Dictionary<string, string>();
+            DB_Handlers.Record.DeleteRow(TableName, GetSelectedRecordData());
+            FetchRecords();
+            view_.UpdateView();
+        }
 
-            for (int i = 0; i < TableFieldNames.Count; i++)
-            {
-                string fieldName = TableFieldNames.ElementAt(i);
-                string value = RecordsData.ElementAt((int)SelectedRecordID).ElementAt(i);
-                output.Add(fieldName, value);
-            }
+        public StateChangeRequestEventArgs GetSelectedRecordArgs()
+        {
+            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
+            args.Data = GetSelectedRecordData();
+            args.Data["tableName"] = TableName;
 
-            return output;
+            return args;
         }
 
         #region Private Methods
@@ -76,6 +79,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public Dictionary<string, string> GetSelectedRecordData()
+        {
+            var output = new Dictionary<string, string>();
+
+            for (int i = 0; i < TableFieldNames.Count; i++)
+            {
+                string fieldName = TableFieldNames.ElementAt(i);
+                string value = RecordsData.ElementAt((int)SelectedRecordID).ElementAt(i);
+                output.Add(fieldName, value);
+            }
+
+            return output;
         }
 
         #endregion

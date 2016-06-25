@@ -63,6 +63,19 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             ToggleEditButtonVisibility();
         }
 
+        private bool GetUserPermission()
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete selected record?", 
+                "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #region View Builders
 
         private void BuildRecordsContainer()
@@ -126,16 +139,29 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
-            args.Data = presenter_.GetSelectedRecordData();
-            args.Data["tableName"] = presenter_.TableName;
-
-            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+            StateChangeRequestEvents.FireStateChangeRequest(sender, presenter_.GetSelectedRecordArgs());
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (GetUserPermission())
+            {
+                presenter_.DeleteRecord();
+            }
+        }
 
+        public void ToggleEditButtonVisibility()
+        {
+            if (presenter_.SelectedRecordID == -1)
+            {
+                buttonEdit.Hide();
+                buttonDelete.Hide();
+            }
+            else
+            {
+                buttonEdit.Show();
+                buttonDelete.Show();
+            }
         }
 
         #endregion
@@ -219,18 +245,6 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             Invalidate();
             Application.DoEvents();
-        }
-
-        public void ToggleEditButtonVisibility()
-        {
-            if (presenter_.SelectedRecordID == -1)
-            {
-                buttonEdit.Hide();
-            }
-            else
-            {
-                buttonEdit.Show();
-            }
         }
     }
 }
