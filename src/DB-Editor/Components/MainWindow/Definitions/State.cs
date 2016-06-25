@@ -15,6 +15,8 @@ namespace DB_Editor.Components.MainWindow.Definitions
             Name = stateName;
             this.Control = Control;
             AllowChangeState = true;
+            Title = Name;
+            Rebuildable = true;
         }
 
         public StateControl Control { get; private set; }
@@ -28,6 +30,10 @@ namespace DB_Editor.Components.MainWindow.Definitions
         public string PrevState { get; set; }
         //do dokumentacji
         public bool AllowChangeState { get; set; }
+        //do dokumentacji
+        public string Title { get; protected set; }
+        //do dokumentacji
+        public bool Rebuildable { get; protected set; }
 
         public virtual void DatabaseChanged(object sender, EventArgs e) { }
 

@@ -23,6 +23,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             tblNameTextBox.Text = String.Empty;
         }
 
+        public Action<string> SetTitle;
 
         public override StateChangeRequestEventArgs EventData
         {
@@ -31,6 +32,8 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                 // Get mode (creator / editor)
                 if (value.Mode == Mode.Editor)
                 {
+                    SetTitle(value.Data["id"]);
+
                     tblNameTextBox.Text = value.Data["id"];
                     string[] settingableTypes = new string[] { "float", "double", "decimal", "char", "varchar", "text", "enum" };
                         

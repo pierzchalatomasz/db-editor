@@ -19,7 +19,14 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             ButtonText = "Save";
             control_ = Control as TableEditorControl;
             this.AllowChangeState = false;
+            control_.SetTitle = SetTitle;
         }
+
+        public void SetTitle(string tableName)
+        {
+            Title = string.Format("Editing \"{0}\" table", tableName);
+        }
+
         public override void OnNextState()
         {           
             Console.WriteLine("Saved successfully");
@@ -37,14 +44,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             {
                 DB_Handlers.Database.CreateTable(control_.NewTableName, control_.GetAllColumns(), DB_Connection.DBConnectionManager.DatabaseName);
                 this.AllowChangeState = true;
-                //
-                //po tej operacji jest klikniety przycisk Save
-                //to powoduje zapisanie tabeli do bazy danych na serwerze
-                //po wykonaniu tego, to wszystko wraca do nastepnego stanu, czyli TablesListing
-                //ktory w sobie nie zawiera tej dodanej bazy danych
-                //zatem najlepiej by bylo, gdyby to sam obiekt odswiezal swoj stan (TablesListing)
-                //albo wywolac zmiane baze danych na ta sama, ale pozostawiam to Tobie
-                //
             }
             else
             {

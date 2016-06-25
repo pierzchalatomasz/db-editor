@@ -19,6 +19,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             InitializeComponent();
             Resize += OnResize;
             Paint += OnResize;
+            DisplayData();
         }
 
         public void AddTables(List<string> tablesNamesList)
@@ -37,6 +38,23 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             foreach (Control tableItem in TableItemsContainer.Controls)
             {
                 tableItem.Width = Width - 25;
+            }
+        }
+
+        private void DisplayData()
+        {
+            try
+            {
+                List<string> tablesNamesList = DB_Handlers.Database.GetTablesFromDatabase(DB_Connection.DBConnectionManager.DatabaseName);
+                AddTables(tablesNamesList);
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                DB_Connection.DBConnectionManager.Connection.Close();
             }
         }
     }

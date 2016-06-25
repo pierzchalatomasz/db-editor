@@ -23,6 +23,8 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private RecordsContainer recordsContainerNew_ = new RecordsContainer();
 
+        public Action<string> SetTitle;
+
         public RecordsListingView()
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
                     presenter_.TableName = value.Data["id"];
                     ClearControls();
                     presenter_.Init();
+
+                    SetTitle(presenter_.TableName);
                 }
             }
         }
@@ -123,8 +127,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
             args.Data = presenter_.GetSelectedRecordData();
-
-            Console.WriteLine(args.Data.Count);
+            args.Data["tableName"] = presenter_.TableName;
 
             StateChangeRequestEvents.FireStateChangeRequest(sender, args);
         }
