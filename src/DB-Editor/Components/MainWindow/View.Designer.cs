@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             this.buttonsContainer = new System.Windows.Forms.Panel();
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonNext = new System.Windows.Forms.Button();
             this.RightPanelTitle = new System.Windows.Forms.Label();
             this.rightPanelWrapper = new System.Windows.Forms.Panel();
             this.rightPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.databasesList = new DB_Editor.Components.MainWindow.Partials.DatabasesListView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -64,30 +64,20 @@
             this.splitContainer.Panel2.Controls.Add(this.RightPanelTitle);
             this.splitContainer.Panel2.Controls.Add(this.rightPanelWrapper);
             this.splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(15);
-            this.splitContainer.Size = new System.Drawing.Size(808, 483);
+            this.splitContainer.Size = new System.Drawing.Size(884, 561);
             this.splitContainer.SplitterDistance = 269;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 0;
-            // 
-            // databasesList
-            // 
-            this.databasesList.AutoSize = true;
-            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databasesList.Location = new System.Drawing.Point(15, 15);
-            this.databasesList.Name = "databasesList";
-            this.databasesList.Size = new System.Drawing.Size(239, 453);
-            this.databasesList.TabIndex = 0;
             // 
             // buttonsContainer
             // 
             this.buttonsContainer.Controls.Add(this.buttonBack);
             this.buttonsContainer.Controls.Add(this.buttonNext);
             this.buttonsContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonsContainer.Location = new System.Drawing.Point(15, 394);
+            this.buttonsContainer.Location = new System.Drawing.Point(15, 472);
             this.buttonsContainer.Name = "buttonsContainer";
             this.buttonsContainer.Padding = new System.Windows.Forms.Padding(15);
-            this.buttonsContainer.Size = new System.Drawing.Size(508, 74);
+            this.buttonsContainer.Size = new System.Drawing.Size(584, 74);
             this.buttonsContainer.TabIndex = 5;
             // 
             // buttonBack
@@ -112,7 +102,7 @@
             this.buttonNext.Dock = System.Windows.Forms.DockStyle.Right;
             this.buttonNext.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonNext.ForeColor = System.Drawing.Color.White;
-            this.buttonNext.Location = new System.Drawing.Point(353, 15);
+            this.buttonNext.Location = new System.Drawing.Point(429, 15);
             this.buttonNext.MaximumSize = new System.Drawing.Size(140, 41);
             this.buttonNext.MinimumSize = new System.Drawing.Size(140, 41);
             this.buttonNext.Name = "buttonNext";
@@ -141,7 +131,7 @@
             this.rightPanelWrapper.Location = new System.Drawing.Point(15, 15);
             this.rightPanelWrapper.Name = "rightPanelWrapper";
             this.rightPanelWrapper.Padding = new System.Windows.Forms.Padding(15, 60, 15, 75);
-            this.rightPanelWrapper.Size = new System.Drawing.Size(508, 453);
+            this.rightPanelWrapper.Size = new System.Drawing.Size(584, 531);
             this.rightPanelWrapper.TabIndex = 0;
             // 
             // rightPanel
@@ -151,18 +141,29 @@
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rightPanel.Location = new System.Drawing.Point(15, 60);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(478, 318);
+            this.rightPanel.Size = new System.Drawing.Size(554, 396);
             this.rightPanel.TabIndex = 4;
+            // 
+            // databasesList
+            // 
+            this.databasesList.AutoSize = true;
+            this.databasesList.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.databasesList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databasesList.Location = new System.Drawing.Point(15, 15);
+            this.databasesList.Name = "databasesList";
+            this.databasesList.Size = new System.Drawing.Size(239, 531);
+            this.databasesList.TabIndex = 0;
             // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(808, 483);
+            this.ClientSize = new System.Drawing.Size(884, 561);
             this.Controls.Add(this.splitContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "View";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DB Editor";
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
