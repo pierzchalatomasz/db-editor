@@ -80,10 +80,5 @@ namespace DB_Editor.Components.MainWindow
                 buttonNext.Text = presenter_.ActiveState.ButtonText;
             }
         }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            new AboutWindow.AboutBox().Show();
-        }
     }
 }
