@@ -38,8 +38,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                //dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
-                dbName_ = "super";
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName_);
                 string tmp = "";
