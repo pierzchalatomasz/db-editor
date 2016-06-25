@@ -12,8 +12,6 @@ namespace DB_Editor.DB_Handlers
     using QueryResult = List<Dictionary<string, string>>;
     static class Table
     {
-        //jezeli jakas metoda nie dziala, to przed wywolaniem dodaj
-        //DB_Connection.DBConnectionManager.Connect();
         private static MySqlCommand command_;
         static Table()
         {
@@ -23,14 +21,12 @@ namespace DB_Editor.DB_Handlers
         #region Methods
 
         #region ColumnManipulateMethods
-        //mozna uzywac zarowno z nazwa bazy danych, jak i bez, np:
         //Table.DropColumn("Nazwa_tabeli", "nazwa_kolumny_do_usuniecia", "nazwa_bazy_danych");
-        //Table.DropColumn("Nazwa_tabeli", "nazwa_kolumny_do_usuniecia");
         public static OperationResult AddColumn(string tableName, ColumnStructureCreator colm, string posName = "", string dbName = "")
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 if (posName != "" || posName != "FIRST")
                     posName = "AFTER " + posName;
@@ -47,12 +43,11 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        //zalozylem, ze zmiany moga byc wieksze, anizeli tylko zmiana nazwy, stad jedna metoda ogarnie sie wiecej zmian naraz
         public static OperationResult ChangeColumn(string tableName, string oldColumnName, ColumnStructureCreator newColumn, string dbName = "")
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + oldColumnName + " " + newColumn.ToString() + ";";
                 command_.ExecuteNonQuery();
@@ -71,7 +66,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP COLUMN " + columnName + ";";
                 command_.ExecuteNonQuery();
@@ -90,7 +85,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 if (posName != "FIRST")
                     posName = "AFTER " + posName;
@@ -114,7 +109,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD PRIMARY KEY(" + columnName + ");";
                 command_.ExecuteNonQuery();
@@ -139,7 +134,7 @@ namespace DB_Editor.DB_Handlers
                 colm.Primary_Key = false;
                 colm.Extra = false;
                 ChangeColumn(tableName, colm.Field, colm, dbName);
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP PRIMARY KEY;";
                 command_.ExecuteNonQuery();
@@ -159,7 +154,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " ADD FOREIGN KEY(" + fieldName + ") REFERENCES " + dbName + referencedTable + "(" + referencedField + ");";
                 command_.ExecuteNonQuery();
@@ -181,7 +176,7 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName);
                 string tmp = GetConstraintName(tableName, fieldName);
 
-                OpenConnection();
+                DBConnectionManager.Connection.Open();
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " DROP FOREIGN KEY " + tmp + ";";
                 command_.Connection = DBConnectionManager.Connection;
                 //sprawdzic, czy powyzsze mozna usunac
@@ -219,7 +214,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                return GetPageOfRecordsByIndex(0, tableName, dbName);           
+                return GetPageOfRecordsByIndex(0, tableName, dbName);
             }
             catch (Exception e)
             {
@@ -297,18 +292,14 @@ namespace DB_Editor.DB_Handlers
             }
         }
         #endregion
-        
+
         #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {
             if (dbName != "")
                 dbName = dbName + ".";
         }
-        private static void OpenConnection()
-        {
-            //DBConnectionManager.Connect();
-            DBConnectionManager.Connection.Open();
-        }
+
         private static string GetConstraintName(string tableName, string fieldName)
         {
             DBConnectionManager.Connect();

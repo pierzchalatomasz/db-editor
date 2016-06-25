@@ -55,12 +55,11 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
                     return fieldTypeDrpDwnLst.SelectedItem.ToString();
                 else
                     return "";
+            }   
+            set
+            {
+                fieldTypeDrpDwnLst.SelectedItem = value;
             }
-       
-            //set
-            //{
-            //    fieldTypeDrpDwnLst.SelectedItem = value;
-            //}
         }
         public string TypeLength
         {
@@ -68,10 +67,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return LengthTxtBox.Text;
             }
-            //set
-            //{
-            //    LengthTxtBox.Text = value;
-            //}
+            set
+            {
+                LengthTxtBox.Text = value;
+            }
         }       
         public bool NullValue
         {
@@ -82,13 +81,13 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
                 else
                     return false;
             }
-            //set
-            //{
-            //    if(value)
-            //       NullDrpDwnLst.SelectedItem = "YES";
-            //    else
-            //        NullDrpDwnLst.SelectedItem = "NO";
-            //}
+            set
+            {
+                if(value)
+                   NullDrpDwnLst.SelectedItem = "YES";
+                else
+                    NullDrpDwnLst.SelectedItem = "NO";
+            }
         }       
         public bool Primary_Key
         {
@@ -96,10 +95,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return PrimaryKeyChckBox.Checked;
             }
-            //set
-            //{
-            //    PrimaryKeyChckBox.Checked = value;
-            //}
+            set
+            {
+                PrimaryKeyChckBox.Checked = value;
+            }
         }       
         public string Default
         {
@@ -107,10 +106,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return defaultTextBox.Text;
             }
-            //set
-            //{
-            //    defaultTextBox.Text = value;
-            //}
+            set
+            {
+                defaultTextBox.Text = value;
+            }
         }      
         public bool Extra
         {
@@ -118,11 +117,24 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             {
                 return AutoIncrementChckBox.Checked;
             }
-            //set
-            //{
-            //    AutoIncrementChckBox.Checked = value;
-            //}
+            set
+            {
+                AutoIncrementChckBox.Checked = value;
+            }
         }
+        //do dokumentacji
+        public bool LengthReadOnly
+        {
+            get
+            {
+                return this.LengthTxtBox.ReadOnly;
+            }
+            set
+            {
+                this.LengthTxtBox.ReadOnly = value;
+            }
+        }
+        
         #endregion
         public void Clear()
         {
@@ -224,12 +236,12 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             else
                 LengthTxtBox.ReadOnly = true;
         }
-        #endregion
+        
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
-
+        #endregion
     }
 }
