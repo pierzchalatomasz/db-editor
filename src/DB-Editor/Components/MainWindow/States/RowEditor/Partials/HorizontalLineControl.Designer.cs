@@ -1,6 +1,6 @@
-﻿namespace DB_Editor.Components.MainWindow.States.RowEditor
+﻿namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
 {
-    partial class RowEditorControl
+    partial class HorizontalLineControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RowEditorContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.HorLine = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // RowEditorContainer
+            // HorLine
             // 
-            this.RowEditorContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RowEditorContainer.Location = new System.Drawing.Point(0, 0);
-            this.RowEditorContainer.Name = "RowEditorContainer";
-            this.RowEditorContainer.Size = new System.Drawing.Size(476, 308);
-            this.RowEditorContainer.TabIndex = 0;
+            this.HorLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.HorLine.Location = new System.Drawing.Point(0, 0);
+            this.HorLine.Name = "HorLine";
+            this.HorLine.Size = new System.Drawing.Size(2, 64);
+            this.HorLine.TabIndex = 0;
             // 
-            // RowEditorControl
+            // HorizontalLineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.RowEditorContainer);
-            this.Name = "RowEditorControl";
-            this.Size = new System.Drawing.Size(476, 308);
-            this.RowEditorContainer.ResumeLayout(false);
+            this.Controls.Add(this.HorLine);
+            this.Name = "HorizontalLineControl";
+            this.Size = new System.Drawing.Size(2, 64);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel RowEditorContainer;
+        private System.Windows.Forms.Label HorLine;
     }
 }

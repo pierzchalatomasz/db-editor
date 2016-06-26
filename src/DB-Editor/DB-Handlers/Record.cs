@@ -44,7 +44,7 @@ namespace DB_Editor.DB_Handlers
                 string tmp = "";
                 tmp += "UPDATE " + dbName_ + tableName + " SET ";
 
-                foreach(var item in StuffToChange)
+                foreach (var item in StuffToChange)
                 {
                     tmp += item.Key + " = \"" + item.Value + "\", ";
                 }
@@ -52,7 +52,7 @@ namespace DB_Editor.DB_Handlers
                 tmp = tmp.Substring(0, tmp.Length - 2);
                 tmp += " WHERE ";
 
-                foreach(var item in OldValues)
+                foreach (var item in OldValues)
                 {
                     tmp += item.Key + " = \"" + item.Value + "\" AND ";
                 }
@@ -79,7 +79,7 @@ namespace DB_Editor.DB_Handlers
         //oko.Add(ok2);
         //oko.Add(ok3);
         //Record.InsertRowValue("stringtable", ok2, oko, "ok");
-        public static OperationResult InsertRowValue(string tableName, string[] ColumnNames, List<string[]> Values)
+        public static OperationResult InsertRowValue(string tableName, List<string> ColumnNames, List<string> Values)
         {
             try
             {
@@ -91,20 +91,17 @@ namespace DB_Editor.DB_Handlers
                 foreach (string columnName in ColumnNames)
                     tmp += columnName + ", ";
                 tmp = tmp.Substring(0, tmp.Length - 2);
-                tmp += ") VALUES ";
+                tmp += ") VALUES (";
 
-                foreach (var stringArrays in Values)
+                foreach (string value in Values)
                 {
-                    tmp += "(";
-                    foreach (var stringArray in stringArrays)
-                    {
-                        tmp += "\"" + stringArray + "\", ";
-                    }
-                    tmp = tmp.Substring(0, tmp.Length - 2);
-                    tmp += "), ";
+                    if(value == "NULL")
+                        tmp += value + ", ";
+                    else
+                        tmp += "\"" + value + "\", ";
                 }
                 tmp = tmp.Substring(0, tmp.Length - 2);
-                tmp += ";";
+                tmp += ");";
 
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
@@ -119,7 +116,7 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-        
+
         //tabela w ktorej jest pole, ktore jest auto_increment oraz nazwa bazy danych
         //w ktorej tabelka sie znajduje, zabezpiecza to przed dwoma tabelkami o tej samej nazwie
         //w roznych bazach danych
@@ -129,7 +126,7 @@ namespace DB_Editor.DB_Handlers
             {
                 string tmp = "SELECT auto_increment FROM information_schema.tables where table_name = \"";
                 tmp += tableName + "\" AND table_schema = \"" + dbName + "\";";
-                QueryResult res = DBConnectionManager.Query(tmp);   
+                QueryResult res = DBConnectionManager.Query(tmp);
                 return Int32.Parse(res[0].First().Value);
             }
             catch (Exception e)
@@ -157,7 +154,7 @@ namespace DB_Editor.DB_Handlers
                 CheckDbName(ref dbName_);
                 string tmp = "";
                 tmp += "DELETE FROM " + dbName_ + tableName + " WHERE ";
-                foreach(var item in pairs)
+                foreach (var item in pairs)
                 {
                     tmp += item.Key + " = \"" + item.Value + "\" AND ";
                 }
@@ -177,7 +174,7 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
-       
+
         #region PrivateMethods
         private static void CheckDbName(ref string dbName)
         {

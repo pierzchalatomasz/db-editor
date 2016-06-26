@@ -104,11 +104,30 @@
     </Compile>
     <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingModel.cs" />
     <Compile Include="Components\MainWindow\States\RecordsListing\RecordsListingPresenter.cs" />
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\HorizontalLineControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\HorizontalLineControl.Designer.cs">
+      <DependentUpon>HorizontalLineControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\IControlInterface.cs" />
     <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.Designer.cs">
       <DependentUpon>FieldEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\OneColumnDropDownEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\OneColumnDropDownEditor.Designer.cs">
+      <DependentUpon>OneColumnDropDownEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\OneColumnTextEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MainWindow\States\RowEditor\Partials\OneColumnTextEditor.Designer.cs">
+      <DependentUpon>OneColumnTextEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\MainWindow\States\RowEditor\RowEditor.cs" />
     <Compile Include="Components\MainWindow\States\RowEditor\RowEditorControl.cs">
@@ -191,6 +210,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\FieldEditor.resx">
       <DependentUpon>FieldEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\HorizontalLineControl.resx">
+      <DependentUpon>HorizontalLineControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\OneColumnDropDownEditor.resx">
+      <DependentUpon>OneColumnDropDownEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\MainWindow\States\RowEditor\Partials\OneColumnTextEditor.resx">
+      <DependentUpon>OneColumnTextEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MainWindow\States\RowEditor\RowEditorControl.resx">
       <DependentUpon>RowEditorControl.cs</DependentUpon>
