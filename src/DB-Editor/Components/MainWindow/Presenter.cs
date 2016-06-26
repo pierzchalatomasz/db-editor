@@ -29,7 +29,7 @@ namespace DB_Editor.Components.MainWindow
             model_.StateBuilt += SetOnResizeEventHandler;
             model_.CreateStates();
             ListenToEvents();
-            SetDefaultState("Welcome");
+            SetDefaultState("Welcome");           
         }
 
         public State ActiveState
