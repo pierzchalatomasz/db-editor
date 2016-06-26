@@ -76,6 +76,7 @@ namespace DB_Editor.Components.MainWindow
         private void ListenToEvents()
         {
             StateChangeRequestEvents.StateChangeRequest += ChangeState;
+            DisplayError.DisplayErrorEvent += view_.DisplayError;
         }
 
         public State GetStateByName(string name)

@@ -92,5 +92,10 @@ namespace DB_Editor.Components.MainWindow
                 buttonNext.Text = presenter_.ActiveState.ButtonText;
             }
         }
+
+        public void DisplayError(string message, string title)
+        {
+            MessageBox.Show(message, title);
+        }
     }
 }

@@ -71,6 +71,8 @@ namespace DB_Editor.DB_Connection
                 builder.Server = server_;
                 builder.UserID = username_;
                 builder.Password = password_;
+                builder.AllowZeroDateTime = true;
+                builder.ConvertZeroDateTime = true;
                 if (database_ != "")
                 {
                     builder.Database = database_;
@@ -95,6 +97,8 @@ namespace DB_Editor.DB_Connection
                 builder.UserID = username;
                 builder.Password = password;
                 builder.Database = database;
+                builder.AllowZeroDateTime = true;
+                builder.ConvertZeroDateTime = true;
 
                 dbConnection_ = new MySqlConnection(builder.ToString());
             }

@@ -57,9 +57,9 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 model_.RecordsData = DB_Handlers.Table.GetPageOfRecordsByIndex(CurrentPage, TableName);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                DisplayError.FireDisplayErrorEvent(e.Message);
             }
         }
 
@@ -69,9 +69,9 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 TableFieldNames = DB_Handlers.Database.GetFieldNamesFromTable(TableName);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                DisplayError.FireDisplayErrorEvent(e.Message);
             }
         }
 
@@ -81,9 +81,9 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 AmountOfPages = DB_Handlers.Table.GetAmountOfPages(TableName);
             }
-            catch (SystemException e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                DisplayError.FireDisplayErrorEvent(e.Message);
             }
         }
 

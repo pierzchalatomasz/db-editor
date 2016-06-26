@@ -41,7 +41,14 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 
         public void Save()
         {
-            DB_Handlers.Record.ChangeRowValue(TableName, oldValues_, GetChangedFields());
+            try
+            {
+                DB_Handlers.Record.ChangeRowValue(TableName, oldValues_, GetChangedFields());
+            }
+            catch(Exception e)
+            {
+                DisplayError.FireDisplayErrorEvent(e.Message);
+            }
         }
 
         private void BuildFields()
@@ -50,13 +57,20 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             {
                 if (fieldData.Key != "tableName")
                 {
-                    FieldEditor fieldEditor = new FieldEditor();
-                    fieldEditor.FieldName = fieldData.Key;
-                    fieldEditor.Value = fieldData.Value;
-                    fieldEditor.FieldType = DB_Handlers.Table.GetFieldDataType(fieldData.Key, TableName);
-                    fieldEditor.Show();
-                    container.Controls.Add(fieldEditor);
-                    fieldEditors_.Add(fieldData.Key, fieldEditor);
+                    try
+                    {
+                        FieldEditor fieldEditor = new FieldEditor();
+                        fieldEditor.FieldName = fieldData.Key;
+                        fieldEditor.Value = fieldData.Value;
+                        fieldEditor.FieldType = DB_Handlers.Table.GetFieldDataType(fieldData.Key, TableName);
+                        fieldEditor.Show();
+                        container.Controls.Add(fieldEditor);
+                        fieldEditors_.Add(fieldData.Key, fieldEditor);
+                    }
+                    catch (Exception e)
+                    {
+                        DisplayError.FireDisplayErrorEvent(e.Message);
+                    }
                 }
             }
         }

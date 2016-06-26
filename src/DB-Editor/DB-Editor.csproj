@@ -139,6 +139,7 @@
       <DependentUpon>WelcomeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DB-Handlers\Record.cs" />
+    <Compile Include="Events\DisplayError.cs" />
     <Compile Include="Events\StateChangeRequestEvents.cs" />
     <Compile Include="Components\MainWindow\States\TablesListing\Partials\TableItem.cs">
       <SubType>UserControl</SubType>
