@@ -17,8 +17,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
         public TablesListingControl()
         {
             InitializeComponent();
-            Resize += OnResize;
-            Paint += OnResize;
+            SetTableItemsWidth();
             DisplayData();
         }
 
@@ -33,7 +32,14 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing
             }
         }
 
-        public void OnResize(object sender, EventArgs e)
+        public override void OnResize(int width, int height)
+        {
+            base.OnResize(width, height);
+            TableItemsContainer.Width = Width;
+            SetTableItemsWidth();
+        }
+
+        private void SetTableItemsWidth()
         {
             foreach (Control tableItem in TableItemsContainer.Controls)
             {

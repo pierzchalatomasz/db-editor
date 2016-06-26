@@ -64,14 +64,16 @@
             this.wrapper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wrapper.Location = new System.Drawing.Point(0, 0);
             this.wrapper.Name = "wrapper";
+            this.wrapper.Padding = new System.Windows.Forms.Padding(0, 30, 0, 0);
             this.wrapper.Size = new System.Drawing.Size(476, 268);
             this.wrapper.TabIndex = 2;
             // 
             // container
             // 
-            this.container.Location = new System.Drawing.Point(0, 29);
+            this.container.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.container.Location = new System.Drawing.Point(0, 30);
             this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(476, 239);
+            this.container.Size = new System.Drawing.Size(476, 238);
             this.container.TabIndex = 0;
             // 
             // buttonAddNewField
