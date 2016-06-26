@@ -10,6 +10,7 @@ using DB_Editor.Components.MainWindow.States.TableEditor;
 using DB_Editor.Components.MainWindow.States.RowEditor;
 using DB_Editor.Components.MainWindow.States.RecordsListing;
 using DB_Editor.Components.MainWindow.States.Welcome;
+using DB_Editor.Components.MainWindow.States.RowEditor.Partials;
 
 namespace DB_Editor.Components.MainWindow
 {

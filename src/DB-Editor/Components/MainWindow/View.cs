@@ -23,6 +23,7 @@ namespace DB_Editor.Components.MainWindow
             presenter_ = new Presenter(this);
             presenter_.Init();
             this.buttonNext.Visible = false;
+           
         }
 
         public void DisplayStateChange()
@@ -33,8 +34,7 @@ namespace DB_Editor.Components.MainWindow
             presenter_.ActiveState.Control.AutoScroll = true;
             presenter_.ActiveState.Control.Show();
             rightPanel.Controls.Add(presenter_.ActiveState.Control);
-            RightPanelTitle.Text = presenter_.ActiveState.Title;
-
+            RightPanelTitle.Text = presenter_.ActiveState.Title;          
             UpdateButtons();
         }
 

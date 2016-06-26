@@ -12,10 +12,11 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing.Partials
 {
     public partial class TableHeaderItem : UserControl
     {
-        public TableHeaderItem()
+        public TableHeaderItem(string name = "")
         {
             InitializeComponent();
             DoubleBuffered = true;
+            FieldName = name;
         }
 
         public string FieldName

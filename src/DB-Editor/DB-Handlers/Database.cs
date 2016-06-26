@@ -294,7 +294,7 @@ namespace DB_Editor.DB_Handlers
                                 break;
                             case "Null":
                                 {
-                                    if (reader[i].ToString() == String.Empty)
+                                    if (reader[i].ToString() == "YES")
                                         tmps.NullValue = true;
                                     else
                                         tmps.NullValue = false;

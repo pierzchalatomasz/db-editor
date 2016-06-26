@@ -99,6 +99,9 @@
             this.LengthTxtBox.ReadOnly = true;
             this.LengthTxtBox.Size = new System.Drawing.Size(42, 22);
             this.LengthTxtBox.TabIndex = 5;
+            this.LengthTxtBox.Click += new System.EventHandler(this.LengthTxtBox_Click);
+            this.LengthTxtBox.Leave += new System.EventHandler(this.LengthTxtBox_Leave);
+            this.LengthTxtBox.MouseHover += new System.EventHandler(this.LengthTxtBox_MouseHover);
             // 
             // NullDrpDwnLst
             // 

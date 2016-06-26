@@ -27,7 +27,7 @@ namespace DB_Editor.Components.MainWindow
         public void Init()
         {
             ListenToEvents();
-            SetDefaultState("Welcome");
+            SetDefaultState("Welcome");           
         }
 
         public State ActiveState
