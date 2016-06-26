@@ -20,11 +20,12 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 
             control_ = Control as RowEditorControl;
             control_.SetTitle = SetTitle;
+            AllowChangeState = true;
         }
 
         public void SetTitle(string tableName)
         {
-            Title = string.Format("Editing record of \"{0}\" table", tableName);
+            Title = string.Format("Adding record of \"{0}\" table", tableName);
         }
 
         public override void OnNextState()

@@ -15,9 +15,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
     public partial class FieldEditor : UserControl
     {
         private FieldEditorPresenter presenter_;
-        private static bool auto_increment_clicked;
-        private static bool primary_key_clicked;
-        private static bool foreign_key_clicked;
+        private bool auto_increment_clicked;
+        private bool primary_key_clicked;
+        private bool foreign_key_clicked;
+        private ToolTip tltip_;
 
         public FieldEditor()
         {
@@ -29,6 +30,8 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             foreign_key_clicked = false;
             TableNameItBelongs = "";
             EditorTableMode = false;
+            tltip_ = new ToolTip();
+            tltip_.Active = false;
         }
 
         #region Properties
@@ -239,9 +242,26 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
         {
             string[] settingableTypes = new string[] { "float", "double", "decimal", "char", "varchar", "text", "enum" };
             if (settingableTypes.Contains(fieldTypeDrpDwnLst.SelectedItem))
+            {
+                LengthTxtBox.ForeColor = Color.Silver;
+                if (fieldTypeDrpDwnLst.SelectedItem == "enum")
+                {
+
+                    LengthTxtBox.Text = "first_poss, second_poss, third_poss";
+                }
+                else
+                {
+                    LengthTxtBox.Text = "20";
+                }
                 LengthReadOnly = false;
+                tltip_.Active = true;
+            }
             else
+            {
+                LengthTxtBox.Text = "";
                 LengthReadOnly = true;
+                tltip_.Active = false;
+            }
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -256,6 +276,29 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
             }
             else
                 this.Dispose();
+        }
+        #endregion
+
+        #region HandlingHelpingWithTypeLengthChoice
+        private void LengthTxtBox_MouseHover(object sender, EventArgs e)
+        {
+            if (FieldType == "enum")
+                tltip_.SetToolTip(LengthTxtBox, "Insert possibilities one after another adding comma between \n for example: \n first_poss, second_poss, third_poss");
+            else
+                tltip_.SetToolTip(LengthTxtBox, "Insert maximum size of this type of data \n(for example \"20\").");
+        }
+        private void LengthTxtBox_Click(object sender, EventArgs e)
+        {
+            if (LengthTxtBox.Text == "20" || LengthTxtBox.Text == "first_poss, second_poss, third_poss")
+                LengthTxtBox.Text = "";
+            LengthTxtBox.ForeColor = Color.Black;
+        }
+        private void LengthTxtBox_Leave(object sender, EventArgs e)
+        {
+            if (LengthTxtBox.Text == "")
+            {
+                Field_Type_Changed(new object(), new EventArgs());
+            }
         }
         #endregion
     }

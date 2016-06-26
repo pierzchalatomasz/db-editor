@@ -64,6 +64,7 @@ namespace DB_Editor.Components.MainWindow
                 if (presenter_.ActiveState.DefaultNextStateData != null)
                 {
                     args.Data = presenter_.ActiveState.DefaultNextStateData;
+                    args.Data["changeRow"] = "anythingElse";
                 }
 
                 StateChangeRequestEvents.FireStateChangeRequest(sender, args);

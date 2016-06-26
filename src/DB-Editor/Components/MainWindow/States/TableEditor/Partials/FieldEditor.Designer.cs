@@ -85,7 +85,7 @@
             // 
             this.LengthLabel.AutoSize = true;
             this.LengthLabel.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LengthLabel.Location = new System.Drawing.Point(211, 9);
+            this.LengthLabel.Location = new System.Drawing.Point(222, 9);
             this.LengthLabel.Name = "LengthLabel";
             this.LengthLabel.Size = new System.Drawing.Size(42, 15);
             this.LengthLabel.TabIndex = 6;
@@ -97,13 +97,16 @@
             this.LengthTxtBox.Location = new System.Drawing.Point(211, 27);
             this.LengthTxtBox.Name = "LengthTxtBox";
             this.LengthTxtBox.ReadOnly = true;
-            this.LengthTxtBox.Size = new System.Drawing.Size(42, 22);
+            this.LengthTxtBox.Size = new System.Drawing.Size(71, 22);
             this.LengthTxtBox.TabIndex = 5;
+            this.LengthTxtBox.Click += new System.EventHandler(this.LengthTxtBox_Click);
+            this.LengthTxtBox.Leave += new System.EventHandler(this.LengthTxtBox_Leave);
+            this.LengthTxtBox.MouseHover += new System.EventHandler(this.LengthTxtBox_MouseHover);
             // 
             // NullDrpDwnLst
             // 
             this.NullDrpDwnLst.FormattingEnabled = true;
-            this.NullDrpDwnLst.Location = new System.Drawing.Point(264, 27);
+            this.NullDrpDwnLst.Location = new System.Drawing.Point(288, 27);
             this.NullDrpDwnLst.Name = "NullDrpDwnLst";
             this.NullDrpDwnLst.Size = new System.Drawing.Size(55, 21);
             this.NullDrpDwnLst.TabIndex = 8;
@@ -112,7 +115,7 @@
             // 
             this.NullLabel.AutoSize = true;
             this.NullLabel.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NullLabel.Location = new System.Drawing.Point(277, 9);
+            this.NullLabel.Location = new System.Drawing.Point(298, 8);
             this.NullLabel.Name = "NullLabel";
             this.NullLabel.Size = new System.Drawing.Size(28, 15);
             this.NullLabel.TabIndex = 7;
@@ -162,7 +165,7 @@
             this.DeleteButton.BackColor = System.Drawing.Color.Crimson;
             this.DeleteButton.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.DeleteButton.ForeColor = System.Drawing.Color.White;
-            this.DeleteButton.Location = new System.Drawing.Point(410, 17);
+            this.DeleteButton.Location = new System.Drawing.Point(434, 18);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(62, 40);
             this.DeleteButton.TabIndex = 12;
@@ -172,7 +175,7 @@
             // 
             // defaultTextBox
             // 
-            this.defaultTextBox.Location = new System.Drawing.Point(325, 27);
+            this.defaultTextBox.Location = new System.Drawing.Point(349, 27);
             this.defaultTextBox.Name = "defaultTextBox";
             this.defaultTextBox.Size = new System.Drawing.Size(79, 20);
             this.defaultTextBox.TabIndex = 13;
@@ -181,7 +184,7 @@
             // 
             this.defaultLabel.AutoSize = true;
             this.defaultLabel.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.defaultLabel.Location = new System.Drawing.Point(346, 9);
+            this.defaultLabel.Location = new System.Drawing.Point(362, 8);
             this.defaultLabel.Name = "defaultLabel";
             this.defaultLabel.Size = new System.Drawing.Size(45, 15);
             this.defaultLabel.TabIndex = 14;
@@ -209,7 +212,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 15);
             this.Name = "FieldEditor";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(490, 86);
+            this.Size = new System.Drawing.Size(512, 86);
             this.ResumeLayout(false);
             this.PerformLayout();
 

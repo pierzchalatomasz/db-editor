@@ -28,7 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.container = new System.Windows.Forms.FlowLayoutPanel();
+            this.RowEditorContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.SuspendLayout();
+            // 
+            // RowEditorContainer
+            // 
+            this.RowEditorContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RowEditorContainer.Location = new System.Drawing.Point(0, 0);
+            this.RowEditorContainer.Name = "RowEditorContainer";
+            this.RowEditorContainer.Size = new System.Drawing.Size(476, 308);
+            this.RowEditorContainer.TabIndex = 0;
+            // 
+            // RowEditorControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.RowEditorContainer);
+            this.Name = "RowEditorControl";
+            this.Size = new System.Drawing.Size(476, 308);
+            this.RowEditorContainer.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+
+            /*this.container = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // container
@@ -46,12 +68,12 @@
             this.Controls.Add(this.container);
             this.Name = "RowEditorControl";
             this.Size = new System.Drawing.Size(476, 308);
-            this.ResumeLayout(false);
+            this.ResumeLayout(false);*/
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel container;
+        private System.Windows.Forms.FlowLayoutPanel RowEditorContainer;
     }
 }

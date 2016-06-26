@@ -79,7 +79,7 @@ namespace DB_Editor.DB_Handlers
         //oko.Add(ok2);
         //oko.Add(ok3);
         //Record.InsertRowValue("stringtable", ok2, oko, "ok");
-        public static OperationResult InsertRowValue(string tableName, string[] ColumnNames, List<string[]> Values)
+        public static OperationResult InsertRowValue(string tableName, List<string> ColumnNames, List<string> Values)
         {
             try
             {
@@ -91,20 +91,17 @@ namespace DB_Editor.DB_Handlers
                 foreach (string columnName in ColumnNames)
                     tmp += columnName + ", ";
                 tmp = tmp.Substring(0, tmp.Length - 2);
-                tmp += ") VALUES ";
+                tmp += ") VALUES (";
 
-                foreach (var stringArrays in Values)
+                foreach (string value in Values)
                 {
-                    tmp += "(";
-                    foreach (var stringArray in stringArrays)
-                    {
-                        tmp += "\"" + stringArray + "\", ";
-                    }
-                    tmp = tmp.Substring(0, tmp.Length - 2);
-                    tmp += "), ";
+                    if (value == "NULL")
+                        tmp += value + ", ";
+                    else
+                        tmp += "\"" + value + "\", ";
                 }
                 tmp = tmp.Substring(0, tmp.Length - 2);
-                tmp += ";";
+                tmp += ");";
 
                 MySqlCommand command_ = new MySqlCommand(tmp, DBConnectionManager.Connection);
                 command_.ExecuteNonQuery();
@@ -159,7 +156,10 @@ namespace DB_Editor.DB_Handlers
                 tmp += "DELETE FROM " + dbName_ + tableName + " WHERE ";
                 foreach(var item in pairs)
                 {
-                    tmp += item.Key + " = \"" + item.Value + "\" AND ";
+                    if(item.Value == "")
+                        tmp += item.Key + " IS NULL AND ";
+                    else
+                        tmp += item.Key + " = \"" + item.Value + "\" AND ";
                 }
                 tmp = tmp.Substring(0, tmp.Length - 5);
                 tmp += ";";

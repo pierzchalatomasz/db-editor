@@ -45,6 +45,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
             args.Data = GetSelectedRecordData();
             args.Data["tableName"] = TableName;
+            args.Data["changeRow"] = "changeRow";
 
             return args;
         }
@@ -90,7 +91,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         public Dictionary<string, string> GetSelectedRecordData()
         {
             var output = new Dictionary<string, string>();
-
+          
             for (int i = 0; i < TableFieldNames.Count; i++)
             {
                 string fieldName = TableFieldNames.ElementAt(i);
