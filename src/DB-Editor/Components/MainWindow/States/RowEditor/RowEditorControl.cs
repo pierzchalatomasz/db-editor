@@ -15,6 +15,10 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 {
     public partial class RowEditorControl : StateControl
     {
+        private Dictionary<string, string> oldValues_ = new Dictionary<string,string>();
+
+        private Dictionary<string, FieldEditor> fieldEditors_ = new Dictionary<string, FieldEditor>();
+
         public RowEditorControl()
         {
             InitializeComponent();
@@ -30,23 +34,58 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             {
                 TableName = value.Data["tableName"];
                 SetTitle(TableName);
-                BuildFields(value.Data);
+                ReadRecordDataOnStateChange(value.Data);
+                BuildFields();
             }
         }
 
-        private void BuildFields(Dictionary<string, string> data)
+        public void Save()
         {
-            foreach (var fieldData in data)
+            DB_Handlers.Record.ChangeRowValue(TableName, oldValues_, GetChangedFields());
+        }
+
+        private void BuildFields()
+        {
+            foreach (var fieldData in oldValues_)
             {
                 if (fieldData.Key != "tableName")
                 {
-                    FieldEditor field = new FieldEditor();
-                    field.FieldName = fieldData.Key;
-                    field.Value = fieldData.Value;
-                    field.Show();
-                    container.Controls.Add(field);
+                    FieldEditor fieldEditor = new FieldEditor();
+                    fieldEditor.FieldName = fieldData.Key;
+                    fieldEditor.Value = fieldData.Value;
+                    fieldEditor.FieldType = DB_Handlers.Table.GetFieldDataType(fieldData.Key, TableName);
+                    fieldEditor.Show();
+                    container.Controls.Add(fieldEditor);
+                    fieldEditors_.Add(fieldData.Key, fieldEditor);
                 }
             }
+        }
+
+        private void ReadRecordDataOnStateChange(Dictionary<string, string> data)
+        {
+            foreach (var item in data)
+            {
+                if (item.Key != "tableName")
+                {
+                    oldValues_.Add(item.Key, item.Value);
+                }
+            }
+        }
+
+        private Dictionary<string, string> GetChangedFields()
+        {
+            Dictionary<string, string> changedFields = new Dictionary<string, string>();
+
+            foreach (var oldValue in oldValues_)
+            {
+                if (oldValue.Value != fieldEditors_[oldValue.Key].Value)
+                {
+                    FieldEditor fieldEditor = fieldEditors_[oldValue.Key];
+                    changedFields.Add(fieldEditor.FieldName, fieldEditor.Value);
+                }
+            }
+
+            return changedFields;
         }
     }
 }

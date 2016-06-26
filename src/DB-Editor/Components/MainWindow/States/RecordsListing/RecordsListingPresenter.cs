@@ -21,10 +21,16 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         public void Init()
         {
-            FetchRecords();
-            FetchTableFieldNames();
             SetAmountOfPages();
             CurrentPage = 0;
+        }
+
+        public void UpdateData()
+        {
+            FetchRecords();
+            FetchTableFieldNames();
+            SelectedRecordID = -1;
+            view_.UpdateView();
         }
 
         public void DeleteRecord()

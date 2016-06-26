@@ -296,6 +296,31 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+
+        public static string GetFieldDataType(string field, string tableName)
+        {
+            try
+            {
+                DB_Connection.DBConnectionManager.Connection.Open();
+
+		        string tmp = "DESC " + dbName_ + tableName + " " + field + ";";
+                command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
+
+                MySqlDataReader reader = command_.ExecuteReader();
+
+                reader.Read();
+
+                return reader.GetString(1);
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
         #endregion
 
         #region PrivateMethods

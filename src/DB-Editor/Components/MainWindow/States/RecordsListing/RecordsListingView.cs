@@ -39,11 +39,11 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
                 if (value.Data.ContainsKey("id"))
                 {
                     presenter_.TableName = value.Data["id"];
-                    ClearControls();
                     presenter_.Init();
-
                     SetTitle(presenter_.TableName);
                 }
+
+                presenter_.UpdateData();
             }
         }
 
