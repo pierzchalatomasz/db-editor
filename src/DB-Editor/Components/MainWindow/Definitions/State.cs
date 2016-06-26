@@ -38,6 +38,10 @@ namespace DB_Editor.Components.MainWindow.Definitions
 
         public bool SaveEnable { get; set; }
 
+        public Dictionary<string, string> DefaultNextStateData { get; set; }
+
+        public Dictionary<string, string> DefaultPrevStateData { get; set; }
+
         public virtual void DatabaseChanged(object sender, EventArgs e) { }
 
         public StateChangeRequestEventArgs EventData

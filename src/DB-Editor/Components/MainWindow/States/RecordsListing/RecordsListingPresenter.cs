@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Editor.Events;
 
 namespace DB_Editor.Components.MainWindow.States.RecordsListing
 {
@@ -20,10 +21,70 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         public void Init()
         {
+            SetAmountOfPages();
+            CurrentPage = 0;
+        }
+
+        public void UpdateData()
+        {
             FetchRecords();
             FetchTableFieldNames();
-            SetAmountOfPages();
-            CurrentPage = 1;
+            SelectedRecordID = -1;
+            view_.UpdateView();
+        }
+
+        public void DeleteRecord()
+        {
+            DB_Handlers.Record.DeleteRow(TableName, GetSelectedRecordData());
+            FetchRecords();
+            view_.UpdateView();
+        }
+
+        public StateChangeRequestEventArgs GetSelectedRecordArgs()
+        {
+            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
+            args.Data = GetSelectedRecordData();
+            args.Data["tableName"] = TableName;
+
+            return args;
+        }
+
+        #region Private Methods
+
+        private void FetchRecords()
+        {
+            try
+            {
+                model_.RecordsData = DB_Handlers.Table.GetPageOfRecordsByIndex(CurrentPage, TableName);
+            }
+            catch (Exception e)
+            {
+                DisplayError.FireDisplayErrorEvent(e.Message);
+            }
+        }
+
+        private void FetchTableFieldNames()
+        {
+            try
+            {
+                TableFieldNames = DB_Handlers.Database.GetFieldNamesFromTable(TableName);
+            }
+            catch (Exception e)
+            {
+                DisplayError.FireDisplayErrorEvent(e.Message);
+            }
+        }
+
+        private void SetAmountOfPages()
+        {
+            try
+            {
+                AmountOfPages = DB_Handlers.Table.GetAmountOfPages(TableName);
+            }
+            catch (Exception e)
+            {
+                DisplayError.FireDisplayErrorEvent(e.Message);
+            }
         }
 
         public Dictionary<string, string> GetSelectedRecordData()
@@ -40,44 +101,6 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             return output;
         }
 
-        #region Private Methods
-
-        private void FetchRecords()
-        {
-            try
-            {
-                model_.RecordsData = DB_Handlers.Table.GetPageOfRecordsByIndex(CurrentPage, TableName);
-            }
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        private void FetchTableFieldNames()
-        {
-            try
-            {
-                TableFieldNames = DB_Handlers.Database.GetFieldNamesFromTable(TableName);
-            }
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        private void SetAmountOfPages()
-        {
-            try
-            {
-                AmountOfPages = DB_Handlers.Table.GetAmountOfPages(TableName);
-            }
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
         #endregion
 
         #region Getters / Setters
@@ -91,6 +114,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             set
             {
                 model_.SelectedRecordID = value;
+                view_.ToggleEditButtonVisibility();
             }
         }
 

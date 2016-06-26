@@ -18,11 +18,19 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
             var control = Control as RecordsListingView;
             control.SetTitle += SetTitle;
+            control.SetTitle += SetDefaultNextStateData;
         }
 
         private void SetTitle(string tableName)
         {
             Title = string.Format("Records of \"{0}\" table", tableName);
+            
+        }
+
+        private void SetDefaultNextStateData(string tableName)
+        {
+            DefaultNextStateData = new Dictionary<string, string>();
+            DefaultNextStateData.Add("tableName", tableName);
         }
     }
 }

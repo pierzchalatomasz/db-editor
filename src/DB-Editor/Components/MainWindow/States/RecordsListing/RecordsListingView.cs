@@ -39,17 +39,17 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
                 if (value.Data.ContainsKey("id"))
                 {
                     presenter_.TableName = value.Data["id"];
-                    ClearControls();
                     presenter_.Init();
-
                     SetTitle(presenter_.TableName);
                 }
+
+                presenter_.UpdateData();
             }
         }
 
         public void UpdateView()
         {
-            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage, presenter_.AmountOfPages - 1);
+            labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage + 1, presenter_.AmountOfPages);
 
             BuildRecordsContainer();
             recordsContainerOld_.Hide();
@@ -60,6 +60,20 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             ScrollTop();
             ToggleNextPageButtonVisibility();
             TogglePrevPageButtonVisibility();
+            ToggleEditButtonVisibility();
+        }
+
+        private bool GetUserPermission()
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete selected record?", 
+                "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #region View Builders
@@ -86,7 +100,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void ShowRecords(RecordsContainer recordsContainer)
         {
-            int iterator = 50 * (presenter_.CurrentPage - 1);
+            int iterator = 0;
 
             records_.Clear();
 
@@ -125,16 +139,29 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            StateChangeRequestEventArgs args = new StateChangeRequestEventArgs("RowEditor");
-            args.Data = presenter_.GetSelectedRecordData();
-            args.Data["tableName"] = presenter_.TableName;
-
-            StateChangeRequestEvents.FireStateChangeRequest(sender, args);
+            StateChangeRequestEvents.FireStateChangeRequest(sender, presenter_.GetSelectedRecordArgs());
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (GetUserPermission())
+            {
+                presenter_.DeleteRecord();
+            }
+        }
 
+        public void ToggleEditButtonVisibility()
+        {
+            if (presenter_.SelectedRecordID == -1)
+            {
+                buttonEdit.Hide();
+                buttonDelete.Hide();
+            }
+            else
+            {
+                buttonEdit.Show();
+                buttonDelete.Show();
+            }
         }
 
         #endregion
@@ -155,7 +182,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
         private void TogglePrevPageButtonVisibility()
         {
-            if (presenter_.CurrentPage == 1 || presenter_.AmountOfPages == 0)
+            if (presenter_.CurrentPage == 0 || presenter_.AmountOfPages == 0)
             {
                 buttonPrevPage.Hide();
             }
@@ -169,7 +196,15 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         {
             Record record = sender as Record;
             HighlightSelectedRecord(presenter_.SelectedRecordID, record.ID);
-            presenter_.SelectedRecordID = record.ID;
+            
+            if (presenter_.SelectedRecordID != record.ID)
+            {
+                presenter_.SelectedRecordID = record.ID;
+            }
+            else
+            {
+                presenter_.SelectedRecordID = -1;
+            }
         }
 
         private void HighlightSelectedRecord(long oldId, long newId)
