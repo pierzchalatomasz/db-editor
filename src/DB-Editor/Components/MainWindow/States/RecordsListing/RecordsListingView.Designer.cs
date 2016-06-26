@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.wrapper = new System.Windows.Forms.Panel();
+            this.container = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -36,13 +38,37 @@
             this.labelPage = new System.Windows.Forms.Label();
             this.buttonNextPage = new System.Windows.Forms.Button();
             this.buttonPrevPage = new System.Windows.Forms.Button();
-            this.container = new System.Windows.Forms.FlowLayoutPanel();
-            this.wrapper = new System.Windows.Forms.Panel();
+            this.wrapper.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.buttonsWrapper.SuspendLayout();
-            this.wrapper.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // wrapper
+            // 
+            this.wrapper.AutoSize = true;
+            this.wrapper.Controls.Add(this.container);
+            this.wrapper.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wrapper.Location = new System.Drawing.Point(0, 0);
+            this.wrapper.Name = "wrapper";
+            this.wrapper.Padding = new System.Windows.Forms.Padding(0, 0, 0, 15);
+            this.wrapper.Size = new System.Drawing.Size(479, 268);
+            this.wrapper.TabIndex = 6;
+            // 
+            // container
+            // 
+            this.container.AutoScroll = true;
+            this.container.AutoSize = true;
+            this.container.BackColor = System.Drawing.Color.Transparent;
+            this.container.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.container.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.container.Location = new System.Drawing.Point(0, 0);
+            this.container.Margin = new System.Windows.Forms.Padding(3, 3, 3, 50);
+            this.container.Name = "container";
+            this.container.Size = new System.Drawing.Size(479, 253);
+            this.container.TabIndex = 0;
+            this.container.WrapContents = false;
+            this.container.Scroll += new System.Windows.Forms.ScrollEventHandler(this.container_Scroll);
             // 
             // panel1
             // 
@@ -139,32 +165,6 @@
             this.buttonPrevPage.UseVisualStyleBackColor = false;
             this.buttonPrevPage.Click += new System.EventHandler(this.buttonPrevPage_Click);
             // 
-            // container
-            // 
-            this.container.AutoScroll = true;
-            this.container.AutoSize = true;
-            this.container.BackColor = System.Drawing.Color.Transparent;
-            this.container.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.container.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.container.Location = new System.Drawing.Point(0, 0);
-            this.container.Margin = new System.Windows.Forms.Padding(3, 3, 3, 50);
-            this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(479, 253);
-            this.container.TabIndex = 0;
-            this.container.WrapContents = false;
-            this.container.Scroll += new System.Windows.Forms.ScrollEventHandler(this.container_Scroll);
-            // 
-            // wrapper
-            // 
-            this.wrapper.AutoSize = true;
-            this.wrapper.Controls.Add(this.container);
-            this.wrapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wrapper.Location = new System.Drawing.Point(0, 0);
-            this.wrapper.Name = "wrapper";
-            this.wrapper.Padding = new System.Windows.Forms.Padding(0, 0, 0, 15);
-            this.wrapper.Size = new System.Drawing.Size(479, 268);
-            this.wrapper.TabIndex = 6;
-            // 
             // RecordsListingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,12 +176,12 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "RecordsListingView";
             this.Size = new System.Drawing.Size(479, 308);
+            this.wrapper.ResumeLayout(false);
+            this.wrapper.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.buttonsWrapper.ResumeLayout(false);
             this.buttonsWrapper.PerformLayout();
-            this.wrapper.ResumeLayout(false);
-            this.wrapper.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

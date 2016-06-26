@@ -26,6 +26,8 @@ namespace DB_Editor.Components.MainWindow
 
         public void Init()
         {
+            model_.StateBuilt += SetOnResizeEventHandler;
+            model_.CreateStates();
             ListenToEvents();
             SetDefaultState("Welcome");
         }
@@ -35,6 +37,14 @@ namespace DB_Editor.Components.MainWindow
             get
             {
                 return model_.ActiveState;
+            }
+        }
+
+        public Action<string> StateBuilt
+        {
+            set
+            {
+                model_.StateBuilt += value;
             }
         }
 
@@ -84,5 +94,10 @@ namespace DB_Editor.Components.MainWindow
             return model_.States[name];
         }
 
+        private void SetOnResizeEventHandler(string name)
+        {
+            view_.ContainerResize += model_.States[name].Control.OnResize;
+            Console.WriteLine(name);
+        }
     }
 }

@@ -17,13 +17,15 @@ namespace DB_Editor.Components.MainWindow
 
     class Model
     {
-        private Dictionary<string, Type> stateTypes_; 
+        private Dictionary<string, Type> stateTypes_;
+
+        public event Action<string> StateBuilt;
 
         public Model()
         {
             States = new StatesDict();
             stateTypes_ = new Dictionary<string, Type>();
-            CreateStates();
+            //CreateStates();
         }
 
         public StatesDict States { get; private set; }
@@ -35,9 +37,10 @@ namespace DB_Editor.Components.MainWindow
             States.Remove(name);
             State state = Activator.CreateInstance(stateTypes_[name]) as State;
             States.Add(state.Name, state);
+            EmitStateBuiltEvent(state.Name);
         }
 
-        private void CreateStates()
+        public void CreateStates()
         {
             CreateSingleState(typeof(Welcome));
             CreateSingleState(typeof(TablesListing));
@@ -51,6 +54,15 @@ namespace DB_Editor.Components.MainWindow
             State state = Activator.CreateInstance(type) as State;
             States.Add(state.Name, state);
             stateTypes_.Add(state.Name, type);
+            EmitStateBuiltEvent(state.Name);
+        }
+
+        private void EmitStateBuiltEvent(string name)
+        {
+            if (StateBuilt != null)
+            {
+                StateBuilt(name);
+            }
         }
     }
 }

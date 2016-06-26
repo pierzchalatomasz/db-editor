@@ -46,6 +46,13 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             set;
         }
 
+        public override void OnResize(int width, int height)
+        {
+            base.OnResize(width, height);
+
+            container.Width = width;
+            container.Height = height;
+        }
 
         public override StateChangeRequestEventArgs EventData
         {

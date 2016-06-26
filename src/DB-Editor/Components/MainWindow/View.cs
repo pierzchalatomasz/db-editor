@@ -16,13 +16,17 @@ namespace DB_Editor.Components.MainWindow
     {
         private Presenter presenter_;
 
+        public event Action<int, int> ContainerResize;
+
         public View()
         {
             InitializeComponent();
             databasesList.Init();
             presenter_ = new Presenter(this);
             presenter_.Init();
-            this.buttonNext.Visible = false;
+            buttonNext.Visible = false;
+            Resize += WindowResize;
+            presenter_.StateBuilt = InitialContainerResize;
         }
 
         public void DisplayStateChange()
@@ -91,6 +95,24 @@ namespace DB_Editor.Components.MainWindow
             {
                 buttonNext.Text = presenter_.ActiveState.ButtonText;
             }
+        }
+
+        private void EmitContainerResize()
+        {
+            if (ContainerResize != null)
+            {
+                ContainerResize(rightPanel.Width, rightPanel.Height);
+            }
+        }
+
+        private void WindowResize(object sender, EventArgs e)
+        {
+            EmitContainerResize();
+        }
+
+        private void InitialContainerResize(string name)
+        {
+            EmitContainerResize();
         }
 
         public void DisplayError(string message, string title)

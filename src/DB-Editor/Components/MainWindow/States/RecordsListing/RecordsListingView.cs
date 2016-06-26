@@ -47,6 +47,16 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             }
         }
 
+        public override void OnResize(int width, int height)
+        {
+            base.OnResize(width, height);
+
+            wrapper.Height = height - 100;
+            wrapper.Width = width - 100;
+
+            Console.WriteLine("test");
+        }
+
         public void UpdateView()
         {
             labelPage.Text = string.Format("Page {0} of {1}", presenter_.CurrentPage + 1, presenter_.AmountOfPages);

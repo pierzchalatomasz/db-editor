@@ -13,5 +13,11 @@ namespace DB_Editor.Components.MainWindow.Definitions
         virtual public StateChangeRequestEventArgs EventData { get; set; }
 
         virtual protected void Clear() { }
+
+        virtual public void OnResize(int width, int height) 
+        {
+            Width = width;
+            Height = height;
+        }
     }
 }
