@@ -282,10 +282,14 @@ namespace DB_Editor.DB_Handlers
                 command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
 
                 MySqlDataReader reader = command_.ExecuteReader();
+                string result = "";
 
-                reader.Read();
+                if (reader.Read()) 
+                {
+                    result = reader.GetString(1);
+                }
 
-                return reader.GetString(1);
+                return result;
             }
             catch (Exception e)
             {

@@ -188,7 +188,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
         {
             foreach (var fieldData in oldValues_)
             {
-                if (fieldData.Key != "tableName")
+                if (fieldData.Key != "tableName" && fieldData.Key != "changeRow")
                 {
                     try
                     {
@@ -196,7 +196,6 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
                         fieldEditor.FieldName = fieldData.Key;
                         fieldEditor.Value = fieldData.Value;
                         fieldEditor.FieldType = DB_Handlers.Table.GetFieldDataType(fieldData.Key, TableName);
-                        //linijka wyzej powoduje blad, ktory wyskakuje przy probie edycji jakiego rekordu
                         fieldEditor.Show();
                         RowEditorContainer.Controls.Add(fieldEditor);
                         fieldEditors_.Add(fieldData.Key, fieldEditor);
@@ -213,7 +212,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
         {
             foreach (var item in data)
             {
-                if (item.Key != "tableName")
+                if (item.Key != "tableName" && item.Key != "changeRow")
                 {
                     oldValues_.Add(item.Key, item.Value);
                 }
