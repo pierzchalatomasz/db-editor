@@ -46,10 +46,10 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                //dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + oldColumnName + " " + newColumn.ToString() + ";";
+                Console.WriteLine(command_.CommandText);
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -203,31 +203,6 @@ namespace DB_Editor.DB_Handlers
         #endregion
 
         #region GetSomethingFromDatabaseMethods
-        //przykladowo:
-        //List<List<string>> tmpListOfList2 = new List<List<string>>();
-        //DB_Connection.DBConnectionManager.Connect();
-        //tmpListOfList2 = Table.GetRecords("oko", "i");
-        //foreach (var list in tmpListOfList2)
-        //{
-        //    foreach (var str in list)
-        //        Console.Write(str + " ");
-        //    Console.Write("\n");
-        //}
-        public static List<List<string>> GetFirstPageOfRecords(string tableName)
-        {
-            try
-            {
-                return GetPageOfRecordsByIndex(0, tableName);
-            }
-            catch (Exception e)
-            {
-                throw new System.Exception(e.Message);
-            }
-            finally
-            {
-                DBConnectionManager.Connection.Close();
-            }
-        }
         public static int GetAmountOfPages(string tableName)
         {
             try

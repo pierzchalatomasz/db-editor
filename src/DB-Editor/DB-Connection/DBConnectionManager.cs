@@ -23,59 +23,44 @@ namespace DB_Editor.DB_Connection
         }
        
         #region ProtszyConnector_DlaTestow
-        private static string server_ = "localhost";
-        private static string username_ = "root";
-        private static string password_ = "";
-        private static string database_ = "";
 
         public static string ServerUrl
         {
-            set
-            {
-                server_ = value;
-            }
+            private get;
+            set;
         }
 
         public static string Username
         {
-            set
-            {
-                username_ = value;
-            }
+            get;
+            set;
         }
 
         public static string Password
         {
-            set
-            {
-                password_ = value;
-            }
+            private get;
+            set;
         }
-        
+
         public static string DatabaseName
         {
-            get
-            {
-                return database_;
-            }
-            set
-            {
-                database_ = value;
-            }
+            get;
+            set;
         }
+        
         public static void Connect()
         {
             try
             {
                 MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-                builder.Server = server_;
-                builder.UserID = username_;
-                builder.Password = password_;
+                builder.Server = ServerUrl;
+                builder.UserID = Username;
+                builder.Password = Password;
                 builder.AllowZeroDateTime = true;
                 builder.ConvertZeroDateTime = true;
-                if (database_ != "")
+                if (DatabaseName!= "")
                 {
-                    builder.Database = database_;
+                    builder.Database = DatabaseName;
                 }
 
                 dbConnection_ = new MySqlConnection(builder.ToString());
@@ -87,27 +72,6 @@ namespace DB_Editor.DB_Connection
             }
         }
         #endregion
-
-        public static void Connect(string server, string username, string password, string database)
-        {
-            try
-            {
-                MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-                builder.Server = server;
-                builder.UserID = username;
-                builder.Password = password;
-                builder.Database = database;
-                builder.AllowZeroDateTime = true;
-                builder.ConvertZeroDateTime = true;
-
-                dbConnection_ = new MySqlConnection(builder.ToString());
-            }
-            catch (MySqlException e)
-            {
-                // Emit event here
-                Console.WriteLine(e.Message);
-            }
-        }
 
         public static QueryResult Query(string query)
         {

@@ -146,6 +146,51 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        public static OperationResult CreateTableWithMultiplePrimaryKeys(string tableName, List<ColumnStructureCreator> list, List<string> primaryKeys, List<Tuple<string, string, string>> foreignKeys = null)
+        {
+            try
+            {
+                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                DBConnectionManager.Connection.Open();              
+                CheckDbName(ref dbName_);
+                string tmp = "CREATE TABLE " + dbName_ + tableName + " (";
+                foreach (var i in list)
+                {
+                    tmp += i.ToStringWithoutPrimaryKeys();
+                    tmp += ", ";
+                }
+                tmp += "PRIMARY KEY (";
+                foreach(var item in primaryKeys)
+                {
+                    tmp +=item + ",";
+                }
+                tmp = tmp.Substring(0, tmp.Length - 1);
+                tmp += "));";
+                //Console.WriteLine(tmp);
+                if (foreignKeys != null)
+                {
+                    foreach (var foreignKeyTupl in foreignKeys)
+                    {
+                        tmp += "FOREIGN KEY (" + foreignKeyTupl.Item1 + ") REFERENCES " + foreignKeyTupl.Item2 + "(" + foreignKeyTupl.Item3 + ") ,";
+                    }
+                    tmp = tmp.Substring(0, tmp.Length - 2);
+                tmp += ");";
+                }
+
+                command_.CommandText = tmp;
+                Console.WriteLine(command_.CommandText);
+                command_.ExecuteNonQuery();
+                return new OperationResult(true, new Exception("QUERY Ok"));
+            }
+            catch (Exception e)
+            {
+                return new OperationResult(false, e);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
         public static OperationResult DropTable(string tableName)
         {
             try
@@ -174,7 +219,6 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName_);
                 command_.CommandText = "RENAME TABLE " + dbName_ + oldName + " TO " + dbName_ + newName + ";";
-                Console.WriteLine(command_.CommandText);
                 command_.ExecuteNonQuery();
                 return new OperationResult(true, new Exception("QUERY Ok"));
             }
@@ -280,8 +324,8 @@ namespace DB_Editor.DB_Handlers
                 while (reader.Read())
                 {
                     for (int i = 0; i < reader.FieldCount; i++)
-                    {                     
-                        switch(reader.GetName(i))
+                    {
+                        switch (reader.GetName(i))
                         {
                             case "Field": tmps.Field = reader[i].ToString();
                                 break;
@@ -297,11 +341,11 @@ namespace DB_Editor.DB_Handlers
                                 break;
                             case "Null":
                                 {
-                                    if (reader[i].ToString() == String.Empty)
+                                    if (reader[i].ToString() == "YES")
                                         tmps.NullValue = true;
                                     else
                                         tmps.NullValue = false;
-                                } 
+                                }
                                 break;
                             case "Key":
                                 {
@@ -310,7 +354,7 @@ namespace DB_Editor.DB_Handlers
                                     else
                                         tmps.Primary_Key = false;
                                 }
-                                break;  
+                                break;
                             case "Default": tmps.Default = reader[i].ToString();
                                 break;
                             case "Extra":
@@ -319,9 +363,9 @@ namespace DB_Editor.DB_Handlers
                                         tmps.Extra = true;
                                     else
                                         tmps.Extra = false;
-                                }                         
-                                break;                               
-                        }               
+                                }
+                                break;
+                        }
                     }
                     listOfClmnStrcCrtr.Add(tmps);
                     tmps = new ColumnStructureCreator();

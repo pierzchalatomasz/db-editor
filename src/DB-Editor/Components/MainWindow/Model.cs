@@ -25,7 +25,6 @@ namespace DB_Editor.Components.MainWindow
         {
             States = new StatesDict();
             stateTypes_ = new Dictionary<string, Type>();
-            //CreateStates();
         }
 
         public StatesDict States { get; private set; }

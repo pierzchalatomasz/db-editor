@@ -20,6 +20,7 @@ namespace DB_Editor.Components.MainWindow.Definitions
             SaveEnable = true;
         }
 
+        #region Properties
         public StateControl Control { get; private set; }
 
         public string Name { get; private set; }
@@ -41,9 +42,7 @@ namespace DB_Editor.Components.MainWindow.Definitions
         public Dictionary<string, string> DefaultNextStateData { get; set; }
 
         public Dictionary<string, string> DefaultPrevStateData { get; set; }
-
-        public virtual void DatabaseChanged(object sender, EventArgs e) { }
-
+       
         public StateChangeRequestEventArgs EventData
         {
             set
@@ -51,11 +50,16 @@ namespace DB_Editor.Components.MainWindow.Definitions
                 Control.EventData = value;
             }
         }
+        #endregion
+        
+        #region VirtualMethods
+        public virtual void DatabaseChanged(object sender, EventArgs e) { }
 
         public virtual void OnPrevState() { }
 
         public virtual void OnNextState() { }
    
         public virtual void ModifyAllowChangeState() { }
+        #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
             InitializeComponent();
         }
 
+        #region UnnecessaryStuffForCasting
         public string FieldName
         {
             get
@@ -57,5 +58,6 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

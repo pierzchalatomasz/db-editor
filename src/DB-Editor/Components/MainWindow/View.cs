@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DB_Editor.Events;
 using DB_Editor.Components.MainWindow.States.TablesListing;
+using DB_Editor.Components.MainWindow.Partials;
 
 namespace DB_Editor.Components.MainWindow
 {
@@ -66,7 +67,6 @@ namespace DB_Editor.Components.MainWindow
                     args.Data = presenter_.ActiveState.DefaultNextStateData;
                     args.Data["changeRow"] = "anythingElse";
                 }
-
                 StateChangeRequestEvents.FireStateChangeRequest(sender, args);
             }
         }
@@ -120,5 +120,7 @@ namespace DB_Editor.Components.MainWindow
         {
             MessageBox.Show(message, title);
         }
+
+ 
     }
 }

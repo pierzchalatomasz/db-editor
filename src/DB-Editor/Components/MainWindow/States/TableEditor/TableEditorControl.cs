@@ -45,15 +45,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             get;
             set;
         }
-
-        public override void OnResize(int width, int height)
-        {
-            base.OnResize(width, height);
-
-            container.Width = width;
-            container.Height = height;
-        }
-
+    
         public override StateChangeRequestEventArgs EventData
         {
             set
@@ -162,20 +154,27 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             }
             return result;
         }
-        public bool CheckAmountOfPrimaryKeys()
+       //do dokumentacji
+        public int GetAmountOfPrimaryKeys()
         {
             int result = 0;
             foreach (FieldEditor item in container.Controls)
             {
                 if (item.Primary_Key)
                     result++;
-                if(result>1)
-                {
-                    SetErrorProvider(item, "There can be only one primary key in table.");
-                    return false;
-                }
             }
-            return true;          
+            return result;          
+        }
+        //do dokumentacji
+        public List<string> GetAllFieldNamesWherePrimary()
+        {
+            List<string> tmpList = new List<string>();
+            foreach (FieldEditor item in container.Controls)
+            {
+                if(item.Primary_Key)
+                    tmpList.Add(item.FieldName);
+            }
+            return tmpList;
         }
 
         private void SetErrorProvider(Control ctrl, string message)
@@ -193,6 +192,8 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             return listOfObjects;
         }
         #endregion
+
+        #region SettingControlStuff
         protected override void Clear()
         {
             // TEST of accessing event data
@@ -209,7 +210,24 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             container.VerticalScroll.Visible = false;
             container.AutoScroll = true;
         }
+     
+        private void ScrollToNewField()
+        {
+            container.AutoScroll = false;
+            container.VerticalScroll.Value = container.VerticalScroll.Maximum;
+            container.AutoScroll = true;
+        }
 
+        public override void OnResize(int width, int height)
+        {
+            base.OnResize(width, height);
+
+            container.Width = width;
+            container.Height = height;
+        }
+        #endregion
+
+        #region ControlEvents
         private void buttonAddNewField_Click(object sender, EventArgs e)
         {
             Partials.FieldEditor field = new Partials.FieldEditor();
@@ -219,16 +237,10 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             errorProvider1.Clear();
         }
 
-        private void ScrollToNewField()
-        {
-            container.AutoScroll = false;
-            container.VerticalScroll.Value = container.VerticalScroll.Maximum;
-            container.AutoScroll = true;
-        }
-
         private void tblNameTextBox_TextChanged(object sender, EventArgs e)
         {
             errorProvider1.Clear();
         }
+        #endregion
     }
 }

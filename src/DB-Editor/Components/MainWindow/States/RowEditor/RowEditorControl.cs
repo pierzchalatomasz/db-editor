@@ -16,12 +16,12 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 {
     public partial class RowEditorControl : StateControl
     {
+        #region PrivateFields
         private Dictionary<string, string> oldValues_ = new Dictionary<string, string>();
-
         private Dictionary<string, FieldEditor> fieldEditors_ = new Dictionary<string, FieldEditor>();
         private HorizontalLineControl tmpCtrl_ = new HorizontalLineControl();
-        private bool ChangeRowControl_;
-
+        private bool changeRowControl_ = true;
+        #endregion
 
         public RowEditorControl()
         {
@@ -29,38 +29,50 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             RowEditorContainer.Controls.Clear();
         }
 
-        public void AddControl(Control ctrl)
+        private void AddControl(Control ctrl)
         {
             RowEditorContainer.Controls.Add(ctrl);
         }
 
+        public bool ReturnChangeRowControl
+        {
+            get
+            {
+                return changeRowControl_;
+            }
+        }
+
         public string TableName { get; set; }
 
-        public Action<string> SetTitle;
+        public Action<string, bool> SetTitle;
 
         public override StateChangeRequestEventArgs EventData
         {
             set
             {
                 TableName = value.Data["tableName"];
-                SetTitle(TableName);
+                
                 if (value.Data["changeRow"] == "changeRow")
                 {
                     ReadRecordDataOnStateChange(value.Data);
                     BuildFields();
-                    ChangeRowControl_ = true;
+                    changeRowControl_ = true;
+                    SetTitle(TableName, changeRowControl_);
                 }
                 else
                 {
                     MakeAllTheComponents();
-                    ChangeRowControl_ = false;
+                    changeRowControl_ = false;
+                    SetTitle(TableName, changeRowControl_);
                 }
 
             }
         }
 
+        #region MakingNewRecord
         private void MakeAllTheComponents()
         {
+            changeRowControl_ = false;
             List<ColumnStructureCreator> tmpList = new List<ColumnStructureCreator>();
             tmpList = Database.GetColumnStructureCreatorsFromTable(TableName);
             foreach (ColumnStructureCreator item in tmpList)
@@ -122,15 +134,20 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             }
             return result;
         }
-
+        #endregion
 
         public void Save()
         {
-            if (ChangeRowControl_)
+            if (changeRowControl_)
             {
                 try
-                {
-                    DB_Handlers.Record.ChangeRowValue(TableName, oldValues_, GetChangedFields());
+                {                 
+                    OperationResult result = DB_Handlers.Record.ChangeRowValue(TableName, oldValues_, GetChangedFields());
+                    if(!result.IsSucceded)
+                    {
+                        changeRowControl_ = false;
+                        MessageBox.Show(result.Exception.ToString(), "Warning");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -166,8 +183,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             }
         }
 
-
-
+        #region EditingRecord
         private void BuildFields()
         {
             foreach (var fieldData in oldValues_)
@@ -220,5 +236,6 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
 
             return changedFields;
         }
+        #endregion
     }
 }

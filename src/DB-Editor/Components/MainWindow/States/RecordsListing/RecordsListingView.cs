@@ -15,13 +15,12 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 {
     public partial class RecordsListingView : StateControl
     {
+        #region PrivateField
         private RecordsListingPresenter presenter_;
-
         private List<Record> records_ = new List<Record>();
-
         private RecordsContainer recordsContainerOld_ = new RecordsContainer();
-
         private RecordsContainer recordsContainerNew_ = new RecordsContainer();
+        #endregion
 
         public Action<string> SetTitle;
 
@@ -53,8 +52,6 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
 
             wrapper.Height = height - 100;
             wrapper.Width = width - 100;
-
-            Console.WriteLine("test");
         }
 
         public void UpdateView()

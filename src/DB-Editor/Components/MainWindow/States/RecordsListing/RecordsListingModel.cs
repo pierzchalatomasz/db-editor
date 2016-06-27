@@ -18,6 +18,8 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             AmountOfPages = 0;
         }
 
+        #region Properties
+
         public List<string> TableFieldNames { get; set; }
 
         public List<List<string>> RecordsData { get; set; }
@@ -29,5 +31,6 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
         public int AmountOfPages { get; set; }
 
         public string TableName { get; set; }
+        #endregion
     }
 }
