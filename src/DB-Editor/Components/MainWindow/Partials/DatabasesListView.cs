@@ -13,12 +13,10 @@ namespace DB_Editor.Components.MainWindow.Partials
 {
     public partial class DatabasesListView : UserControl
     {
+
         public event EventHandler DatabaseAdd;
-
         public event EventHandler DatabaseDelete;
-
         public event EventHandler CurrentlyUsedDatabaseDelete;
-
 
         public DatabasesListView()
         {
@@ -39,14 +37,6 @@ namespace DB_Editor.Components.MainWindow.Partials
             private set;
         }
 
-        private void databasesList_DoubleClick(object sender, EventArgs e)
-        {
-            DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
-            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
-            StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
-        }
-
-
         private void DisplayDatabasesList()
         {
             databasesList.Items.Clear();
@@ -56,6 +46,14 @@ namespace DB_Editor.Components.MainWindow.Partials
             {
                 databasesList.Items.Add(database);
             }
+        }
+
+        #region ControlEvents
+        private void databasesList_DoubleClick(object sender, EventArgs e)
+        {
+            DB_Connection.DBConnectionManager.DatabaseName = databasesList.SelectedItem.ToString();
+            StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("TablesListing");
+            StateChangeRequestEvents.FireStateChangeRequest(this, eventArgs);
         }
 
         private void addNewDatabase_Click(object sender, EventArgs e)
@@ -91,7 +89,9 @@ namespace DB_Editor.Components.MainWindow.Partials
                 databasesList.SelectedIndex = -1;
             }
         }
+        #endregion
 
+        #region EventHandling
         public void DatabaseAddHandler(object sender, EventArgs e)
         {
             DB_Handlers.OperationResult tmp = DB_Handlers.Database.CreateDatabase(DatabaseNameToAction);
@@ -117,5 +117,6 @@ namespace DB_Editor.Components.MainWindow.Partials
                 MessageBox.Show("Error! " + tmp.Exception.Message + " Try again.", "Database Delete Error");
             DB_Connection.DBConnectionManager.Connection.Close();
         }
+        #endregion
     }
 }

@@ -21,7 +21,7 @@ namespace DB_Editor.Components.MainWindow
         public Presenter(View view)
         {
             view_ = view;
-            model_ = new Model();
+            model_ = new Model();                    
         }
 
         public void Init()
@@ -97,7 +97,6 @@ namespace DB_Editor.Components.MainWindow
         private void SetOnResizeEventHandler(string name)
         {
             view_.ContainerResize += model_.States[name].Control.OnResize;
-            Console.WriteLine(name);
         }
     }
 }

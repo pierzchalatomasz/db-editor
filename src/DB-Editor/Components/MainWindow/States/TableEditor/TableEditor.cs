@@ -14,6 +14,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
     public class TableEditor : State
     {
         private TableEditorControl control_;
+
         public TableEditor()
             : base("TableEditor", new TableEditorControl())
         {
@@ -46,19 +47,45 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             {
                 if (control_.ActualMode == Mode.Creator)
                 {
-                    Database.CreateTable(control_.NewTableName, control_.GetAllColumns());
-                    this.AllowChangeState = true;
+                    if(control_.GetAmountOfPrimaryKeys()<2)
+                    {
+                        OperationResult result = Database.CreateTable(control_.NewTableName, control_.GetAllColumns());
+                        if (result.IsSucceded)
+                        {
+                            this.AllowChangeState = true;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Exception.ToString(), "Warning");
+                            this.AllowChangeState = false;
+                        }
+                    }
+                    else
+                    {
+                        OperationResult result = DB_Handlers.Database.CreateTableWithMultiplePrimaryKeys(control_.NewTableName, control_.GetAllColumns(), control_.GetAllFieldNamesWherePrimary());
+                        if (result.IsSucceded)
+                        {
+                            this.AllowChangeState = true;
+                            
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Exception.ToString(), "Warning");
+                            this.AllowChangeState = false;
+                        }
+                    }
                 }
                 else
                 {
-                     if (control_.OldTableName != control_.NewTableName)
-                         Database.RenameTable(control_.OldTableName, control_.NewTableName);
-                     
+                    if (control_.OldTableName != control_.NewTableName)
+                        Database.RenameTable(control_.OldTableName, control_.NewTableName);
+
                     List<ColumnStructureCreator> oldColumnListWithProperties = new List<ColumnStructureCreator>();
                     oldColumnListWithProperties = Database.GetColumnStructureCreatorsFromTable(control_.NewTableName);
 
                     List<ColumnStructureCreator> actualColumnListWithProperties = control_.GetColumnsWithProperties();
-                    
+
                     for (int i = 0; i < oldColumnListWithProperties.Count; i++)
                     {
                         if (oldColumnListWithProperties[i] != actualColumnListWithProperties[i])
@@ -72,7 +99,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                     {
                         for (int i = 0; i < actualColumnListWithProperties.Count - oldColumnListWithProperties.Count; i++)
                         {
-                            DB_Handlers.Table.AddColumn(control_.NewTableName, actualColumnListWithProperties[oldColumnListWithProperties.Count+i]);
+                            DB_Handlers.Table.AddColumn(control_.NewTableName, actualColumnListWithProperties[oldColumnListWithProperties.Count + i]);
                         }
                     }
                     this.AllowChangeState = true;
@@ -94,10 +121,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
                     {
                         if (control_.CheckTypesOfColumns())
                         {
-                            if (control_.CheckAmountOfPrimaryKeys())
-                            {
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }

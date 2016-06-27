@@ -21,11 +21,13 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
         {
             ValueDropDownList.SelectedIndex = 0;
         }
+              
         public void SelectItem(string name)
         {
             ValueDropDownList.SelectedItem = name;
         }
-
+        
+        #region Properties
         public string ValueName
         {
             get
@@ -72,6 +74,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
                     ValueDropDownList.Items.Add(item);
             }
         }
+        #endregion
 
         public bool IfNecesseryFullfiled()
         {

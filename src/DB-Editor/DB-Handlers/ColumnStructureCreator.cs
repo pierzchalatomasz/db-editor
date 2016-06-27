@@ -8,7 +8,6 @@ namespace DB_Editor.DB_Handlers
 {
     public class ColumnStructureCreator
     {
-        private object[] properties_;
         public ColumnStructureCreator()
         {
 
@@ -27,10 +26,9 @@ namespace DB_Editor.DB_Handlers
             else
                 Default = "";
 
-            Extra = isAutoIncrement;
-            properties_ = new object[] { Field, Type, TypeLength, NullValue, Primary_Key, Default, Extra };
-
+            Extra = isAutoIncrement;         
         }
+       
         #region Properties
         public string Field { get; set; }
         public string Type { get; set; }
@@ -64,12 +62,12 @@ namespace DB_Editor.DB_Handlers
             }
             string tmp = "";
             if (!NullValue)
-                nullValueString = "NOT NULL ";
+                nullValueString = " NOT NULL ";
             if (Primary_Key)
                 primaryKeyString = " PRIMARY KEY";
             if (Extra)
                 extraString = "auto_increment";
-            if (Default != String.Empty)
+            if (Default != "")
             {
                 Default = "DEFAULT \"" + Default + "\"";
                 tmp = Field + " " + Type + nullValueString + Default + " " + extraString + primaryKeyString;
@@ -77,7 +75,43 @@ namespace DB_Editor.DB_Handlers
             else
                 tmp = Field + " " + Type + nullValueString + extraString + primaryKeyString;
             return tmp.TrimEnd();
-        }     
+        }
+        public string ToStringWithoutPrimaryKeys()
+        {
+            string nullValueString = "";
+            string extraString = "";
+            if (TypeLength != "")
+            {
+                Type += "(";
+                if (TypeLength.Any(char.IsDigit))
+                    Type += TypeLength;
+                else
+                {
+                    string[] tmpArray = TypeLength.Split(',');
+                    foreach (string str in tmpArray)
+                    {
+                        Type += "'" + str.Trim() + "', ";
+                    }
+                    Type = Type.Substring(0, Type.Length - 2);
+                }
+                Type += ") ";
+            }
+            string tmp = "";
+            if (!NullValue)
+                nullValueString = " NOT NULL ";
+            if (Extra)
+                extraString = "auto_increment";
+            if (Default != String.Empty)
+            {
+                Default = "DEFAULT \"" + Default + "\"";
+                tmp = Field + " " + Type + nullValueString + Default + " " + extraString;
+            }
+            else
+                tmp = Field + " " + Type + nullValueString + extraString;
+            Console.WriteLine(tmp.TrimEnd());
+            return tmp.TrimEnd();
+        }
+
         public static bool operator ==(ColumnStructureCreator firstColumn, ColumnStructureCreator secondColumn)
         {
             if(firstColumn.Field == secondColumn.Field & firstColumn.Type == secondColumn.Type & firstColumn.TypeLength == secondColumn.TypeLength & firstColumn.NullValue == secondColumn.NullValue &
@@ -91,14 +125,6 @@ namespace DB_Editor.DB_Handlers
             if (firstColumn == secondColumn)
                 return false;
             return true;
-        }
-
-        public object this[int i]
-        {
-            get
-            {
-                return properties_[i%7];
-            }
         }
     }
 }

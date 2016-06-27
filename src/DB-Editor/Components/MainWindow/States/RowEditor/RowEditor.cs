@@ -12,7 +12,8 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
     {
         RowEditorControl control_;
 
-        public RowEditor() : base("RowEditor", new RowEditorControl())
+        public RowEditor()
+            : base("RowEditor", new RowEditorControl())
         {
             ButtonText = "Save";
             NextState = "RecordsListing";
@@ -23,9 +24,12 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor
             AllowChangeState = true;
         }
 
-        public void SetTitle(string tableName)
+        public void SetTitle(string tableName, bool changeRowControl)
         {
-            Title = string.Format("Adding record of \"{0}\" table", tableName);
+            if (changeRowControl)
+                Title = string.Format("Editing record of \"{0}\" table", tableName);
+            else
+                Title = string.Format("Adding record of \"{0}\" table", tableName);
         }
 
         public override void OnNextState()

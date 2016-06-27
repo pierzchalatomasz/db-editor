@@ -18,6 +18,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
 
         }
 
+        #region Properties
         public string FieldName
         {
             get
@@ -67,6 +68,7 @@ namespace DB_Editor.Components.MainWindow.States.RowEditor.Partials
                 ValueTextBox.MaxLength = value;
             }
         }
+        #endregion
 
         public bool IfNecesseryFullfiled()
         {

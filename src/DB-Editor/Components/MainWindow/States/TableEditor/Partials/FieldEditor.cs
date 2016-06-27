@@ -14,11 +14,13 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
 {
     public partial class FieldEditor : UserControl
     {
+        #region PrivateFields
         private FieldEditorPresenter presenter_;
         private bool auto_increment_clicked;
         private bool primary_key_clicked;
         private bool foreign_key_clicked;
         private ToolTip tltip_;
+        #endregion
 
         public FieldEditor()
         {
@@ -146,6 +148,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor.Partials
         }
 
         #endregion
+
         public void Clear()
         {
             fieldNameTxtBox.Text = "";

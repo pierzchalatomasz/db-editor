@@ -19,6 +19,7 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing.Partials
             this.name.Text = name;
         }
 
+        #region ControlEvents
         private void buttonRecords_Click(object sender, EventArgs args)
         {
             StateChangeRequestEventArgs eventArgs = new StateChangeRequestEventArgs("RecordsListing");
@@ -43,5 +44,6 @@ namespace DB_Editor.Components.MainWindow.States.TablesListing.Partials
                 this.Dispose();
             }
         }
+        #endregion
     }
 }
