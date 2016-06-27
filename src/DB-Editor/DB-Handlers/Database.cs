@@ -289,7 +289,10 @@ namespace DB_Editor.DB_Handlers
                                 {
                                     tmpStrings = reader[i].ToString().Split(delimiterChar);
                                     tmps.Type = tmpStrings[0];
-                                    tmps.TypeLength = tmpStrings[1].TrimEnd(')');
+                                    if (tmpStrings.Length > 1)
+                                    {
+                                        tmps.TypeLength = tmpStrings[1].TrimEnd(')');
+                                    }
                                 }
                                 break;
                             case "Null":
