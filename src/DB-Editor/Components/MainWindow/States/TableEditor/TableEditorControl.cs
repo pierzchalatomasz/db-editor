@@ -23,7 +23,7 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             tblNameTextBox.Text = String.Empty;
         }
 
-        List<ColumnStructureCreator> oldListOfColumns_;
+        private List<ColumnStructureCreator> oldListOfColumns_;
         public Action<string> SetTitle;
 
         public Mode ActualMode
