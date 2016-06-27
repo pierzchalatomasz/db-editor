@@ -46,7 +46,7 @@ namespace DB_Editor.DB_Handlers
         {
             try
             {
-                dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
+                //dbName_ = DB_Connection.DBConnectionManager.DatabaseName;
                 DBConnectionManager.Connection.Open();
                 CheckDbName(ref dbName);
                 command_.CommandText = "ALTER TABLE " + dbName + tableName + " CHANGE " + oldColumnName + " " + newColumn.ToString() + ";";
@@ -321,6 +321,38 @@ namespace DB_Editor.DB_Handlers
                 DBConnectionManager.Connection.Close();
             }
         }
+        public static string[] GetEnumValues(string tableName, string columnName)
+        {
+            try
+            {
+                DB_Connection.DBConnectionManager.Connection.Open();
+                string tmp = "SELECT column_type FROM information_schema.columns where table_schema = '";
+                tmp += DB_Connection.DBConnectionManager.DatabaseName;
+                tmp += "' and table_name = '" + tableName + "' and column_name = '" + columnName + "';";
+                command_ = new MySqlCommand(tmp, DB_Connection.DBConnectionManager.Connection);
+
+                MySqlDataReader reader = command_.ExecuteReader();
+                reader.Read();
+                tmp = reader.GetString(0);
+                tmp = tmp.Remove(0, 6);
+                tmp = tmp.Substring(0, tmp.Length - 2);
+                string[] tmpArray = tmp.Split(',');
+
+                for (int i = 0; i < tmpArray.Length; i++)
+                    tmpArray[i] = tmpArray[i].Trim('\'');
+
+                return tmpArray;
+            }
+            catch (Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+            finally
+            {
+                DBConnectionManager.Connection.Close();
+            }
+        }
+        
         #endregion
 
         #region PrivateMethods

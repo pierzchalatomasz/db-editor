@@ -47,21 +47,35 @@ namespace DB_Editor.DB_Handlers
             string primaryKeyString = "";
             string extraString = "";
             if (TypeLength != "")
-                Type += " " + TypeLength;
+            {
+                Type += "(";
+                if (TypeLength.Any(char.IsDigit))
+                    Type += TypeLength;
+                else
+                {
+                    string[] tmpArray = TypeLength.Split(',');
+                    foreach (string str in tmpArray)
+                    {
+                        Type += "'" + str.Trim() + "', ";
+                    }
+                    Type = Type.Substring(0, Type.Length - 2);
+                }
+                Type += ") ";
+            }
             string tmp = "";
             if (!NullValue)
-                nullValueString = "NOT NULL";
+                nullValueString = "NOT NULL ";
             if (Primary_Key)
-                primaryKeyString = "PRIMARY KEY";
+                primaryKeyString = " PRIMARY KEY";
             if (Extra)
                 extraString = "auto_increment";
             if (Default != String.Empty)
             {
                 Default = "DEFAULT \"" + Default + "\"";
-                tmp = Field + " " + Type + " " + nullValueString + " " + Default + " " + extraString + " " + primaryKeyString;
+                tmp = Field + " " + Type + nullValueString + Default + " " + extraString + primaryKeyString;
             }
             else
-                tmp = Field + " " + Type + " " + nullValueString + " " + extraString + " " + primaryKeyString;
+                tmp = Field + " " + Type + nullValueString + extraString + primaryKeyString;
             return tmp.TrimEnd();
         }     
         public static bool operator ==(ColumnStructureCreator firstColumn, ColumnStructureCreator secondColumn)

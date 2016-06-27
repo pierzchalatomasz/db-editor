@@ -38,7 +38,7 @@ namespace DB_Editor.Components.MainWindow.States.RecordsListing
             {
                 if (value.Data.ContainsKey("id"))
                 {
-                    presenter_.TableName = value.Data["id"];
+                    presenter_.TableName = value.Data["id"];               
                     presenter_.Init();
                     SetTitle(presenter_.TableName);
                 }
