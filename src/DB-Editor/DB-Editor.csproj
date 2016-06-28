@@ -48,8 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\LoginWindow\Model.cs" />
-    <Compile Include="Components\LoginWindow\Presenter.cs" />
     <Compile Include="Components\LoginWindow\View.cs">
       <SubType>Form</SubType>
     </Compile>

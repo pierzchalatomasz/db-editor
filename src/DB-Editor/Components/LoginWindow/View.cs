@@ -12,14 +12,11 @@ namespace DB_Editor.Components.LoginWindow
 {
     public partial class View : Form
     {
-        private Presenter presenter_;
-
         private MainWindow.View mainWindow;
 
         public View()
         {
-            InitializeComponent();
-            presenter_ = new Presenter(this);           
+            InitializeComponent();   
         }
 
         private void CloseLoginWindow(object sender, EventArgs e)

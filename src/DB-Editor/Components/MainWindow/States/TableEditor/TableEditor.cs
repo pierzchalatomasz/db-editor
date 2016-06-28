@@ -31,16 +31,6 @@ namespace DB_Editor.Components.MainWindow.States.TableEditor
             Title = string.Format("Editing \"{0}\" table", tableName);
         }
 
-        public override void OnNextState()
-        {
-            Console.WriteLine("Saved successfully");
-        }
-
-        public override void OnPrevState()
-        {
-            Console.WriteLine("Are you sure?");
-        }
-
         public override void ModifyAllowChangeState()
         {
             if (DoAllTheTests())
